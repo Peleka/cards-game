@@ -22,7 +22,7 @@ export const Routes = () => {
         <div>
             {/*Switch выбирает первый подходящий роут*/}
             <Switch>
-                <Route path={'/'} exact render={() => <Redirect to={PATH.LOGIN}/>}/>
+                <Route path={'/'} exact render={() => <Redirect to={PATH.TEST}/>}/>
 
                 <Route path={PATH.LOGIN} render={() => <Login/>}/>
                 <Route path={PATH.REGISTER} render={() => <Register/>}/>
