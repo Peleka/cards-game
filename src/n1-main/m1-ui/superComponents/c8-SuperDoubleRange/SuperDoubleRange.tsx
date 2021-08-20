@@ -1,6 +1,7 @@
 import React from "react";
 import {Slider} from "@material-ui/core";
 
+
 type SuperDoubleRangePropsType = {
     onChangeRange?:  (event: any, value: number | number[]) => void
     value?: [number, number]
