@@ -2,6 +2,7 @@
     border-radius: 5px;
     min-width: 50px;
     height: 20px;
+    margin: 5px;
 }
 
 .default:disabled {
