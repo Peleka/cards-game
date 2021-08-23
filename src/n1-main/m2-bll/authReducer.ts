@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import axios from "axios";
+import {authAPI} from "../m3-dal/api";
 
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
     userData: null as UserDataType | null
 };
 
-export type InitialStateType = typeof initialState
+type InitialStateType = typeof initialState
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -18,7 +18,6 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
         default:
             return state
     }
-
 };
 
 //actions
@@ -53,7 +52,7 @@ export const loginTC = (values: UserLoginData) => (dispatch: Dispatch<ActionsTyp
 
 export const logoutTC = (dispatch: Dispatch<ActionsType>) => {
     try {
-        authAPI.logout().then(res => {
+        authAPI.logout().then(() => {
             dispatch(setIsLoggedInAC(false))
             dispatch(setUserDataAC(null))
         })
@@ -77,21 +76,4 @@ export type UserDataType = {
     name: string
     avatar?: string | null
     publicCardPacksCount: number
-}
-
-//dal
-
-const instance = axios.create(
-    {
-        baseURL: "https://neko-back.herokuapp.com/2.0/",
-        withCredentials: true,
-    })
-
-const authAPI = {
-    login(email: string, password: string, rememberMe: boolean) {
-        return instance.post('auth/login', {email, password, rememberMe})
-    },
-    logout() {
-        return instance.delete('auth/me')
-    }
 }

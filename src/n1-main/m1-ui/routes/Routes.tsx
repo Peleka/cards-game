@@ -3,7 +3,7 @@ import {Redirect, Route, Switch } from "react-router-dom";
 import {Error404} from "./pages/Error404";
 import {Login} from "./pages/Login";
 import {Profile} from "./pages/Profile";
-import {Register} from "./pages/Register";
+import {Register} from "./pages/Registration/Register";
 import {NewPassword} from "./pages/NewPassword";
 import {PasswordRecovery} from "./pages/PasswordRecovery";
 import {TestPage} from "./pages/TestPage";
@@ -33,7 +33,6 @@ export const Routes = () => {
 
                 <Route render={() => <Error404/>}/>
             </Switch>
-
         </div>
     )
 }
