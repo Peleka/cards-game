@@ -1,9 +1,12 @@
 import React from 'react'
 import s from './Register.module.css'
 import {useFormik} from 'formik';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import SuperInputText from "../../../superComponents/c1-SuperInputText/SuperInputText";
 import SuperButton from "../../../superComponents/c2-SuperButton/SuperButton";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStoreType} from "../../../../m2-bll/store";
+import {registerTC} from "../../../../m2-bll/registrationReducer";
 
 type SignupFormErrorType = {
     email?: string
@@ -11,6 +14,8 @@ type SignupFormErrorType = {
     confirmedPassword?: string
 }
 export const Register = () => {
+    const dispatch = useDispatch()
+    const isRegistered = useSelector((state: AppStoreType) => state.register.isRegistered)
 
     const formik = useFormik({
         initialValues: {
@@ -39,13 +44,15 @@ export const Register = () => {
         },
         onSubmit: values => {
             if (values.password === values.confirmedPassword) {
-                //dispatch
-                alert(JSON.stringify(values));
-
+                dispatch(registerTC(values))
                 formik.resetForm()
             }
         },
     })
+
+    if(isRegistered) {
+        return <Redirect to={'./login'}/>
+    }
 
     return (
         <div>
