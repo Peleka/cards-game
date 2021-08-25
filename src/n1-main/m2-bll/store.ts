@@ -3,11 +3,13 @@ import {authReducer} from "./authReducer";
 import thunk from "redux-thunk";
 import {registerReducer} from "./registrationReducer";
 import {appReducer} from "./app-reducer";
+import {recoverPasswordReducer} from "./recoverPassword-reducer";
 
 const reducers = combineReducers({
     auth: authReducer,
     register: registerReducer,
-    app: appReducer
+    app: appReducer,
+    forgotPassword: recoverPasswordReducer
 });
 
 const store = createStore(reducers, applyMiddleware(thunk));

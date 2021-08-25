@@ -21,3 +21,14 @@ export const registerAPI = {
         return instance.post('/auth/register', {email, password})
     }
 }
+
+export const recoverPasswordAPI = {
+    recoverPassword(email: string, message: string) {
+        return instance.post('/auth/forgot', {email, message})
+    },
+    setNewPassword(password: string, resetPasswordToken: string) {
+        return instance.post('/auth/set-new-password', {password, resetPasswordToken})
+    }
+}
+
+
