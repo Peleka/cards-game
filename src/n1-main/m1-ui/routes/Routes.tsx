@@ -5,14 +5,14 @@ import {Login} from "./pages/Login";
 import {Profile} from "./pages/Profile";
 import {Register} from "./pages/Registration/Register";
 import {NewPassword} from "./pages/NewPassword";
-import {PasswordRecovery} from "./pages/PasswordRecovery";
+import {ForgotPassword} from "./pages/ForgotPassword";
 import {TestPage} from "./pages/TestPage";
 
 export const PATH = {
     LOGIN: '/login',
     REGISTER: '/register',
     PROFILE: '/profile',
-    PASSWORD_RECOVERY: '/password-recovery',
+    FORGOT_PASSWORD: '/forgot-password',
     NEW_PASSWORD: '/new-password',
     TEST: '/test'
 }
@@ -26,7 +26,7 @@ export const Routes = () => {
 
                 <Route path={PATH.LOGIN} render={() => <Login/>}/>
                 <Route path={PATH.REGISTER} render={() => <Register/>}/>
-                <Route path={PATH.PASSWORD_RECOVERY} render={() => <PasswordRecovery/>}/>
+                <Route path={PATH.FORGOT_PASSWORD} render={() => <ForgotPassword/>}/>
                 <Route path={PATH.NEW_PASSWORD} render={() => <NewPassword/>}/>
                 <Route path={PATH.PROFILE} render={() => <Profile/>}/>
                 <Route path={PATH.TEST} render={() => <TestPage/>}/>

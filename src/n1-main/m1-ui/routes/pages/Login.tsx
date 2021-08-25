@@ -74,7 +74,7 @@ export const Login = () => {
                 </SuperButton>
             </form>
 
-            <NavLink to='/recovery'>Forgot Password</NavLink> <br/>
+            <NavLink to='/forgot-password'>Forgot Password</NavLink> <br/>
             <NavLink to="/register"><SuperButton> Sign Up </SuperButton></NavLink>
         </div>
     )
