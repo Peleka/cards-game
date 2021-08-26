@@ -1,7 +1,8 @@
 .superInput {
+    width: 80%;
+    border: none;
+    border-bottom: solid 1px #24254A;
     margin: 10px;
-    background: #bbffbb;
-
 }
 
 .errorInput {
@@ -13,5 +14,4 @@
 .error {
     color: red;
     height: 20px;
-
 }

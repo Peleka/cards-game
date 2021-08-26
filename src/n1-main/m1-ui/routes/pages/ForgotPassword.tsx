@@ -1,4 +1,5 @@
 import React from 'react'
+import s from '../../common/styles.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {recoverPasswordTC} from "../../../m2-bll/recoverPassword-reducer";
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
@@ -37,15 +38,17 @@ export const ForgotPassword = () => {
     })
 
     return (
-        <div>
-            <h2>Recover Password</h2>
+        <div className={s.bgr}>
+            <h1>it-incubator</h1>
+            <h2>Forgot your password?</h2>
             {!recoveredPassword
                 ? <div>
                     <form onSubmit={formik.handleSubmit}>
                         <SuperInputText type='email'
+                                        placeholder='Email'
                                         {...formik.getFieldProps('email')}
                         />
-                        <SuperButton type={'submit'}>Recover</SuperButton>
+                        <SuperButton type={'submit'}>Send instructions</SuperButton>
                     </form>
                 </div>
                 : <Message email={formik.values.email}/>
