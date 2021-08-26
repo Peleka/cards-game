@@ -1,4 +1,5 @@
 import React from 'react'
+import s from '../../common/styles.module.css'
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import SuperCheckbox from "../../superComponents/c3-SuperCheckbox/SuperCheckbox";
 import SuperInputText from "../../superComponents/c1-SuperInputText/SuperInputText";
@@ -49,7 +50,7 @@ export const Login = () => {
     }
 
     return (
-        <div>
+        <div className={s.bgr}>
             <h2> Login </h2>
 
             <form onSubmit={formik.handleSubmit}>

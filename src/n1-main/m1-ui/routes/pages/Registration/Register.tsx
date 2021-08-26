@@ -1,5 +1,5 @@
 import React from 'react'
-import s from './Register.module.css'
+import s from '../../../common/styles.module.css'
 import {useFormik} from 'formik';
 import {NavLink, Redirect} from 'react-router-dom';
 import SuperInputText from "../../../superComponents/c1-SuperInputText/SuperInputText";
@@ -55,18 +55,19 @@ export const Register = () => {
     }
 
     return (
-        <div>
-            <h2>Registration</h2>
+        <div className={s.bgr}>
+            <h1>it-incubator</h1>
+            <h2>Sign In</h2>
             <form onSubmit={formik.handleSubmit} className={s.form}>
 
                 <SuperInputText
                     type='email'
-                    placeholder='Enter your email'
+                    placeholder='Email'
                     {...formik.getFieldProps('email')}
                 />
                 <SuperInputText
                     type='password'
-                    placeholder='Enter your password'
+                    placeholder='Password'
                     {...formik.getFieldProps('password')}
                     //formik.getFieldProps вместо этого:
                     // name='password'
