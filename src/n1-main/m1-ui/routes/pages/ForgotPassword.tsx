@@ -1,17 +1,17 @@
 import React from 'react'
-import {useDispatch} from "react-redux";
-// import {AppStoreType} from "../../../m2-bll/store";
+import {useDispatch, useSelector} from "react-redux";
 import {recoverPasswordTC} from "../../../m2-bll/recoverPassword-reducer";
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {useFormik} from "formik";
 import SuperInputText from "../../superComponents/c1-SuperInputText/SuperInputText";
+import {AppStoreType} from '../../../m2-bll/store';
 
 export type RecoveryFormikErrorType = {
     email?: string
 }
 export const ForgotPassword = () => {
     const dispatch = useDispatch()
-    // const recoverPassword = useSelector((state: AppStoreType) => state.forgotPassword.recoveredPassword)
+    const recoveredPassword = useSelector((state: AppStoreType) => state.forgotPassword.recoveredPassword)
 
 
     const message = `<div style="background-color: lime; padding: 15px">
@@ -32,7 +32,6 @@ export const ForgotPassword = () => {
             return errors;
         },
         onSubmit: values => {
-            debugger
             dispatch(recoverPasswordTC(values.email, message))
         },
     })
@@ -40,15 +39,32 @@ export const ForgotPassword = () => {
     return (
         <div>
             <h2>Recover Password</h2>
-            <form onSubmit={formik.handleSubmit}>
-                <SuperInputText type='email'
-                                {...formik.getFieldProps('email')}
-                />
-                <SuperButton type={'submit'}>Recover</SuperButton>
-            </form>
+            {!recoveredPassword
+                ? <div>
+                    <form onSubmit={formik.handleSubmit}>
+                        <SuperInputText type='email'
+                                        {...formik.getFieldProps('email')}
+                        />
+                        <SuperButton type={'submit'}>Recover</SuperButton>
+                    </form>
+                </div>
+                : <Message email={formik.values.email}/>
+            }
         </div>
     )
-    // if (recoverPassword) {
-    //     return <div>Check your email</div>
-    // }
+}
+
+
+type MessagePropsType = {
+    email: string
+}
+const Message = (props: MessagePropsType) => {
+    return (
+        <div>
+            <h4>Check your Email</h4>
+            <span>
+                click the link in the message in your email {props.email}
+            </span>
+        </div>
+    )
 }

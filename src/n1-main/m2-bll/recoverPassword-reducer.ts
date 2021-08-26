@@ -27,7 +27,6 @@ export const recoverPasswordTC = ( email: string, message: string) => {
         dispatch(setAppStatusAC('loading'))
         recoverPasswordAPI.recoverPassword(email, message)
             .then(() => {
-                debugger
                 dispatch(recoverPasswordAC())
                 dispatch(setAppStatusAC('succeeded'))
             })
