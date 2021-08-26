@@ -16,7 +16,7 @@ export const ForgotPassword = () => {
 
 
     const message = `<div style="background-color: lime; padding: 15px">
-            password recovery link:	<a href='https://ccылка.github.io/проект/#/страница нового паспорта/$token$'>link</a>
+            password recovery link:	<a href='https://Peleka.github.io/cards-game/#/new-password/$token$'>link</a>
             </div>`
 
     const formik = useFormik({

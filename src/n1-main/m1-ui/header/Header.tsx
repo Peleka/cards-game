@@ -20,6 +20,7 @@ export const Header = () => {
                 <NavLink to={PATH.REGISTER} activeClassName={s.active}>Register</NavLink>
                 <NavLink to={PATH.PROFILE} activeClassName={s.active}>Profile</NavLink>
                 <NavLink to={PATH.FORGOT_PASSWORD} activeClassName={s.active}>ForgotPassword</NavLink>
+                <NavLink to={PATH.NEW_PASSWORD} activeClassName={s.active}>SetNewPassword</NavLink>
                 <SuperButton onClick={() => {dispatch(logoutTC)
                     console.log(isLoggedIn)}}>Log out</SuperButton>
             </div>
