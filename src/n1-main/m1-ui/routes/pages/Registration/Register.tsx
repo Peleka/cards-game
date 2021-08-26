@@ -63,24 +63,27 @@ export const Register = () => {
                 <SuperInputText
                     type='email'
                     placeholder='Email'
+                    error={formik.touched.email ? formik.errors.email : null}
                     {...formik.getFieldProps('email')}
                 />
+
                 <SuperInputText
                     type='password'
                     placeholder='Password'
+                    error={formik.touched.password ? formik.errors.password : null}
                     {...formik.getFieldProps('password')}
                     //formik.getFieldProps вместо этого:
                     // name='password'
                     // onChange={formik.handleChange}
                     // value={formik.values.password}
                 />
+
                 <SuperInputText
                     type='password'
                     placeholder='Confirm your password'
                     error={formik.touched.confirmedPassword ? formik.errors.confirmedPassword : null}
                     {...formik.getFieldProps('confirmedPassword')}
                 />
-
                 <div>
                     <NavLink to='/login'><SuperButton> Cancel </SuperButton></NavLink>
                     <SuperButton type={'submit'}> Register </SuperButton>
