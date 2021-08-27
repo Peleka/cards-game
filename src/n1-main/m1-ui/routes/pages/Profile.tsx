@@ -1,7 +1,7 @@
 import React from 'react'
 import {useSelector} from "react-redux";
 import {AppStoreType} from "../../../m2-bll/store";
-import {Login} from "./Login";
+import {Login} from "./Login/Login";
 
 export const  Profile = () => {
 
