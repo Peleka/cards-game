@@ -1,7 +1,7 @@
 import React from "react";
 import {Redirect, Route, Switch } from "react-router-dom";
 import {Error404} from "./pages/Error404";
-import {Login} from "./pages/Login";
+import {Login} from "./pages/Login/Login";
 import {Profile} from "./pages/Profile";
 import {Register} from "./pages/Registration/Register";
 import {NewPassword} from "./pages/NewPassword";
