@@ -42,11 +42,11 @@ export const  NewPassword = () => {
     },
     onSubmit: values => {
       // debugger
-      // if (values.password === values.confirmPassword) {
-      //   dispatch(setNewPasswordTC(values.confirmPassword, token.token))
-      //   formik.resetForm()
-      // }
-      dispatch(setNewPasswordTC(values.password, token))
+      if (values.password === values.confirmPassword) {
+        dispatch(setNewPasswordTC(values.confirmPassword, token))
+        formik.resetForm()
+      }
+      // dispatch(setNewPasswordTC(values.password, token))
     },
   });
 
@@ -59,10 +59,11 @@ export const  NewPassword = () => {
             <div className={s.bgr}>
               <h1>it-incubator</h1>
               <h2>Set new password</h2>
-              <form onSubmit={formik.handleSubmit}>
+              <form onSubmit={formik.handleSubmit} className={s.form}>
                 <SuperInputText
                   type='password'
                   placeholder='New password'
+                  error={formik.touched.password ? formik.errors.password : null}
                   {...formik.getFieldProps('password')}
                 />
                 <SuperInputText
