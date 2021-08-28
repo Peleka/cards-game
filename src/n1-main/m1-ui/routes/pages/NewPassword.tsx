@@ -17,7 +17,7 @@ type SetNewPassErrorType = {
 export const  NewPassword = () => {
   const dispatch = useDispatch()
   const newPasswordSet = useSelector((state: AppStoreType) => state.setNewPassword.isNewPassword)
-  const token = useParams<{ token: string }>()
+  const {token} = useParams<{ token: string }>()
 
 
   const formik = useFormik({
@@ -46,7 +46,7 @@ export const  NewPassword = () => {
       //   dispatch(setNewPasswordTC(values.confirmPassword, token.token))
       //   formik.resetForm()
       // }
-      dispatch(setNewPasswordTC(values.password, token.token))
+      dispatch(setNewPasswordTC(values.password, token))
     },
   });
 
@@ -71,10 +71,8 @@ export const  NewPassword = () => {
                   error={formik.touched.confirmPassword ? formik.errors.confirmPassword : null}
                   {...formik.getFieldProps('confirmPassword')}
                 />
+                <SuperButton type={'submit'}>Set new password</SuperButton>
               </form>
-              {/*{кнопка работае, но запросы не шлет}*/}
-              <SuperButton type={'submit'} onClick={() => {alert('blaaay')}}>Set new password</SuperButton>
-
             </div>
         </div>
     )

@@ -27,7 +27,7 @@ export const Routes = () => {
                 <Route path={PATH.LOGIN} render={() => <Login/>}/>
                 <Route path={PATH.REGISTER} render={() => <Register/>}/>
                 <Route path={PATH.FORGOT_PASSWORD} render={() => <ForgotPassword/>}/>
-                <Route path={PATH.NEW_PASSWORD} render={() => <NewPassword/>}/>
+                <Route path={PATH.NEW_PASSWORD + '/:token?'} render={() => <NewPassword/>}/>
                 <Route path={PATH.PROFILE} render={() => <Profile/>}/>
                 <Route path={PATH.TEST} render={() => <TestPage/>}/>
 
