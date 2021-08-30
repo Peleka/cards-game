@@ -8,6 +8,7 @@ import {NewPassword} from "./pages/NewPassword";
 import {ForgotPassword} from "./pages/ForgotPassword";
 import {TestPage} from "./pages/TestPage";
 import {Packs} from "../components/Packs/Packs";
+import {Cards} from "../components/Cards/Cards";
 
 export const PATH = {
     LOGIN: '/login',
@@ -17,6 +18,7 @@ export const PATH = {
     NEW_PASSWORD: '/new-password',
     TEST: '/test',
     PACKS: '/packs',
+    CARDS: '/cards',
 }
 
 export const Routes = () => {
@@ -33,6 +35,7 @@ export const Routes = () => {
                 <Route path={PATH.PROFILE} render={() => <Profile/>}/>
                 <Route path={PATH.TEST} render={() => <TestPage/>}/>
                 <Route path={PATH.PACKS} render={() => <Packs/>}/>
+                <Route path={PATH.CARDS} render={() => <Cards/>}/>
 
                 <Route render={() => <Error404/>}/>
             </Switch>

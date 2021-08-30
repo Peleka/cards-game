@@ -5,6 +5,7 @@ import {Pack} from "./Pack/Pack";
 import {AppStoreType} from "../../../m2-bll/store";
 import s from './Pack/Pack.module.css'
 import st from './Packs.module.css'
+import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 
 export const Packs = () => {
 
@@ -23,9 +24,9 @@ export const Packs = () => {
                 <div>name</div>
                 <div>cards count</div>
                 <div>last update</div>
-                <div>add</div>
-                <div>update</div>
-                <div>cards</div>
+                <div><SuperButton>add</SuperButton></div>
+                <div></div>
+                <div></div>
             </div>
 
             {mappedPacks}
