@@ -6,7 +6,7 @@ import SuperInputText from "../../../superComponents/c1-SuperInputText/SuperInpu
 import SuperButton from "../../../superComponents/c2-SuperButton/SuperButton";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../../m2-bll/store";
-import {registerTC} from "../../../../m2-bll/registrationReducer";
+import {registerTC} from "../../../../m2-bll/registration-reducer";
 
 type SignupFormErrorType = {
     email?: string

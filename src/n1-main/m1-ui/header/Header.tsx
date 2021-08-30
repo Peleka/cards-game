@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import {PATH} from "../routes/Routes";
 import SuperButton from "../superComponents/c2-SuperButton/SuperButton";
 import {useDispatch, useSelector} from "react-redux";
-import {logoutTC} from "../../m2-bll/authReducer";
+import {logoutTC} from "../../m2-bll/auth-reducer";
 import {AppStoreType} from "../../m2-bll/store";
 
 export const Header = () => {
@@ -19,6 +19,7 @@ export const Header = () => {
                 <NavLink to={PATH.TEST} activeClassName={s.active}>Test</NavLink>
                 <NavLink to={PATH.REGISTER} activeClassName={s.active}>Register</NavLink>
                 <NavLink to={PATH.PROFILE} activeClassName={s.active}>Profile</NavLink>
+                <NavLink to={PATH.PACKS} activeClassName={s.active}>Packs</NavLink>
                 <NavLink to={PATH.FORGOT_PASSWORD} activeClassName={s.active}>ForgotPassword</NavLink>
                 <NavLink to={PATH.NEW_PASSWORD} activeClassName={s.active}>SetNewPassword</NavLink>
                 <SuperButton onClick={() => {dispatch(logoutTC)

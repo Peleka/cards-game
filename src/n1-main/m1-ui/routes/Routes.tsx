@@ -7,6 +7,7 @@ import {Register} from "./pages/Registration/Register";
 import {NewPassword} from "./pages/NewPassword";
 import {ForgotPassword} from "./pages/ForgotPassword";
 import {TestPage} from "./pages/TestPage";
+import {Packs} from "../components/Packs/Packs";
 
 export const PATH = {
     LOGIN: '/login',
@@ -14,7 +15,8 @@ export const PATH = {
     PROFILE: '/profile',
     FORGOT_PASSWORD: '/forgot-password',
     NEW_PASSWORD: '/new-password',
-    TEST: '/test'
+    TEST: '/test',
+    PACKS: '/packs',
 }
 
 export const Routes = () => {
@@ -30,6 +32,7 @@ export const Routes = () => {
                 <Route path={PATH.NEW_PASSWORD + '/:token?'} render={() => <NewPassword/>}/>
                 <Route path={PATH.PROFILE} render={() => <Profile/>}/>
                 <Route path={PATH.TEST} render={() => <TestPage/>}/>
+                <Route path={PATH.PACKS} render={() => <Packs/>}/>
 
                 <Route render={() => <Error404/>}/>
             </Switch>
