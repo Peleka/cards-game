@@ -17,7 +17,7 @@ type SetNewPassErrorType = {
 export const  NewPassword = () => {
   const dispatch = useDispatch()
   const newPasswordSet = useSelector((state: AppStoreType) => state.setNewPassword.isNewPassword)
-  const token = useParams<{ token: string }>()
+  const {token} = useParams<{ token: string }>()
 
 
   const formik = useFormik({
@@ -42,11 +42,11 @@ export const  NewPassword = () => {
     },
     onSubmit: values => {
       // debugger
-      // if (values.password === values.confirmPassword) {
-      //   dispatch(setNewPasswordTC(values.confirmPassword, token.token))
-      //   formik.resetForm()
-      // }
-      dispatch(setNewPasswordTC(values.password, token.token))
+      if (values.password === values.confirmPassword) {
+        dispatch(setNewPasswordTC(values.confirmPassword, token))
+        formik.resetForm()
+      }
+      // dispatch(setNewPasswordTC(values.password, token))
     },
   });
 
@@ -59,10 +59,11 @@ export const  NewPassword = () => {
             <div className={s.bgr}>
               <h1>it-incubator</h1>
               <h2>Set new password</h2>
-              <form onSubmit={formik.handleSubmit}>
+              <form onSubmit={formik.handleSubmit} className={s.form}>
                 <SuperInputText
                   type='password'
                   placeholder='New password'
+                  error={formik.touched.password ? formik.errors.password : null}
                   {...formik.getFieldProps('password')}
                 />
                 <SuperInputText
@@ -71,10 +72,8 @@ export const  NewPassword = () => {
                   error={formik.touched.confirmPassword ? formik.errors.confirmPassword : null}
                   {...formik.getFieldProps('confirmPassword')}
                 />
+                <SuperButton type={'submit'}>Set new password</SuperButton>
               </form>
-              {/*{кнопка работае, но запросы не шлет}*/}
-              <SuperButton type={'submit'} onClick={() => {alert('blaaay')}}>Set new password</SuperButton>
-
             </div>
         </div>
     )
