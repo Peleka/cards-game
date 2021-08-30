@@ -1,4 +1,5 @@
 import axios from "axios";
+import {GetPacksRequestDataType} from "../m2-bll/packs-reducer";
 
 export const instance = axios.create(
     {
@@ -30,5 +31,30 @@ export const recoverPasswordAPI = {
         return instance.post('/auth/set-new-password', {password, resetPasswordToken})
     }
 }
+
+export const cardsAPI = {
+    getPacks(data: GetPacksRequestDataType) {
+        const min = data.min ?? 3
+        const max = data.max ?? 9
+        const sort = data.sortPacks ?? 0
+        const page = data.page ?? 1
+       // const packName = data.packName ?? 'english'
+        return instance
+            .get(`/cards/pack?pageCount=5&min=${min}&max=${max}&sortPacks=${sort}&page=${page}`)
+    },
+    addPacks() {
+        return instance.post('/cards/pack')
+    },
+    deletePacks() {
+        return instance.delete('/cards/pack')
+    },
+    updatePacks() {
+        return instance.put('/cards/pack')
+    },
+}
+
+//types
+
+
 
 
