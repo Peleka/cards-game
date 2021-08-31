@@ -10,6 +10,7 @@ import {TestPage} from "./pages/TestPage";
 import {Packs} from "../components/Packs/Packs";
 import {Cards} from "../components/Cards/Cards";
 
+
 export const PATH = {
     LOGIN: '/login',
     REGISTER: '/register',
