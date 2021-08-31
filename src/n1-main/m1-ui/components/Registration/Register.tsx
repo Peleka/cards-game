@@ -1,12 +1,12 @@
 import React from 'react'
-import s from '../../../common/styles.module.css'
+import s from '../../common/styles.module.css'
 import {useFormik} from 'formik';
 import {NavLink, Redirect} from 'react-router-dom';
-import SuperInputText from "../../../superComponents/c1-SuperInputText/SuperInputText";
-import SuperButton from "../../../superComponents/c2-SuperButton/SuperButton";
+import SuperInputText from "../../superComponents/c1-SuperInputText/SuperInputText";
+import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {useDispatch, useSelector} from "react-redux";
-import {AppStoreType} from "../../../../m2-bll/store";
-import {registerTC} from "../../../../m2-bll/registration-reducer";
+import {AppStoreType} from "../../../m2-bll/store";
+import {registerTC} from "../../../m2-bll/registration-reducer";
 
 type SignupFormErrorType = {
     email?: string

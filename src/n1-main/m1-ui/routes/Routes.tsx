@@ -1,12 +1,12 @@
 import React from "react";
 import {Redirect, Route, Switch } from "react-router-dom";
-import {Error404} from "./pages/Error404";
-import {Login} from "./pages/Login/Login";
-import {Profile} from "./pages/Profile";
-import {Register} from "./pages/Registration/Register";
-import {NewPassword} from "./pages/NewPassword";
-import {ForgotPassword} from "./pages/ForgotPassword";
-import {TestPage} from "./pages/TestPage";
+import {Error404} from "../components/Error404";
+import {Login} from "../components/Login/Login";
+import {Profile} from "../components/Profile";
+import {Register} from "../components/Registration/Register";
+import {NewPassword} from "../components/NewPassword";
+import {ForgotPassword} from "../components/ForgotPassword";
+import {TestPage} from "../components/TestPage";
 import {Packs} from "../components/Packs/Packs";
 import {Cards} from "../components/Cards/Cards";
 

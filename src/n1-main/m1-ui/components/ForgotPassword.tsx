@@ -1,11 +1,11 @@
 import React from 'react'
-import s from '../../common/styles.module.css'
+import s from '../common/styles.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {recoverPasswordTC} from "../../../m2-bll/recoverPassword-reducer";
-import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
+import {recoverPasswordTC} from "../../m2-bll/recoverPassword-reducer";
+import SuperButton from "../superComponents/c2-SuperButton/SuperButton";
 import {useFormik} from "formik";
-import SuperInputText from "../../superComponents/c1-SuperInputText/SuperInputText";
-import {AppStoreType} from '../../../m2-bll/store';
+import SuperInputText from "../superComponents/c1-SuperInputText/SuperInputText";
+import {AppStoreType} from '../../m2-bll/store';
 
 export type RecoveryFormikErrorType = {
     email?: string

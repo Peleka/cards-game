@@ -1,8 +1,8 @@
 .packItem {
-    width: 90%;
+    width: 80%;
     margin: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 100px 1fr 100px 100px 100px;
     border-bottom: 2px solid mediumpurple;
 }
 

@@ -3,14 +3,12 @@ import s from './Header.module.css'
 import { NavLink } from "react-router-dom";
 import {PATH} from "../routes/Routes";
 import SuperButton from "../superComponents/c2-SuperButton/SuperButton";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {logoutTC} from "../../m2-bll/auth-reducer";
-import {AppStoreType} from "../../m2-bll/store";
 
 export const Header = () => {
 
     const dispatch = useDispatch()
-    const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
 
     return (
         <div>
@@ -23,8 +21,7 @@ export const Header = () => {
                 <NavLink to={PATH.CARDS} activeClassName={s.active}>Cards</NavLink>
                 <NavLink to={PATH.FORGOT_PASSWORD} activeClassName={s.active}>ForgotPassword</NavLink>
                 <NavLink to={PATH.NEW_PASSWORD} activeClassName={s.active}>SetNewPassword</NavLink>
-                <SuperButton onClick={() => {dispatch(logoutTC)
-                    console.log(isLoggedIn)}}>Log out</SuperButton>
+                <SuperButton onClick={() => dispatch(logoutTC)}>Log out</SuperButton>
             </div>
         </div>
     )
