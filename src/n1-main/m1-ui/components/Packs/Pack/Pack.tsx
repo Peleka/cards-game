@@ -11,8 +11,7 @@ export const Pack = (props: PackResponseType) => {
             <div className={s.packSpecification}>{props.updated}</div>
             <div className={s.packSpecification}><SuperButton>Delete</SuperButton></div>
             <div className={s.packSpecification}><SuperButton>Edit</SuperButton></div>
-            <div className={s.packSpecification}>cards(link)</div>
+            <div className={s.packSpecification}>link</div>
         </div>
     )
-
 }
