@@ -3,7 +3,10 @@ import {Dispatch} from "redux";
 import {setAppStatusAC} from "./app-reducer";
 
 const initialState = {
-    cardPacks: null as null | PackResponseType[]
+    cardPacks: null as null | PackResponseType[],
+    totalPacksCount: 0,
+    pageSize: 10,
+    currentPage: 1,
 }
 
 
@@ -13,6 +16,10 @@ export const packsReducer = (state = initialState, action: ActionsType): Initial
     switch (action.type) {
         case 'PACKS/SET-PACKS':
             return {...state, cardPacks: action.data}
+        case 'SET-TOTAL-PACKS-COUNT':
+            return {...state, totalPacksCount: action.totalPacks}
+        case 'SET-CURRENT-PAGE':
+            return {...state, currentPage: action.pageNumber}
         default:
             return state
     }
@@ -24,12 +31,21 @@ export const setPacksAC = (data: PackResponseType[]) => ({
     type: 'PACKS/SET-PACKS',
     data,
 } as const)
+const setTotalPacksCountAC = (totalPacks: number) => ({
+    type: 'SET-TOTAL-PACKS-COUNT',
+    totalPacks,
+} as const)
+export const setCurrentPage = (pageNumber: number) => ({
+    type: 'SET-CURRENT-PAGE',
+    pageNumber,
+} as const)
 
 //thunk
 export const getPacksTC = (data: GetPacksRequestDataType) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.getPacks(data)
         .then(res => {
+            dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
             dispatch(setPacksAC(res.data.cardPacks))
             dispatch(setAppStatusAC('succeeded'))
         })
@@ -42,6 +58,8 @@ export const getPacksTC = (data: GetPacksRequestDataType) => (dispatch: Dispatch
 //types
 type ActionsType = ReturnType<typeof setPacksAC>
     | ReturnType<typeof setAppStatusAC>
+    | ReturnType<typeof setTotalPacksCountAC>
+    | ReturnType<typeof setCurrentPage>
 
 export type GetPacksRequestDataType = {
     packName?: string

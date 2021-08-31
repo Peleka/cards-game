@@ -1,12 +1,12 @@
 import React from 'react'
-import s from '../../common/styles.module.css'
-import SuperInputText from "../../superComponents/c1-SuperInputText/SuperInputText";
-import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
+import s from '../common/styles.module.css'
+import SuperInputText from "../superComponents/c1-SuperInputText/SuperInputText";
+import SuperButton from "../superComponents/c2-SuperButton/SuperButton";
 import {useFormik} from "formik";
-import {setNewPasswordTC} from "../../../m2-bll/setNewPassword-reducer";
+import {setNewPasswordTC} from "../../m2-bll/setNewPassword-reducer";
 import {Redirect, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {AppStoreType} from "../../../m2-bll/store";
+import {AppStoreType} from "../../m2-bll/store";
 
 type SetNewPassErrorType = {
   password?: string

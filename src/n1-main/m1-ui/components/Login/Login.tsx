@@ -1,13 +1,13 @@
 import React from 'react'
-import s from '../../../common/styles.module.css'
-import SuperButton from "../../../superComponents/c2-SuperButton/SuperButton";
-import SuperCheckbox from "../../../superComponents/c3-SuperCheckbox/SuperCheckbox";
-import SuperInputText from "../../../superComponents/c1-SuperInputText/SuperInputText";
+import s from '../../common/styles.module.css'
+import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
+import SuperCheckbox from "../../superComponents/c3-SuperCheckbox/SuperCheckbox";
+import SuperInputText from "../../superComponents/c1-SuperInputText/SuperInputText";
 import {useDispatch, useSelector} from "react-redux";
-import {loginTC} from "../../../../m2-bll/auth-reducer";
+import {loginTC} from "../../../m2-bll/auth-reducer";
 import {useFormik} from 'formik';
 import {NavLink, Redirect} from "react-router-dom";
-import {AppStoreType} from "../../../../m2-bll/store";
+import {AppStoreType} from "../../../m2-bll/store";
 import style from './Login.module.css'
 
 type LoginErrorType = {

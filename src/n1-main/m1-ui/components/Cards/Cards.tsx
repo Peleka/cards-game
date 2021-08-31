@@ -7,11 +7,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../m2-bll/store";
 import {getCardsTC} from "../../../m2-bll/cards-reducer";
 import {useParams} from "react-router-dom";
+import {Login} from "../Login/Login";
 
 export const Cards = () => {
     const dispatch = useDispatch()
     const cards = useSelector((state: AppStoreType) => state.cards.cards)
     const {packID} = useParams<{packID: string}>()
+    const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
 
     useEffect(() => {
         dispatch(getCardsTC({cardsPack_id: packID}))
@@ -19,9 +21,15 @@ export const Cards = () => {
 
     const mappedCards = cards && cards.map((c, i) => <Card key={i} {...c}/>)
 
+    if (!isLoggedIn) {
+        return <Login />
+    }
+
     return (
         <div>
-            <h1>Cards</h1>
+            <div>
+                <h1>Cards</h1>
+            </div>
 
             <div className={`${s.cardItem} ${st.cardContents}`}>
                 <div>question</div>
