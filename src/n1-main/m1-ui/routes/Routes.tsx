@@ -18,7 +18,7 @@ export const PATH = {
     NEW_PASSWORD: '/new-password',
     TEST: '/test',
     PACKS: '/packs',
-    CARDS: '/cards',
+    CARDS: '/cards/:packID',
 }
 
 export const Routes = () => {

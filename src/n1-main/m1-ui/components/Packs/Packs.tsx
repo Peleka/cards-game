@@ -12,9 +12,11 @@ export const Packs = () => {
     const dispatch = useDispatch()
     const cardPacks = useSelector((state: AppStoreType) => state.packs.cardPacks)
 
-    useEffect(() => {dispatch(getPacksTC({}))}, [dispatch])
+    useEffect(() => {
+        dispatch(getPacksTC({}))
+    }, [dispatch])
 
-    const mappedPacks = cardPacks && cardPacks.map((p,i) => <Pack key={i} {...p}/>)
+    const mappedPacks = cardPacks && cardPacks.map((p, i) => <Pack key={i} {...p}/>)
 
     return (
         <div>
@@ -34,5 +36,4 @@ export const Packs = () => {
 
         </div>
     )
-
 }

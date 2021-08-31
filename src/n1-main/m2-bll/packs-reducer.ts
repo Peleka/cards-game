@@ -1,4 +1,4 @@
-import {cardsAPI} from "../m3-dal/api";
+import {packsAPI} from "../m3-dal/api";
 import {Dispatch} from "redux";
 import {setAppStatusAC} from "./app-reducer";
 
@@ -28,7 +28,7 @@ export const setPacksAC = (data: PackResponseType[]) => ({
 //thunk
 export const getPacksTC = (data: GetPacksRequestDataType) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getPacks(data)
+    packsAPI.getPacks(data)
         .then(res => {
             dispatch(setPacksAC(res.data.cardPacks))
             dispatch(setAppStatusAC('succeeded'))
@@ -67,6 +67,3 @@ export type PackResponseType = {
     "more_id": string,
     "__v": number
 }
-
-
-

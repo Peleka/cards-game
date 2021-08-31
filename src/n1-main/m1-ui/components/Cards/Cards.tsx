@@ -1,10 +1,24 @@
-import React from "react"
+import React, {useEffect} from "react"
 import s from "./Card/Card.module.css";
 import st from "./Cards.module.css";
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {Card} from "./Card/Card";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStoreType} from "../../../m2-bll/store";
+import {getCardsTC} from "../../../m2-bll/cards-reducer";
+import {useParams} from "react-router-dom";
 
 export const Cards = () => {
+    const dispatch = useDispatch()
+    const cards = useSelector((state: AppStoreType) => state.cards.cards)
+    const {packID} = useParams<{packID: string}>()
+
+    useEffect(() => {
+        dispatch(getCardsTC({cardsPack_id: packID}))
+    }, [dispatch])
+
+    const mappedCards = cards && cards.map((c, i) => <Card key={i} {...c}/>)
+
     return (
         <div>
             <h1>Cards</h1>
@@ -19,10 +33,7 @@ export const Cards = () => {
                 <div></div>
             </div>
 
-            <Card />
-            <Card />
-            <Card />
-
+            {mappedCards}
         </div>
     )
 }

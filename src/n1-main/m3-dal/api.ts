@@ -1,5 +1,6 @@
 import axios from "axios";
 import {GetPacksRequestDataType} from "../m2-bll/packs-reducer";
+import {GetCardsRequestDataType} from "../m2-bll/cards-reducer";
 
 export const instance = axios.create(
     {
@@ -32,15 +33,15 @@ export const recoverPasswordAPI = {
     }
 }
 
-export const cardsAPI = {
+export const packsAPI = {
     getPacks(data: GetPacksRequestDataType) {
         const min = data.min ?? 3
         const max = data.max ?? 9
         const sort = data.sortPacks ?? 0
         const page = data.page ?? 1
-       // const packName = data.packName ?? 'english'
+        // const packName = data.packName ?? 'english'
         return instance
-            .get(`/cards/pack?pageCount=5&min=${min}&max=${max}&sortPacks=${sort}&page=${page}`)
+            .get(`/cards/pack?pageCount=9&min=${min}&max=${max}&sortPacks=${sort}&page=${page}`)
     },
     addPacks() {
         return instance.post('/cards/pack')
@@ -53,8 +54,29 @@ export const cardsAPI = {
     },
 }
 
+export const cardsAPI = {
+    getCards(data: GetCardsRequestDataType,) {
+        // const cardAnswer = data.cardAnswer ?? 'english'
+        // const cardQuestion = data.cardQuestion ?? 'english'
+        const cardsPack_id = data.cardsPack_id ?? '612ce7f59f1a7900041d6f3a'
+        // const min = data.min ?? 1
+        // const max = data.max ?? 4
+        // const sort = data.sortCards ?? 0
+        // const page = data.page ?? 1
+
+
+        return instance
+            .get(`/cards/card?cardsPack_id=${cardsPack_id}`)
+    },
+    addCards() {
+        return instance.post('/cards/card')
+    },
+    deleteCards() {
+        return instance.delete('/cards/card')
+    },
+    updateCards() {
+        return instance.put('/cards/card')
+    },
+}
+
 //types
-
-
-
-
