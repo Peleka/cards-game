@@ -9,7 +9,6 @@ const initialState = {
     currentPage: 1,
 }
 
-
 type InitialStateType = typeof initialState
 
 export const packsReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -20,11 +19,13 @@ export const packsReducer = (state = initialState, action: ActionsType): Initial
             return {...state, totalPacksCount: action.totalPacks}
         case 'SET-CURRENT-PAGE':
             return {...state, currentPage: action.pageNumber}
+        case 'PACKS/DEL-PACKS':
+            return state
         default:
             return state
     }
-}
 
+}
 
 //action creators
 export const setPacksAC = (data: PackResponseType[]) => ({
@@ -39,27 +40,45 @@ export const setCurrentPage = (pageNumber: number) => ({
     type: 'SET-CURRENT-PAGE',
     pageNumber,
 } as const)
+export const delPacksAC = (id: string) => ({
+    type: 'PACKS/DEL-PACKS',
+    id
+} as const)
 
 //thunk
 export const getPacksTC = (data: GetPacksRequestDataType) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.getPacks(data)
-        .then(res => {
-            dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
-            dispatch(setPacksAC(res.data.cardPacks))
-            dispatch(setAppStatusAC('succeeded'))
-        })
-        .catch(() => {
-            dispatch(setAppStatusAC('failed'))
-            console.log('get packs error')
-        })
+      .then(res => {
+          dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
+          dispatch(setPacksAC(res.data.cardPacks))
+          dispatch(setAppStatusAC('succeeded'))
+      })
+      .catch(() => {
+          dispatch(setAppStatusAC('failed'))
+          console.log('get packs error')
+      })
+}
+
+export const delPacksTC = (id: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    packsAPI.deletePacks(id)
+      .then(res => {
+          dispatch(delPacksAC(res.data.id))
+          dispatch(setAppStatusAC('succeeded'))
+      })
+      .catch(() => {
+          dispatch(setAppStatusAC('failed'))
+          console.log('get packs error')
+      })
 }
 
 //types
 type ActionsType = ReturnType<typeof setPacksAC>
-    | ReturnType<typeof setAppStatusAC>
-    | ReturnType<typeof setTotalPacksCountAC>
-    | ReturnType<typeof setCurrentPage>
+  | ReturnType<typeof setAppStatusAC>
+  | ReturnType<typeof setTotalPacksCountAC>
+  | ReturnType<typeof setCurrentPage>
+  | ReturnType<typeof delPacksAC>
 
 export type GetPacksRequestDataType = {
     packName?: string
@@ -68,6 +87,7 @@ export type GetPacksRequestDataType = {
     sortPacks?: number
     page?: number
 }
+
 export type PackResponseType = {
     "_id": string,
     "user_id": string,
@@ -83,5 +103,6 @@ export type PackResponseType = {
     "created": string,
     "updated": string,
     "more_id": string,
-    "__v": number
+    "__v": number,
+    delPack: (id: string) => void
 }

@@ -46,8 +46,8 @@ export const packsAPI = {
     addPacks() {
         return instance.post('/cards/pack')
     },
-    deletePacks() {
-        return instance.delete('/cards/pack')
+    deletePacks(id: string) {
+        return instance.delete(`/cards/pack?id=${id}`)
     },
     updatePacks() {
         return instance.put('/cards/pack')
