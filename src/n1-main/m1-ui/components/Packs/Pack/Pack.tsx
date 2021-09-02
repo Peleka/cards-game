@@ -14,7 +14,6 @@ export const Pack = (props: PackResponseType) => {
   // const updatePack = () => {
   //   props.updatePacks(props.updatePacks.cardsPack)
   // }
-
     return (
         <div className={s.packItem}>
             <div className={s.packSpecification}>{props.name}</div>
