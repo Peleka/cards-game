@@ -80,7 +80,7 @@ export const Packs = () => {
                 </div>
 
                 <div className={st.paginator}>
-                    <
+                    
                     {pages.map(p => {
                         return <span key={p} className={currentPage === p ? s.selectedPage : ''}
                                      onClick={() => onPageChangedHandler(p)}> {p} </span>
