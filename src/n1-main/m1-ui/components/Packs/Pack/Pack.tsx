@@ -10,6 +10,11 @@ export const Pack = (props: PackResponseType) => {
     props.delPack(props._id)
   }
 
+  // ОнКлик на кнопку Edit
+  // const updatePack = () => {
+  //   props.updatePacks(props.updatePacks.cardsPack)
+  // }
+
     return (
         <div className={s.packItem}>
             <div className={s.packSpecification}>{props.name}</div>

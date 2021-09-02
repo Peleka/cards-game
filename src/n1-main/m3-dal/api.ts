@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GetPacksRequestDataType} from "../m2-bll/packs-reducer";
+import {GetPacksRequestDataType, UpdatePacksRequestData} from "../m2-bll/packs-reducer";
 import {GetCardsRequestDataType} from "../m2-bll/cards-reducer";
 
 export const instance = axios.create(
@@ -43,8 +43,8 @@ export const packsAPI = {
         return instance
             .get(`/cards/pack?pageCount=10&min=${min}&max=${max}&sortPacks=${sort}&page=${page}`)
     },
-    addPacks() {
-        return instance.post('/cards/pack')
+    addPacks(data: UpdatePacksRequestData) {
+        return instance.post('/cards/pack', data)
     },
     deletePacks(id: string) {
         return instance.delete(`/cards/pack?id=${id}`)
