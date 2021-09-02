@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GetPacksRequestDataType, UpdatePacksRequestData} from "../m2-bll/packs-reducer";
+import {GetPacksRequestDataType, UpdatePacksRequestDataType} from "../m2-bll/packs-reducer";
 import {GetCardsRequestDataType} from "../m2-bll/cards-reducer";
 
 export const instance = axios.create(
@@ -43,14 +43,14 @@ export const packsAPI = {
         return instance
             .get(`/cards/pack?pageCount=10&min=${min}&max=${max}&sortPacks=${sort}&page=${page}`)
     },
-    addPacks(data: UpdatePacksRequestData) {
-        return instance.post('/cards/pack', data)
+    addPack(data: AddPackRequestDataType) {
+        return instance.post('/cards/pack', {cardsPack: data})
     },
-    deletePacks(id: string) {
+    deletePack(id: string) {
         return instance.delete(`/cards/pack?id=${id}`)
     },
-    updatePacks() {
-        return instance.put('/cards/pack')
+    updatePack(data: UpdatePacksRequestDataType) {
+        return instance.put('/cards/pack', {cardsPack: data})
     },
 }
 
@@ -80,3 +80,8 @@ export const cardsAPI = {
 }
 
 //types
+
+export type AddPackRequestDataType = {
+    name?: string
+    private?: boolean
+}
