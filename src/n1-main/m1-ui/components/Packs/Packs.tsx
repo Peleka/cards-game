@@ -1,6 +1,12 @@
 import React, {useCallback, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux";
-import {addPackTC, delPacksTC, getPacksTC, setCurrentPage} from "../../../m2-bll/packs-reducer";
+import {
+    delPacksTC,
+    getPacksTC,
+    setCurrentPage,
+    UpdatePacksRequestData,
+    updatePacksTC
+} from "../../../m2-bll/packs-reducer";
 import {Pack} from "./Pack/Pack";
 import {AppStoreType} from "../../../m2-bll/store";
 import s from './Pack/Pack.module.css'
@@ -19,6 +25,9 @@ export const Packs = () => {
     const delPacks = useCallback(function (id: string) {
         dispatch(delPacksTC(id))
     }, [])
+    const updatePacks = useCallback(function (data: UpdatePacksRequestData) {
+        dispatch(updatePacksTC(data))
+    }, [])
 
     //pagination
     let pages = []
@@ -34,7 +43,12 @@ export const Packs = () => {
         dispatch(getPacksTC({}))
     }, [dispatch])
 
-    const mappedPacks = cardPacks && cardPacks.map((p, i) => <Pack key={i} {...p} delPack={delPacks}/>)
+    const mappedPacks = cardPacks && cardPacks.map((p, i) => <Pack
+      key={i}
+      {...p}
+      delPack={delPacks}
+      updatePacks={updatePacks}
+    />)
 
     if (!isLoggedIn) {
         return <Login />
@@ -56,7 +70,7 @@ export const Packs = () => {
                 <div>name</div>
                 <div>cards count</div>
                 <div>last update</div>
-                <div><SuperButton onClick={() => dispatch(addPackTC({}))}>add</SuperButton></div>
+                <div><SuperButton>add</SuperButton></div>
                 <div></div>
                 <div></div>
             </div>

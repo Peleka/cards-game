@@ -21,6 +21,8 @@ export const packsReducer = (state = initialState, action: ActionsType): Initial
             return {...state, currentPage: action.pageNumber}
         case 'PACKS/DEL-PACKS':
             return state
+        case 'PACKS/UPDATE-PACKS':
+            return state
         default:
             return state
     }
@@ -43,6 +45,10 @@ export const setCurrentPage = (pageNumber: number) => ({
 export const delPacksAC = (id: string) => ({
     type: 'PACKS/DEL-PACKS',
     id
+} as const)
+export const updatePacksAC = (data: UpdatePacksRequestData) => ({
+    type: 'PACKS/UPDATE-PACKS',
+    data
 } as const)
 
 //thunk
@@ -73,17 +79,16 @@ export const delPacksTC = (id: string) => (dispatch: Dispatch) => {
       })
 }
 
-export const addPackTC = ({}) => (dispatch: Dispatch) => {
+export const updatePacksTC = (data: UpdatePacksRequestData) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    packsAPI.addPack({})
-        .then(() => {
-            console.log('pack added successfully')
-            dispatch(setAppStatusAC('succeeded'))
-        })
-        .catch(() => {
-            dispatch(setAppStatusAC('failed'))
-            console.log('add pack error')
-        })
+    packsAPI.updatePacks()
+    .then(res => {
+        dispatch(updatePacksAC(res.data.cardPacks._id))
+    })
+    .catch(() => {
+        dispatch(setAppStatusAC('failed'))
+        console.log('get packs error')
+    })
 }
 
 //types
@@ -92,6 +97,7 @@ type ActionsType = ReturnType<typeof setPacksAC>
   | ReturnType<typeof setTotalPacksCountAC>
   | ReturnType<typeof setCurrentPage>
   | ReturnType<typeof delPacksAC>
+  | ReturnType<typeof updatePacksAC>
 
 export type GetPacksRequestDataType = {
     packName?: string
@@ -118,4 +124,13 @@ export type PackResponseType = {
     "more_id": string,
     "__v": number,
     delPack: (id: string) => void
+    updatePacks: (data: UpdatePacksRequestData) => void
+}
+
+export type UpdatePacksRequestData = {
+    cardsPack: {
+        _id: string
+        name: string
+        private: boolean
+    }
 }
