@@ -23,7 +23,6 @@ export const Packs = () => {
     const totalPacks = useSelector((state: AppStoreType) => state.packs.totalPacksCount)
     const pageSize = useSelector((state: AppStoreType) => state.packs.pageSize)
     const currentPage = useSelector((state: AppStoreType) => state.packs.currentPage)
-    const status = useSelector((state: AppStoreType) => state.app.status)
     const delPack = useCallback(function (id: string) {
         dispatch(delPackTC(id))
     }, [dispatch])
@@ -42,8 +41,8 @@ export const Packs = () => {
     //
 
     useEffect(() => {
-        if ( status === 'loading') dispatch(getPacksTC({}))
-    }, [dispatch, status])
+        dispatch(getPacksTC({}))
+    }, [dispatch])
 
     const mappedPacks = cardPacks && cardPacks.map((p, i) => <Pack
         key={i}
