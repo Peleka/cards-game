@@ -12,3 +12,14 @@
     top: 10px;
     right: 10%;
 }
+.filter {
+    position: absolute;
+    top: 10px;
+    left: 25%;
+    width: 150px;
+}
+.pageCount {
+    position: absolute;
+    top: 10px;
+    left: 10%;
+}

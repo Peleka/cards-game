@@ -39,9 +39,10 @@ export const packsAPI = {
         const max = data.max ?? 6
         const sort = data.sortPacks ?? 0
         const page = data.page ?? 1
+        const pageCount = data.pageCount ?? '10'
         // const packName = data.packName ?? 'english'
         return instance
-            .get(`/cards/pack?pageCount=10&min=${min}&max=${max}&sortPacks=${sort}&page=${page}`)
+            .get(`/cards/pack?pageCount=${pageCount}&min=${min}&max=${max}&sortPacks=${sort}&page=${page}`)
     },
     addPack(data: AddPackRequestDataType) {
         return instance.post('/cards/pack', {cardsPack: data})
