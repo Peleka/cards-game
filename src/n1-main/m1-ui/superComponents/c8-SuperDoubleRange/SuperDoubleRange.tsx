@@ -19,11 +19,14 @@ const SuperDoubleRange: React.FC<SuperDoubleRangePropsType> = (
     return (
         <>
             <Slider
-                style={{margin: '0 10px', height: '10px'}}
+                style={{margin: '0', height: '20px'}}
                 value={value}
                 onChange={onChangeRange}
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
+                name='cards count'
+                min={0}
+                max={20}
             />
         </>
     );

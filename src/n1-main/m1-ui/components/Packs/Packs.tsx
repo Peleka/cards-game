@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from "react"
+import React, {ChangeEvent, useCallback, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux";
 import {
     addPackTC,
@@ -14,6 +14,8 @@ import s from './Pack/Pack.module.css'
 import st from './Packs.module.css'
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {Login} from "../Login/Login";
+import SuperDoubleRange from "../../superComponents/c8-SuperDoubleRange/SuperDoubleRange";
+import SuperSelect from "../../superComponents/c5-SuperSelect/SuperSelect";
 
 export const Packs = () => {
 
@@ -52,14 +54,33 @@ export const Packs = () => {
     />)
 
     if (!isLoggedIn) {
-        return <Login/>
+        return <Login />
     }
 
     return (
         <div>
-            <div className={st.titleParent}><h1>Packs</h1>
+            <div className={st.titleParent}>
+
+                <h1>Packs</h1>
+
+                <div className={st.pageCount}>
+                    <SuperSelect
+                        options={['5', '8', '10', '20', '50', '100']}
+                        onChangeOption={(option: string) => dispatch(getPacksTC({pageCount: option}))}/> pages displayed
+                </div>
+
+                <div className={st.filter}>
+                    <SuperDoubleRange
+                        value={[0, 20]}
+                        onChangeRange={(e:ChangeEvent<{}>, value: number | number[]) => {
+                            let min = typeof value === 'object' ? value[0] : 3
+                            let max = typeof value === 'object' ? value[1] : 6
+                            dispatch(getPacksTC({min: min, max: max}))
+                        }}/>
+                </div>
 
                 <div className={st.paginator}>
+                    <
                     {pages.map(p => {
                         return <span key={p} className={currentPage === p ? s.selectedPage : ''}
                                      onClick={() => onPageChangedHandler(p)}> {p} </span>
@@ -71,7 +92,8 @@ export const Packs = () => {
                 <div>name</div>
                 <div>cards count</div>
                 <div>last update</div>
-                <div><SuperButton onClick={() => dispatch(addPackTC({name: 'Aleks/Dima/Elena pack'}))}>add</SuperButton></div>
+                <div><SuperButton onClick={() => dispatch(addPackTC({name: 'Aleks/Dima/Elena pack'}))}>add</SuperButton>
+                </div>
                 <div></div>
                 <div></div>
             </div>
