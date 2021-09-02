@@ -17,7 +17,7 @@ export const Cards = () => {
 
     useEffect(() => {
         dispatch(getCardsTC({cardsPack_id: packID}))
-    }, [dispatch])
+    }, [dispatch, packID])
 
     const mappedCards = cards && cards.map((c, i) => <Card key={i} {...c}/>)
 

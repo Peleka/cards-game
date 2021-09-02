@@ -1,4 +1,4 @@
-import {packsAPI} from "../m3-dal/api";
+import {AddPackRequestDataType, packsAPI} from "../m3-dal/api";
 import {Dispatch} from "redux";
 import {setAppStatusAC} from "./app-reducer";
 
@@ -19,9 +19,9 @@ export const packsReducer = (state = initialState, action: ActionsType): Initial
             return {...state, totalPacksCount: action.totalPacks}
         case 'SET-CURRENT-PAGE':
             return {...state, currentPage: action.pageNumber}
-        case 'PACKS/DEL-PACKS':
+        case 'PACKS/DEL-PACK':
             return state
-        case 'PACKS/UPDATE-PACKS':
+        case 'PACKS/UPDATE-PACK':
             return state
         default:
             return state
@@ -42,12 +42,12 @@ export const setCurrentPage = (pageNumber: number) => ({
     type: 'SET-CURRENT-PAGE',
     pageNumber,
 } as const)
-export const delPacksAC = (id: string) => ({
-    type: 'PACKS/DEL-PACKS',
+export const delPackAC = (id: string) => ({
+    type: 'PACKS/DEL-PACK',
     id
 } as const)
-export const updatePacksAC = (data: UpdatePacksRequestData) => ({
-    type: 'PACKS/UPDATE-PACKS',
+export const updatePackAC = (data: UpdatePacksRequestDataType) => ({
+    type: 'PACKS/UPDATE-PACK',
     data
 } as const)
 
@@ -66,28 +66,43 @@ export const getPacksTC = (data: GetPacksRequestDataType) => (dispatch: Dispatch
       })
 }
 
-export const delPacksTC = (id: string) => (dispatch: Dispatch) => {
+export const addPackTC = (data: AddPackRequestDataType) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    packsAPI.deletePacks(id)
-      .then(res => {
-          dispatch(delPacksAC(res.data.id))
+    packsAPI.addPack(data)
+        .then(() => {
+            getPacksTC({})
+            console.log('pack added successfully')
+        })
+        .catch(() => {
+            dispatch(setAppStatusAC('failed'))
+            console.log('add pack error')
+        })
+}
+
+export const delPackTC = (id: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    packsAPI.deletePack(id)
+      .then(() => {
           dispatch(setAppStatusAC('succeeded'))
+          getPacksTC({})
+          console.log('pack deleted successfully')
       })
       .catch(() => {
           dispatch(setAppStatusAC('failed'))
-          console.log('get packs error')
+          console.log('delete pack error')
       })
 }
 
-export const updatePacksTC = (data: UpdatePacksRequestData) => (dispatch: Dispatch) => {
+export const updatePackTC = (data: UpdatePacksRequestDataType) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    packsAPI.updatePacks()
-    .then(res => {
-        dispatch(updatePacksAC(res.data.cardPacks._id))
+    packsAPI.updatePack(data)
+    .then(() => {
+        getPacksTC({})
+        console.log('pack updated successfully')
     })
     .catch(() => {
         dispatch(setAppStatusAC('failed'))
-        console.log('get packs error')
+        console.log('update pack error')
     })
 }
 
@@ -96,8 +111,8 @@ type ActionsType = ReturnType<typeof setPacksAC>
   | ReturnType<typeof setAppStatusAC>
   | ReturnType<typeof setTotalPacksCountAC>
   | ReturnType<typeof setCurrentPage>
-  | ReturnType<typeof delPacksAC>
-  | ReturnType<typeof updatePacksAC>
+  | ReturnType<typeof delPackAC>
+  | ReturnType<typeof updatePackAC>
 
 export type GetPacksRequestDataType = {
     packName?: string
@@ -123,14 +138,10 @@ export type PackResponseType = {
     "updated": string,
     "more_id": string,
     "__v": number,
-    delPack: (id: string) => void
-    updatePacks: (data: UpdatePacksRequestData) => void
 }
 
-export type UpdatePacksRequestData = {
-    cardsPack: {
+export type UpdatePacksRequestDataType = {
         _id: string
-        name: string
-        private: boolean
-    }
+        name?: string
+        private?: boolean
 }

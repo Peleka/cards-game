@@ -1,11 +1,12 @@
 import React, {useCallback, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux";
 import {
-    delPacksTC,
+    addPackTC,
+    delPackTC,
     getPacksTC,
     setCurrentPage,
-    UpdatePacksRequestData,
-    updatePacksTC
+    UpdatePacksRequestDataType,
+    updatePackTC
 } from "../../../m2-bll/packs-reducer";
 import {Pack} from "./Pack/Pack";
 import {AppStoreType} from "../../../m2-bll/store";
@@ -22,12 +23,13 @@ export const Packs = () => {
     const totalPacks = useSelector((state: AppStoreType) => state.packs.totalPacksCount)
     const pageSize = useSelector((state: AppStoreType) => state.packs.pageSize)
     const currentPage = useSelector((state: AppStoreType) => state.packs.currentPage)
-    const delPacks = useCallback(function (id: string) {
-        dispatch(delPacksTC(id))
-    }, [])
-    const updatePacks = useCallback(function (data: UpdatePacksRequestData) {
-        dispatch(updatePacksTC(data))
-    }, [])
+    const status = useSelector((state: AppStoreType) => state.app.status)
+    const delPack = useCallback(function (id: string) {
+        dispatch(delPackTC(id))
+    }, [dispatch])
+    const updatePack = useCallback(function (data: UpdatePacksRequestDataType) {
+        dispatch(updatePackTC(data))
+    }, [dispatch])
 
     //pagination
     let pages = []
@@ -40,18 +42,18 @@ export const Packs = () => {
     //
 
     useEffect(() => {
-        dispatch(getPacksTC({}))
-    }, [dispatch])
+        if ( status === 'loading') dispatch(getPacksTC({}))
+    }, [dispatch, status])
 
     const mappedPacks = cardPacks && cardPacks.map((p, i) => <Pack
-      key={i}
-      {...p}
-      delPack={delPacks}
-      updatePacks={updatePacks}
+        key={i}
+        {...p}
+        delPack={delPack}
+        updatePack={updatePack}
     />)
 
     if (!isLoggedIn) {
-        return <Login />
+        return <Login/>
     }
 
     return (
@@ -70,7 +72,7 @@ export const Packs = () => {
                 <div>name</div>
                 <div>cards count</div>
                 <div>last update</div>
-                <div><SuperButton>add</SuperButton></div>
+                <div><SuperButton onClick={() => dispatch(addPackTC({name: 'Aleks/Dima/Elena pack'}))}>add</SuperButton></div>
                 <div></div>
                 <div></div>
             </div>
