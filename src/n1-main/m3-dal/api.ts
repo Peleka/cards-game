@@ -43,8 +43,8 @@ export const packsAPI = {
         return instance
             .get(`/cards/pack?pageCount=10&min=${min}&max=${max}&sortPacks=${sort}&page=${page}`)
     },
-    addPacks() {
-        return instance.post('/cards/pack')
+    addPack(data: AddPackRequestDataType) {
+        return instance.post('/cards/pack', {cardsPack: data})
     },
     deletePacks(id: string) {
         return instance.delete(`/cards/pack?id=${id}`)
@@ -80,3 +80,9 @@ export const cardsAPI = {
 }
 
 //types
+
+
+export type AddPackRequestDataType = {
+    name?: string
+    private?: boolean
+}

@@ -73,6 +73,19 @@ export const delPacksTC = (id: string) => (dispatch: Dispatch) => {
       })
 }
 
+export const addPackTC = ({}) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    packsAPI.addPack({})
+        .then(() => {
+            console.log('pack added successfully')
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch(() => {
+            dispatch(setAppStatusAC('failed'))
+            console.log('add pack error')
+        })
+}
+
 //types
 type ActionsType = ReturnType<typeof setPacksAC>
   | ReturnType<typeof setAppStatusAC>
