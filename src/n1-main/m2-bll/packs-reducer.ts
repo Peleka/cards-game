@@ -72,6 +72,7 @@ export const addPackTC = (data: AddPackRequestDataType) => (dispatch: Dispatch) 
         .then(() => {
             getPacksTC({})
             console.log('pack added successfully')
+            dispatch(setAppStatusAC("succeeded"))
         })
         .catch(() => {
             dispatch(setAppStatusAC('failed'))
@@ -99,6 +100,7 @@ export const updatePackTC = (data: UpdatePacksRequestDataType) => (dispatch: Dis
     .then(() => {
         getPacksTC({})
         console.log('pack updated successfully')
+        dispatch(setAppStatusAC('succeeded'))
     })
     .catch(() => {
         dispatch(setAppStatusAC('failed'))
