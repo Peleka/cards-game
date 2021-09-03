@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/cards-game/static/css/main.e8369187.chunk.css",
-    "main.js": "/cards-game/static/js/main.c6440045.chunk.js",
-    "main.js.map": "/cards-game/static/js/main.c6440045.chunk.js.map",
+    "main.css": "/cards-game/static/css/main.1dbe48b2.chunk.css",
+    "main.js": "/cards-game/static/js/main.f415bcd9.chunk.js",
+    "main.js.map": "/cards-game/static/js/main.f415bcd9.chunk.js.map",
     "runtime-main.js": "/cards-game/static/js/runtime-main.66d3f375.js",
     "runtime-main.js.map": "/cards-game/static/js/runtime-main.66d3f375.js.map",
     "static/js/2.d827b2db.chunk.js": "/cards-game/static/js/2.d827b2db.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.da40bba9.chunk.js": "/cards-game/static/js/3.da40bba9.chunk.js",
     "static/js/3.da40bba9.chunk.js.map": "/cards-game/static/js/3.da40bba9.chunk.js.map",
     "index.html": "/cards-game/index.html",
-    "static/css/main.e8369187.chunk.css.map": "/cards-game/static/css/main.e8369187.chunk.css.map",
+    "static/css/main.1dbe48b2.chunk.css.map": "/cards-game/static/css/main.1dbe48b2.chunk.css.map",
     "static/js/2.d827b2db.chunk.js.LICENSE.txt": "/cards-game/static/js/2.d827b2db.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.66d3f375.js",
     "static/js/2.d827b2db.chunk.js",
-    "static/css/main.e8369187.chunk.css",
-    "static/js/main.c6440045.chunk.js"
+    "static/css/main.1dbe48b2.chunk.css",
+    "static/js/main.f415bcd9.chunk.js"
   ]
 }
