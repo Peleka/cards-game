@@ -1,11 +1,9 @@
 import axios from "axios";
 import {GetPacksRequestDataType, UpdatePacksRequestDataType} from "../m2-bll/packs-reducer";
-import {GetCardsRequestDataType} from "../m2-bll/cards-reducer";
 
 export const instance = axios.create(
     {
         baseURL: "https://neko-back.herokuapp.com/2.0/",
-        // baseURL: `http://localhost:7542/2.0`,
         withCredentials: true,
     })
 
@@ -60,29 +58,26 @@ export const packsAPI = {
 }
 
 export const cardsAPI = {
-    getCards(data: GetCardsRequestDataType,) {
-        // const cardAnswer = data.cardAnswer ?? 'english'
-        // const cardQuestion = data.cardQuestion ?? 'english'
-        const cardsPack_id = data.cardsPack_id ?? '612ce7f59f1a7900041d6f3a'
-        // const min = data.min ?? 1
-        // const max = data.max ?? 4
-        // const sort = data.sortCards ?? 0
-        // const page = data.page ?? 1
-        return instance
-            .get(`/cards/card?cardsPack_id=${cardsPack_id}`)
+    getCards(cardsPack_id: string) {
+        return instance.get(`/cards/card?cardsPack_id=${cardsPack_id}`)
     },
     addCard(data: CreateCardRequestDataType) {
         return instance.post('/cards/card', {card: {cardsPack_id: data.cardsPack_id}})
     },
-    deleteCard(id: string) {
-        return instance.delete(`/cards/card?id=${id}`)
+    deleteCard(cardsPack_id: string) {
+        return instance.delete(`/cards/card?id=${cardsPack_id}`)
     },
-    updateCard(data: UpdateCardsRequestDataType) {
-        return instance.put('/cards/card', {card: {_id: data._id}})
-    },
+    updateCard(updateCardData: updateCardDataType) {
+        return instance.put('cards/card', {card: {_id: updateCardData._id}})
+    }
 }
 
 //types
+export type updateCardDataType = {
+    _id: string,
+    question?: string,
+    answer?: string
+}
 
 export type CreateCardRequestDataType = {
     cardsPack_id: string
@@ -96,11 +91,4 @@ export type CreateCardRequestDataType = {
 export type AddPackRequestDataType = {
     name?: string
     private?: boolean
-}
-
-export type UpdateCardsRequestDataType = {
-    _id?: string
-    question?: string
-    comments?: string
-    packId?: string
 }

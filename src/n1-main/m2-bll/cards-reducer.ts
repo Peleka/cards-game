@@ -1,9 +1,9 @@
 import {setAppStatusAC} from "./app-reducer";
-import {cardsAPI, CreateCardRequestDataType, UpdateCardsRequestDataType} from "../m3-dal/api";
+import {cardsAPI, CreateCardRequestDataType, updateCardDataType} from "../m3-dal/api";
 import {AppThunkType} from "./store";
 
 const initialState = {
-    cards: null as Array<CardType> | null
+    cards: null as Array<CardDataType> | null
 }
 
 type InitialStateType = typeof initialState
@@ -11,22 +11,23 @@ type InitialStateType = typeof initialState
 export const cardsReducer = (state: InitialStateType = initialState, action: CardsActionsType): InitialStateType => {
     switch (action.type) {
         case 'CARDS/SET-CARDS':
-            return {...state, cards: action.data}
+            return {...state, cards: action.cards}
         default:
             return state
     }
 }
+
 //action creators
-export const setCardsAC = (data: CardType[]) => ({
+export const setCardsAC = (cards: CardDataType[]) => ({
     type: 'CARDS/SET-CARDS',
-    data
+    cards
 } as const)
 
 
 //thunk
-export const getCardsTC = (data: GetCardsRequestDataType): AppThunkType => dispatch => {
+export const getCardsTC = (cardsPack_id: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getCards(data)
+    cardsAPI.getCards(cardsPack_id)
         .then(res => {
             dispatch(setCardsAC(res.data.cards))
             dispatch(setAppStatusAC('succeeded'))
@@ -41,21 +42,22 @@ export const addCardTC = (data: CreateCardRequestDataType): AppThunkType => disp
     dispatch(setAppStatusAC('loading'))
     cardsAPI.addCard(data)
         .then(() => {
-            dispatch(getCardsTC(data))
-            console.log("card added succeeded")
+            dispatch(getCardsTC(data.cardsPack_id))
+            dispatch(setAppStatusAC('succeeded'))
         })
         .catch(e => {
             const error = e.res ? e.res.data.error : (`Add card failed: ${e.message}.`)
+            dispatch(setAppStatusAC('failed'))
             alert(error)
         })
 }
 
-export const delCardTC = (id: string): AppThunkType => dispatch => {
+export const delCardTC = (id: string, packId: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     cardsAPI.deleteCard(id)
         .then(() => {
             dispatch(setAppStatusAC('succeeded'))
-            dispatch(getCardsTC({}))
+            dispatch(getCardsTC(packId))
             console.log('card deleted successfully')
         })
         .catch(() => {
@@ -64,18 +66,18 @@ export const delCardTC = (id: string): AppThunkType => dispatch => {
         })
 }
 
-export const updateCardTC = (data: UpdateCardsRequestDataType): AppThunkType => dispatch => {
+export const updateCardTC = (packId: string, updateCardData: updateCardDataType): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.updateCard(data)
+    cardsAPI.updateCard(updateCardData)
         .then(() => {
-            dispatch(setAppStatusAC('succeeded'))
-            dispatch(getCardsTC({cardsPack_id: data.packId}))
-
-            console.log("card updated")
+            dispatch(getCardsTC(packId))
         })
-        .catch(() => {
+        .catch(err => {
+            const error = err.response
+                ? err.response.data.error
+                : (err.message + ' , error')
             dispatch(setAppStatusAC('failed'))
-            console.log("update card error")
+            alert(error)
         })
 }
 
@@ -83,18 +85,18 @@ export const updateCardTC = (data: UpdateCardsRequestDataType): AppThunkType => 
 export type CardsActionsType = ReturnType<typeof setCardsAC> |
     ReturnType<typeof setAppStatusAC>
 
-export type GetCardsRequestDataType = {
-    cardAnswer?: string
-    cardQuestion?: string
-    cardsPack_id?: string
-    min?: number
-    max?: number
-    sortCards?: number
-    page?: number
-    pageCount?: number
-}
+// export type GetCardsRequestDataType = {
+//     cardAnswer?: string
+//     cardQuestion?: string
+//     cardsPack_id: string
+//     min?: number
+//     max?: number
+//     sortCards?: number
+//     page?: number
+//     pageCount?: number
+// }
 
-export type CardType = {
+export type CardDataType = {
     cardsPack_id: string
     answer?: string
     comments?: string

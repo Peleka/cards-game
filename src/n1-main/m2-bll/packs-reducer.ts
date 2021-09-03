@@ -69,7 +69,6 @@ export const getPacksTC = (data: GetPacksRequestDataType): AppThunkType => (disp
 
 export const addPackTC = (data: AddPackRequestDataType): AppThunkType => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    debugger
     packsAPI.addPack(data)
         .then(() => {
             dispatch(getPacksTC({
