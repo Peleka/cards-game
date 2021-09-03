@@ -73,7 +73,7 @@ export const addPackTC = (data: AddPackRequestDataType): AppThunkType => (dispat
     packsAPI.addPack(data)
         .then(() => {
             dispatch(getPacksTC({
-                pageCount: '100',
+                pageCount: '10',
                 page: 1,
             }))
             console.log('pack added successfully')
