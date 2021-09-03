@@ -15,7 +15,7 @@ export const authAPI = {
     },
     logout() {
         return instance.delete('auth/me')
-    }
+    },
 }
 
 export const registerAPI = {
@@ -40,9 +40,10 @@ export const packsAPI = {
         const sort = data.sortPacks ?? 0
         const page = data.page ?? 10
         const pageCount = data.pageCount ?? '10'
+        const userId = data.user_id ? `&user_id=${data.user_id}` : ''
         // const packName = data.packName ?? 'english'
         return instance
-            .get(`/cards/pack?pageCount=${pageCount}&min=${min}&max=${max}&sortPacks=${sort}&page=${page}`)
+            .get(`/cards/pack?pageCount=${pageCount}&min=${min}&max=${max}&sortPacks=${sort}&page=${page}${userId}`)
     },
     addPack(data: AddPackRequestDataType) {
         return instance.post('/cards/pack', {cardsPack: data})

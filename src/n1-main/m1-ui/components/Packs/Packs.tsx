@@ -26,12 +26,16 @@ export const Packs = () => {
     const totalPacks = useSelector((state: AppStoreType) => state.packs.totalPacksCount)
     const pageSize = useSelector((state: AppStoreType) => state.packs.pageSize)
     const currentPage = useSelector((state: AppStoreType) => state.packs.currentPage)
+    const userID = useSelector((state: AppStoreType) => state.auth.userData?._id)
     const delPack = useCallback(function (id: string) {
         dispatch(delPackTC(id))
     }, [dispatch])
     const updatePack = useCallback(function (data: UpdatePacksRequestDataType) {
         dispatch(updatePackTC(data))
     }, [dispatch])
+    const showMyPacks = () => {
+        dispatch(getPacksTC({user_id: userID}))
+    }
 
     //pagination
     let pages = []
@@ -86,10 +90,12 @@ export const Packs = () => {
                 <div className={st.paginator}>
 
                     <Pagination count={pagesCount}
-                                boundaryCount={2}
+                                boundaryCount={1}
                                 defaultPage={1}
                                 page={currentPage}
                                 onChange={(e: ChangeEvent<any>, p: number) => onPageChangedHandler(p)}/>
+
+                    <SuperButton onClick={showMyPacks}> show my packs </SuperButton>
                 </div>
             </div>
 

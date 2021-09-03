@@ -128,6 +128,7 @@ export type GetPacksRequestDataType = {
     sortPacks?: number
     page?: number
     pageCount?: string
+    user_id?: string
 }
 
 export type PackResponseType = {
