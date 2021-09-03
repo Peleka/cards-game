@@ -1,6 +1,6 @@
 import {AddPackRequestDataType, packsAPI} from "../m3-dal/api";
-import {Dispatch} from "redux";
 import {setAppStatusAC} from "./app-reducer";
+import {AppThunkType} from "./store";
 
 const initialState = {
     cardPacks: null as null | PackResponseType[],
@@ -11,7 +11,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-export const packsReducer = (state = initialState, action: ActionsType): InitialStateType => {
+export const packsReducer = (state = initialState, action: PacksActionsType): InitialStateType => {
     switch (action.type) {
         case 'PACKS/SET-PACKS':
             return {...state, cardPacks: action.data}
@@ -26,7 +26,6 @@ export const packsReducer = (state = initialState, action: ActionsType): Initial
         default:
             return state
     }
-
 }
 
 //action creators
@@ -52,25 +51,31 @@ export const updatePackAC = (data: UpdatePacksRequestDataType) => ({
 } as const)
 
 //thunk
-export const getPacksTC = (data: GetPacksRequestDataType) => (dispatch: Dispatch) => {
+export const getPacksTC = (data: GetPacksRequestDataType): AppThunkType => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
+
     packsAPI.getPacks(data)
-      .then(res => {
-          dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
-          dispatch(setPacksAC(res.data.cardPacks))
-          dispatch(setAppStatusAC('succeeded'))
-      })
-      .catch(() => {
-          dispatch(setAppStatusAC('failed'))
-          console.log('get packs error')
-      })
+        .then(res => {
+
+            dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
+            dispatch(setPacksAC(res.data.cardPacks))
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch(() => {
+            dispatch(setAppStatusAC('failed'))
+            console.log('get packs error')
+        })
 }
 
-export const addPackTC = (data: AddPackRequestDataType) => (dispatch: Dispatch) => {
+export const addPackTC = (data: AddPackRequestDataType): AppThunkType => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
+    debugger
     packsAPI.addPack(data)
         .then(() => {
-            getPacksTC({})
+            dispatch(getPacksTC({
+                pageCount: '10',
+                page: 1,
+            }))
             console.log('pack added successfully')
             dispatch(setAppStatusAC("succeeded"))
         })
@@ -80,41 +85,41 @@ export const addPackTC = (data: AddPackRequestDataType) => (dispatch: Dispatch) 
         })
 }
 
-export const delPackTC = (id: string) => (dispatch: Dispatch) => {
+export const delPackTC = (id: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.deletePack(id)
-      .then(() => {
-          dispatch(setAppStatusAC('succeeded'))
-          getPacksTC({})
-          console.log('pack deleted successfully')
-      })
-      .catch(() => {
-          dispatch(setAppStatusAC('failed'))
-          console.log('delete pack error')
-      })
+        .then(() => {
+            dispatch(setAppStatusAC('succeeded'))
+            getPacksTC({})
+            console.log('pack deleted successfully')
+        })
+        .catch(() => {
+            dispatch(setAppStatusAC('failed'))
+            console.log('delete pack error')
+        })
 }
 
-export const updatePackTC = (data: UpdatePacksRequestDataType) => (dispatch: Dispatch) => {
+export const updatePackTC = (data: UpdatePacksRequestDataType): AppThunkType => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.updatePack(data)
-    .then(() => {
-        getPacksTC({})
-        console.log('pack updated successfully')
-        dispatch(setAppStatusAC('succeeded'))
-    })
-    .catch(() => {
-        dispatch(setAppStatusAC('failed'))
-        console.log('update pack error')
-    })
+        .then(() => {
+            getPacksTC({})
+            console.log('pack updated successfully')
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch(() => {
+            dispatch(setAppStatusAC('failed'))
+            console.log('update pack error')
+        })
 }
 
 //types
-type ActionsType = ReturnType<typeof setPacksAC>
-  | ReturnType<typeof setAppStatusAC>
-  | ReturnType<typeof setTotalPacksCountAC>
-  | ReturnType<typeof setCurrentPage>
-  | ReturnType<typeof delPackAC>
-  | ReturnType<typeof updatePackAC>
+export type PacksActionsType = ReturnType<typeof setPacksAC>
+    | ReturnType<typeof setAppStatusAC>
+    | ReturnType<typeof setTotalPacksCountAC>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof delPackAC>
+    | ReturnType<typeof updatePackAC>
 
 export type GetPacksRequestDataType = {
     packName?: string
@@ -144,7 +149,7 @@ export type PackResponseType = {
 }
 
 export type UpdatePacksRequestDataType = {
-        _id: string
-        name?: string
-        private?: boolean
+    _id: string
+    name?: string
+    private?: boolean
 }

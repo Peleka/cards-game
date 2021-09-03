@@ -43,7 +43,10 @@ export const Packs = () => {
     //
 
     useEffect(() => {
-        dispatch(getPacksTC({}))
+        dispatch(getPacksTC({
+            pageCount: '10',
+            page: 1,
+        }))
     }, [dispatch])
 
     const mappedPacks = cardPacks && cardPacks.map((p, i) => <Pack

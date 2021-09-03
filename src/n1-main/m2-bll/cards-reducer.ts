@@ -1,14 +1,14 @@
-import {Dispatch} from "redux";
 import {setAppStatusAC} from "./app-reducer";
-import {cardsAPI} from "../m3-dal/api";
+import {cardsAPI, CreateCardRequestDataType} from "../m3-dal/api";
+import {AppThunkType} from "./store";
 
 const initialState = {
-    cards: null as null | CardResponseType[]
+    cards: null as Array<CardType> | null
 }
 
 type InitialStateType = typeof initialState
 
-export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const cardsReducer = (state: InitialStateType = initialState, action: CardsActionsType): InitialStateType => {
     switch (action.type) {
         case 'CARDS/SET-CARDS':
             return {...state, cards: action.data}
@@ -17,13 +17,14 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
     }
 }
 //action creators
-export const setCardsAC = (data: CardResponseType[]) => ({
+export const setCardsAC = (data: CardType[]) => ({
     type: 'CARDS/SET-CARDS',
     data
 } as const)
 
+
 //thunk
-export const getCardsTC = (data: GetCardsRequestDataType) => (dispatch: Dispatch) => {
+export const getCardsTC = (data: GetCardsRequestDataType): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     cardsAPI.getCards(data)
         .then(res => {
@@ -36,8 +37,20 @@ export const getCardsTC = (data: GetCardsRequestDataType) => (dispatch: Dispatch
         })
 }
 
+export const addCardTC = (data: CreateCardRequestDataType): AppThunkType => dispatch => {
+    cardsAPI.addCard(data)
+        .then(() => {
+            dispatch(getCardsTC(data))
+            console.log("card added succeeded")
+        })
+        .catch(e => {
+            const error = e.res ? e.res.data.error : (`Add card failed: ${e.message}.`)
+            alert(error)
+        })
+}
+
 //types
-type ActionsType = ReturnType<typeof setCardsAC> |
+export type CardsActionsType = ReturnType<typeof setCardsAC> |
     ReturnType<typeof setAppStatusAC>
 
 export type GetCardsRequestDataType = {
@@ -51,20 +64,20 @@ export type GetCardsRequestDataType = {
     pageCount?: number
 }
 
-export type CardResponseType = {
-    answer: string
+export type CardType = {
     cardsPack_id: string
-    comments: string
-    created: string
-    grade: number
-    more_id: string
-    question: string
-    questionImg: string
-    rating: number
-    shots: number
-    type: string
-    updated: string
-    user_id: string
-    __v: number
-    _id: string
+    answer?: string
+    comments?: string
+    created?: string
+    grade?: number
+    more_id?: string
+    question?: string
+    questionImg?: string
+    rating?: number
+    shots?: number
+    type?: string
+    updated?: string
+    user_id?: string
+    __v?: number
+    _id?: string
 }
