@@ -36,9 +36,9 @@ export const recoverPasswordAPI = {
 export const packsAPI = {
     getPacks(data: GetPacksRequestDataType) {
         const min = data.min ?? 0
-        const max = data.max ?? 103
+        const max = data.max ?? 5
         const sort = data.sortPacks ?? 0
-        const page = data.page ?? 1
+        const page = data.page ?? 10
         const pageCount = data.pageCount ?? '10'
         // const packName = data.packName ?? 'english'
         return instance
@@ -73,8 +73,8 @@ export const cardsAPI = {
     deleteCard(id: string) {
         return instance.delete(`/cards/card?id=${id}`)
     },
-    updateCard() {
-        return instance.put('/cards/card')
+    updateCard(data: UpdateCardsRequestDataType) {
+        return instance.put('/cards/card', {card: {_id: data._id}})
     },
 }
 
@@ -92,4 +92,11 @@ export type CreateCardRequestDataType = {
 export type AddPackRequestDataType = {
     name?: string
     private?: boolean
+}
+
+export type UpdateCardsRequestDataType = {
+    _id?: string
+    question?: string
+    comments?: string
+    packId?: string
 }
