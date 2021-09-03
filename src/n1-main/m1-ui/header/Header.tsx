@@ -14,7 +14,6 @@ export const Header = () => {
         <div>
             <div className={s.wrapper}>
                 <NavLink to={PATH.LOGIN} activeClassName={s.active}>Login</NavLink>
-                <NavLink to={PATH.TEST} activeClassName={s.active}>Test</NavLink>
                 <NavLink to={PATH.REGISTER} activeClassName={s.active}>Register</NavLink>
                 <NavLink to={PATH.PROFILE} activeClassName={s.active}>Profile</NavLink>
                 <NavLink to={PATH.PACKS} activeClassName={s.active}>Packs</NavLink>

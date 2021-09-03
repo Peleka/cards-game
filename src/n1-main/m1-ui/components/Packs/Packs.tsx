@@ -16,7 +16,6 @@ import st from './Packs.module.css'
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {Login} from "../Login/Login";
 import SuperDoubleRange from "../../superComponents/c8-SuperDoubleRange/SuperDoubleRange";
-import SuperSelect from "../../superComponents/c5-SuperSelect/SuperSelect";
 
 export const Packs = () => {
 
@@ -49,7 +48,7 @@ export const Packs = () => {
 
     useEffect(() => {
         dispatch(getPacksTC({
-            pageCount: '100',
+            pageCount: '10',
             page: 1,
         }))
     }, [dispatch])
@@ -71,11 +70,14 @@ export const Packs = () => {
 
                 <h1>Packs</h1>
 
+
+                {/*показывает окошко с выбором кол-ва отображаемых колод
+
                 <div className={st.pageCount}>
                     <SuperSelect
                         options={['10', '5', '20', '50', '100']}
                         onChangeOption={(option: string) => dispatch(getPacksTC({pageCount: option}))}/> pages displayed
-                </div>
+                </div>*/}
 
                 <div className={st.filter}>
                     <SuperDoubleRange
@@ -100,6 +102,7 @@ export const Packs = () => {
             </div>
 
             <div className={`${s.packItem} ${st.packContents}`}>
+                <div>username</div>
                 <div>name</div>
                 <div>cards count</div>
                 <div>last update</div>

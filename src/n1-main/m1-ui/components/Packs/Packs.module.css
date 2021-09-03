@@ -2,10 +2,13 @@
     font-weight: bold;
     font-size: large;
     padding-bottom: 15px;
+    padding-top: 15px;
     border-bottom: 2px solid darkviolet;
+    background-color: mediumpurple;
 }
 .titleParent {
     position: relative;
+    padding-bottom: 10px;
 }
 .paginator {
     position: absolute;
@@ -15,11 +18,12 @@
 .filter {
     position: absolute;
     top: 10px;
-    left: 25%;
+    left: 10%;
     width: 150px;
 }
+/*
 .pageCount {
     position: absolute;
     top: 10px;
     left: 10%;
-}
+}*/

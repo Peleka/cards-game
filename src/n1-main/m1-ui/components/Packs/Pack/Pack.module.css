@@ -2,7 +2,7 @@
     width: 80%;
     margin: auto;
     display: grid;
-    grid-template-columns: 1fr 100px 1fr 100px 100px 100px;
+    grid-template-columns: 1fr 1fr 0.6fr 0.6fr 80px 80px 80px;
     border-bottom: 2px solid mediumpurple;
 }
 
