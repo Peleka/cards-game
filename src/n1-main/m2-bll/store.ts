@@ -1,12 +1,12 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import {authReducer} from "./auth-reducer";
-import thunk from "redux-thunk";
+import thunk, {ThunkAction} from "redux-thunk";
 import {registerReducer} from "./registration-reducer";
 import {appReducer} from "./app-reducer";
 import {recoverPasswordReducer} from "./recoverPassword-reducer";
 import {setNewPasswordReducer} from "./setNewPassword-reducer";
-import {packsReducer} from "./packs-reducer";
-import {cardsReducer} from "./cards-reducer";
+import {PacksActionsType, packsReducer} from "./packs-reducer";
+import {CardsActionsType, cardsReducer} from "./cards-reducer";
 
 const reducers = combineReducers({
     auth: authReducer,
@@ -17,6 +17,8 @@ const reducers = combineReducers({
     packs: packsReducer,
     cards: cardsReducer,
 });
+export type AppActions = PacksActionsType | CardsActionsType
+export type AppThunkType<ReturnType= void> = ThunkAction<ReturnType, AppStoreType, unknown, AppActions>
 
 const store = createStore(reducers, applyMiddleware(thunk));
 

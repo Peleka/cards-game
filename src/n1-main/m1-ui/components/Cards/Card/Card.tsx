@@ -1,9 +1,9 @@
 import React from "react";
 import SuperButton from "../../../superComponents/c2-SuperButton/SuperButton";
 import s from './Card.module.css'
-import {CardResponseType} from "../../../../m2-bll/cards-reducer";
+import {CardType} from "../../../../m2-bll/cards-reducer";
 
-export const Card = (props: CardResponseType) => {
+export const Card = (props: CardType) => {
     return (
         <div className={s.cardItem}>
             <div className={s.cardSpecification}>{props.question}</div>

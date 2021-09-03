@@ -35,8 +35,8 @@ export const recoverPasswordAPI = {
 
 export const packsAPI = {
     getPacks(data: GetPacksRequestDataType) {
-        const min = data.min ?? 3
-        const max = data.max ?? 6
+        const min = data.min ?? 0
+        const max = data.max ?? 103
         const sort = data.sortPacks ?? 0
         const page = data.page ?? 1
         const pageCount = data.pageCount ?? '10'
@@ -64,23 +64,30 @@ export const cardsAPI = {
         // const max = data.max ?? 4
         // const sort = data.sortCards ?? 0
         // const page = data.page ?? 1
-
-
         return instance
             .get(`/cards/card?cardsPack_id=${cardsPack_id}`)
     },
-    addCards() {
-        return instance.post('/cards/card')
+    addCard(data: CreateCardRequestDataType) {
+        return instance.post('/cards/card', {card: {cardsPack_id: data.cardsPack_id}})
     },
-    deleteCards() {
-        return instance.delete('/cards/card')
+    deleteCard(id: string) {
+        return instance.delete(`/cards/card?id=${id}`)
     },
-    updateCards() {
+    updateCard() {
         return instance.put('/cards/card')
     },
 }
 
 //types
+
+export type CreateCardRequestDataType = {
+    cardsPack_id: string
+    question?: string
+    answer?: string
+    grade?: number
+    shots?: number
+    type?: string
+}
 
 export type AddPackRequestDataType = {
     name?: string
