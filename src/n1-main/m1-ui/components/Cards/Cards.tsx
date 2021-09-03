@@ -8,25 +8,31 @@ import {AppStoreType} from "../../../m2-bll/store";
 import {addCardTC, delCardTC, getCardsTC, updateCardTC} from "../../../m2-bll/cards-reducer";
 import {useParams} from "react-router-dom";
 import {Login} from "../Login/Login";
-import {CreateCardRequestDataType, UpdateCardsRequestDataType} from "../../../m3-dal/api";
+import {updateCardDataType} from "../../../m3-dal/api";
 
 export const Cards = () => {
+
     const dispatch = useDispatch()
+
     const cards = useSelector((state: AppStoreType) => state.cards.cards)
     const {packID} = useParams<{ packID: string }>()
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
 
-    const delCard = useCallback((id: string) => {
-        dispatch(delCardTC(id))
+
+    const delCard = useCallback((id: string, packId: string) => {
+        dispatch(delCardTC(id, packId))
     }, [dispatch])
 
-    const updateCard = useCallback((data: UpdateCardsRequestDataType) => {
-        dispatch(updateCardTC(data))
-    }, [dispatch])
+    // const updateCard = useCallback((data: UpdateCardsRequestDataType) => {
+    //     dispatch(updateCardTC(data))
+    // }, [dispatch])
 
+    const updateCard = useCallback((updateCardData: updateCardDataType) => {
+        dispatch(updateCardTC(packID, updateCardData))
+    }, [dispatch])
 
     useEffect(() => {
-        dispatch(getCardsTC({cardsPack_id: packID}))
+        dispatch(getCardsTC(packID))
     }, [dispatch, packID])
 
     const mappedCards = cards && cards.map((c, i) => <Card
@@ -37,8 +43,8 @@ export const Cards = () => {
         updateCard={updateCard}
     />)
 
-    const addCard = (data: CreateCardRequestDataType) => {
-        dispatch(addCardTC(data))
+    const addCardHandler = () => {
+        dispatch(addCardTC({cardsPack_id: packID}))
     }
 
     if (!isLoggedIn) {
@@ -56,8 +62,7 @@ export const Cards = () => {
                 <div>answer</div>
                 <div>grade</div>
                 <div>last update</div>
-                <div>url</div>
-                <div><SuperButton onClick={() => addCard({cardsPack_id: packID})}>add</SuperButton></div>
+                <div><SuperButton type={"submit"} onClick={addCardHandler}>add</SuperButton></div>
                 <div></div>
             </div>
 

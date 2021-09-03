@@ -7,7 +7,6 @@ const initialState = {
     isLoggedIn: false,
     userData: null as UserDataType | null,
     authError: '',
-
 };
 
 type InitialStateType = typeof initialState
@@ -56,12 +55,12 @@ export const loginTC = (values: UserLoginData) => (dispatch: Dispatch<ActionsTyp
             dispatch(setIsLoggedInAC(true))
             dispatch(setAppStatusAC('succeeded'))
         })
-        .catch ((e) => {
-        const error = e.response ? e.response.data.error : e.message
-        dispatch(setAuthErrorAC(error))
-        dispatch(setAppStatusAC('failed'))
+        .catch((e) => {
+            const error = e.response ? e.response.data.error : e.message
+            dispatch(setAuthErrorAC(error))
+            dispatch(setAppStatusAC('failed'))
 
-})
+        })
 }
 
 export const logoutTC = (dispatch: Dispatch<ActionsType>) => {
