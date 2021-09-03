@@ -1,5 +1,5 @@
 import {setAppStatusAC} from "./app-reducer";
-import {cardsAPI, CreateCardRequestDataType} from "../m3-dal/api";
+import {cardsAPI, CreateCardRequestDataType, UpdateCardsRequestDataType} from "../m3-dal/api";
 import {AppThunkType} from "./store";
 
 const initialState = {
@@ -38,6 +38,7 @@ export const getCardsTC = (data: GetCardsRequestDataType): AppThunkType => dispa
 }
 
 export const addCardTC = (data: CreateCardRequestDataType): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC('loading'))
     cardsAPI.addCard(data)
         .then(() => {
             dispatch(getCardsTC(data))
@@ -46,6 +47,35 @@ export const addCardTC = (data: CreateCardRequestDataType): AppThunkType => disp
         .catch(e => {
             const error = e.res ? e.res.data.error : (`Add card failed: ${e.message}.`)
             alert(error)
+        })
+}
+
+export const delCardTC = (id: string): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.deleteCard(id)
+        .then(() => {
+            dispatch(setAppStatusAC('succeeded'))
+            dispatch(getCardsTC({}))
+            console.log('card deleted successfully')
+        })
+        .catch(() => {
+            dispatch(setAppStatusAC('failed'))
+            console.log('delete card error')
+        })
+}
+
+export const updateCardTC = (data: UpdateCardsRequestDataType): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.updateCard(data)
+        .then(() => {
+            dispatch(setAppStatusAC('succeeded'))
+            dispatch(getCardsTC({cardsPack_id: data.packId}))
+
+            console.log("card updated")
+        })
+        .catch(() => {
+            dispatch(setAppStatusAC('failed'))
+            console.log("update card error")
         })
 }
 

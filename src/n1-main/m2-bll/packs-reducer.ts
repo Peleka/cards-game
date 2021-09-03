@@ -73,7 +73,7 @@ export const addPackTC = (data: AddPackRequestDataType): AppThunkType => (dispat
     packsAPI.addPack(data)
         .then(() => {
             dispatch(getPacksTC({
-                pageCount: '10',
+                pageCount: '100',
                 page: 1,
             }))
             console.log('pack added successfully')
@@ -90,7 +90,7 @@ export const delPackTC = (id: string): AppThunkType => dispatch => {
     packsAPI.deletePack(id)
         .then(() => {
             dispatch(setAppStatusAC('succeeded'))
-            getPacksTC({})
+            dispatch(getPacksTC({}))
             console.log('pack deleted successfully')
         })
         .catch(() => {
@@ -103,7 +103,7 @@ export const updatePackTC = (data: UpdatePacksRequestDataType): AppThunkType => 
     dispatch(setAppStatusAC('loading'))
     packsAPI.updatePack(data)
         .then(() => {
-            getPacksTC({})
+            dispatch(getPacksTC({}))
             console.log('pack updated successfully')
             dispatch(setAppStatusAC('succeeded'))
         })
