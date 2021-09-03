@@ -6,7 +6,8 @@ import {setAppStatusAC} from "./app-reducer";
 const initialState = {
     isLoggedIn: false,
     userData: null as UserDataType | null,
-    authError: ''
+    authError: '',
+
 };
 
 type InitialStateType = typeof initialState
@@ -79,6 +80,7 @@ type ActionsType = ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setUserDataAC>
     | ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setAuthErrorAC>
+
 
 export type UserLoginData = {
     email: string
