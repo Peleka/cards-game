@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useCallback, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux";
+import { Pagination } from '@material-ui/lab';
 import {
     addPackTC,
     delPackTC,
@@ -68,7 +69,7 @@ export const Packs = () => {
 
                 <div className={st.pageCount}>
                     <SuperSelect
-                        options={['5', '8', '10', '20', '50', '100']}
+                        options={['10', '5', '20', '50', '100']}
                         onChangeOption={(option: string) => dispatch(getPacksTC({pageCount: option}))}/> pages displayed
                 </div>
 
@@ -83,11 +84,12 @@ export const Packs = () => {
                 </div>
 
                 <div className={st.paginator}>
-                    
-                    {pages.map(p => {
-                        return <span key={p} className={currentPage === p ? s.selectedPage : ''}
-                                     onClick={() => onPageChangedHandler(p)}> {p} </span>
-                    })}
+
+                    <Pagination count={pagesCount}
+                                boundaryCount={2}
+                                defaultPage={1}
+                                page={currentPage}
+                                onChange={(e: ChangeEvent<any>, p: number) => onPageChangedHandler(p)}/>
                 </div>
             </div>
 
