@@ -49,7 +49,7 @@ export const Packs = () => {
 
     useEffect(() => {
         dispatch(getPacksTC({
-            pageCount: '10',
+            pageCount: '100',
             page: 1,
         }))
     }, [dispatch])
