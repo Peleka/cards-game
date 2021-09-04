@@ -4,8 +4,22 @@ import {setAppStatusAC} from "./app-reducer";
 
 
 const initialState = {
+    userData: {
+        avatar: '',
+        created: '',
+        email: '',
+        isAdmin: false,
+        name: '',
+        publicCardPacksCount: 0,
+        rememberMe: false,
+        token: '',
+        tokenDeathTime: 0,
+        updated: '',
+        verified: false,
+        __v: 0,
+        _id: '',
+    } || null,
     isLoggedIn: false,
-    userData: null as UserDataType | null,
     authError: '',
 };
 
@@ -14,9 +28,9 @@ type InitialStateType = typeof initialState
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case 'login/SET-IS-LOGGED-IN':
+            return {...state, userData: action.userData, isLoggedIn: action.value}
+        case 'login/SET-IS-LOGGED-OUT':
             return {...state, isLoggedIn: action.value}
-        case 'login/SET-USER-DATA':
-            return {...state, userData: action.payload}
         case 'login/SET-AUTH-ERROR':
             return {...state, authError: action.errorMessage}
         default:
@@ -25,12 +39,11 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 };
 
 //actions
-export const setIsLoggedInAC = (value: boolean) => ({
-    type: 'login/SET-IS-LOGGED-IN', value
+export const setIsLoggedInAC = (value: boolean, userData: UserDataResponseType) => ({
+    type: 'login/SET-IS-LOGGED-IN', value, userData
 } as const)
-
-export const setUserDataAC = (payload: UserDataType | null) => ({
-    type: 'login/SET-USER-DATA', payload
+export const setIsLoggedOutAC = (value: boolean) => ({
+    type: 'login/SET-IS-LOGGED-OUT', value
 } as const)
 
 const setAuthErrorAC = (errorMessage: string) => ({
@@ -44,15 +57,7 @@ export const loginTC = (values: UserLoginData) => (dispatch: Dispatch<ActionsTyp
 
     authAPI.login(values.email, values.password, values.rememberMe)
         .then((res) => {
-            const userDataFromApi: UserDataType = {
-                _id: res.data._id,
-                name: res.data.name,
-                email: res.data.email,
-                avatar: res.data.avatar || null,
-                publicCardPacksCount: res.data.publicCardPacksCount
-            }
-            dispatch(setUserDataAC(userDataFromApi))
-            dispatch(setIsLoggedInAC(true))
+            dispatch(setIsLoggedInAC(true, res.data))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((e) => {
@@ -66,8 +71,7 @@ export const loginTC = (values: UserLoginData) => (dispatch: Dispatch<ActionsTyp
 export const logoutTC = (dispatch: Dispatch<ActionsType>) => {
     try {
         authAPI.logout().then(() => {
-            dispatch(setIsLoggedInAC(false))
-            dispatch(setUserDataAC(null))
+            dispatch(setIsLoggedOutAC(false))
         })
     } catch (e) {
 
@@ -76,7 +80,7 @@ export const logoutTC = (dispatch: Dispatch<ActionsType>) => {
 
 // types
 type ActionsType = ReturnType<typeof setIsLoggedInAC>
-    | ReturnType<typeof setUserDataAC>
+    | ReturnType<typeof setIsLoggedOutAC>
     | ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setAuthErrorAC>
 
@@ -87,10 +91,18 @@ export type UserLoginData = {
     rememberMe: boolean
 }
 
-export type UserDataType = {
-    _id: string
+export type UserDataResponseType = {
+    avatar: string
+    created: string
     email: string
+    isAdmin: boolean
     name: string
-    avatar?: string | null
     publicCardPacksCount: number
+    rememberMe: boolean
+    token: string
+    tokenDeathTime: number
+    updated: string
+    verified: boolean
+    __v: number
+    _id: string
 }

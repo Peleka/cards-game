@@ -1,11 +1,11 @@
 import React, {ChangeEvent, useCallback, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux";
-import { Pagination } from '@material-ui/lab';
+import {Pagination} from '@material-ui/lab';
 import {
     addPackTC,
     delPackTC,
     getPacksTC,
-    setCurrentPage,
+    setCurrentPageAC, setUserIdAC,
     UpdatePacksRequestDataType,
     updatePackTC
 } from "../../../m2-bll/packs-reducer";
@@ -25,7 +25,7 @@ export const Packs = () => {
     const totalPacks = useSelector((state: AppStoreType) => state.packs.totalPacksCount)
     const pageSize = useSelector((state: AppStoreType) => state.packs.pageSize)
     const currentPage = useSelector((state: AppStoreType) => state.packs.currentPage)
-    const userID = useSelector((state: AppStoreType) => state.auth.userData?._id)
+    const userId = useSelector((state: AppStoreType) => state.auth.userData._id)
     const delPack = useCallback(function (id: string) {
         dispatch(delPackTC(id))
     }, [dispatch])
@@ -33,7 +33,12 @@ export const Packs = () => {
         dispatch(updatePackTC(data))
     }, [dispatch])
     const showMyPacks = () => {
-        dispatch(getPacksTC({user_id: userID}))
+        dispatch(setUserIdAC(userId))
+        dispatch(getPacksTC())
+    }
+    const showAllPacks = () => {
+        dispatch(setUserIdAC(''))
+        dispatch(getPacksTC())
     }
 
     //pagination
@@ -41,16 +46,13 @@ export const Packs = () => {
     let pagesCount = Math.ceil(totalPacks / pageSize)
     for (let i = 1; i <= pagesCount; i++) pages.push(i)
     const onPageChangedHandler = (p: number) => {
-        dispatch(setCurrentPage(p))
-        dispatch(getPacksTC({page: currentPage}))
+        dispatch(setCurrentPageAC(p))
+        dispatch(getPacksTC())
     }
     //
 
     useEffect(() => {
-        dispatch(getPacksTC({
-            pageCount: '10',
-            page: 1,
-        }))
+        showAllPacks()
     }, [dispatch])
 
     const mappedPacks = cardPacks && cardPacks.map((p, i) => <Pack
@@ -61,7 +63,7 @@ export const Packs = () => {
     />)
 
     if (!isLoggedIn) {
-        return <Login />
+        return <Login/>
     }
 
     return (
@@ -82,11 +84,7 @@ export const Packs = () => {
                 <div className={st.filter}>
                     <SuperDoubleRange
                         value={[0, 20]}
-                        onChangeRange={(e:ChangeEvent<{}>, value: number | number[]) => {
-                            let min = typeof value === 'object' ? value[0] : 3
-                            let max = typeof value === 'object' ? value[1] : 6
-                            dispatch(getPacksTC({min: min, max: max}))
-                        }}/>
+                        />
                 </div>
 
                 <div className={st.paginator}>
@@ -97,7 +95,8 @@ export const Packs = () => {
                                 page={currentPage}
                                 onChange={(e: ChangeEvent<any>, p: number) => onPageChangedHandler(p)}/>
 
-                    <SuperButton onClick={showMyPacks}> show my packs </SuperButton>
+                    <SuperButton onClick={showMyPacks}> my packs </SuperButton>
+                    <SuperButton onClick={showAllPacks}> all packs </SuperButton>
                 </div>
             </div>
 

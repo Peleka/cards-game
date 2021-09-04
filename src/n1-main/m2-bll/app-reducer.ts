@@ -1,5 +1,5 @@
 import {AppThunkType} from "./store";
-import {setIsLoggedInAC, setUserDataAC} from "./auth-reducer";
+import {setIsLoggedInAC} from "./auth-reducer";
 import {authAPI} from "../m3-dal/api";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -38,8 +38,7 @@ export const setIsInitializedTC = (): AppThunkType => dispatch => {
     authAPI.me()
         .then((res) => {
             dispatch(setIsInitializedAC(true))
-            dispatch(setUserDataAC(res.data))
-            dispatch(setIsLoggedInAC(true))
+            dispatch(setIsLoggedInAC(true,res.data))
             dispatch(setAppStatusAC("succeeded"))
         })
         .catch(() => {
@@ -53,7 +52,6 @@ export const setIsInitializedTC = (): AppThunkType => dispatch => {
 //types
 export type AppActionsType = ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setIsLoggedInAC>
-    | ReturnType<typeof setUserDataAC>
     | ReturnType<typeof setIsInitializedAC>
 
 
