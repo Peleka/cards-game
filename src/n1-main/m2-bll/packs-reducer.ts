@@ -4,9 +4,15 @@ import {AppThunkType} from "./store";
 
 const initialState = {
     cardPacks: null as null | PackResponseType[],
+    maxCardsCount: 4,
+    minCardsCount: 0,
+    pageCount: 10,
+    packId: '',
+    name: '',
     totalPacksCount: 0,
     pageSize: 10,
     currentPage: 1,
+    userId: '',
 }
 
 type InitialStateType = typeof initialState
@@ -23,6 +29,8 @@ export const packsReducer = (state = initialState, action: PacksActionsType): In
             return state
         case 'PACKS/UPDATE-PACK':
             return state
+        case 'PACKS/SET-USER-ID':
+            return {...state, userId: action.userId}
         default:
             return state
     }
@@ -37,7 +45,7 @@ const setTotalPacksCountAC = (totalPacks: number) => ({
     type: 'SET-TOTAL-PACKS-COUNT',
     totalPacks,
 } as const)
-export const setCurrentPage = (pageNumber: number) => ({
+export const setCurrentPageAC = (pageNumber: number) => ({
     type: 'SET-CURRENT-PAGE',
     pageNumber,
 } as const)
@@ -49,14 +57,25 @@ export const updatePackAC = (data: UpdatePacksRequestDataType) => ({
     type: 'PACKS/UPDATE-PACK',
     data
 } as const)
+export const setUserIdAC = (userId: string) => ({
+    type: 'PACKS/SET-USER-ID',
+    userId
+} as const)
 
 //thunk
-export const getPacksTC = (data: GetPacksRequestDataType): AppThunkType => (dispatch) => {
+export const getPacksTC = (): AppThunkType => (dispatch, getState) => {
+  // debugger
     dispatch(setAppStatusAC('loading'))
+    const state = getState()
+    const currentPage = state.packs.currentPage
+    const packName = state.packs.name
+    const minCardsCount = state.packs.minCardsCount
+    const maxCardsCount = state.packs.maxCardsCount
+    const userId = state.packs.userId
+    const pageCount = state.packs.pageCount
 
-    packsAPI.getPacks(data)
+    packsAPI.getPacks(pageCount,currentPage,packName,minCardsCount,maxCardsCount,userId)
         .then(res => {
-
             dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
             dispatch(setPacksAC(res.data.cardPacks))
             dispatch(setAppStatusAC('succeeded'))
@@ -71,10 +90,7 @@ export const addPackTC = (data: AddPackRequestDataType): AppThunkType => (dispat
     dispatch(setAppStatusAC('loading'))
     packsAPI.addPack(data)
         .then(() => {
-            dispatch(getPacksTC({
-                pageCount: '10',
-                page: 1,
-            }))
+            dispatch(getPacksTC())
             console.log('pack added successfully')
             dispatch(setAppStatusAC("succeeded"))
         })
@@ -89,7 +105,7 @@ export const delPackTC = (id: string): AppThunkType => dispatch => {
     packsAPI.deletePack(id)
         .then(() => {
             dispatch(setAppStatusAC('succeeded'))
-            dispatch(getPacksTC({}))
+            dispatch(getPacksTC())
             console.log('pack deleted successfully')
         })
         .catch(() => {
@@ -102,7 +118,7 @@ export const updatePackTC = (data: UpdatePacksRequestDataType): AppThunkType => 
     dispatch(setAppStatusAC('loading'))
     packsAPI.updatePack(data)
         .then(() => {
-            dispatch(getPacksTC({}))
+            dispatch(getPacksTC())
             console.log('pack updated successfully')
             dispatch(setAppStatusAC('succeeded'))
         })
@@ -116,9 +132,10 @@ export const updatePackTC = (data: UpdatePacksRequestDataType): AppThunkType => 
 export type PacksActionsType = ReturnType<typeof setPacksAC>
     | ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setTotalPacksCountAC>
-    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setCurrentPageAC>
     | ReturnType<typeof delPackAC>
     | ReturnType<typeof updatePackAC>
+    | ReturnType<typeof setUserIdAC>
 
 export type GetPacksRequestDataType = {
     packName?: string
