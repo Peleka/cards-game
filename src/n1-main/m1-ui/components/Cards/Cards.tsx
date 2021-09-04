@@ -5,7 +5,7 @@ import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {Card} from "./Card/Card";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../m2-bll/store";
-import {addCardTC, delCardTC, getCardsTC, updateCardTC} from "../../../m2-bll/cards-reducer";
+import {addCardTC, delCardTC, getCardsTC, setCardsCurrentPageAC, updateCardTC} from "../../../m2-bll/cards-reducer";
 import {useParams} from "react-router-dom";
 import {Login} from "../Login/Login";
 import {updateCardDataType} from "../../../m3-dal/api";
@@ -17,6 +17,7 @@ export const Cards = () => {
     const cards = useSelector((state: AppStoreType) => state.cards.cards)
     const {packID} = useParams<{ packID: string }>()
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
+    // const totalCards = useSelector((state: AppStoreType) => state.cards.cardsTotalCount)
 
 
     const delCard = useCallback((id: string, packId: string) => {
@@ -34,6 +35,16 @@ export const Cards = () => {
     useEffect(() => {
         dispatch(getCardsTC(packID))
     }, [dispatch, packID])
+
+    //pagination
+    // let pages = []
+    // let pagesCount = Math.ceil(totalCards / pageCardsSize)
+    // for (let i = 1; i <= pagesCount; i++) pages.push(i)
+    // const onPageChangedHandler = (p: number) => {
+    //     dispatch(setCardsCurrentPageAC(p))
+    //     dispatch(getCardsTC(packID))
+    // }
+    //
 
     const mappedCards = cards && cards.map((c, i) => <Card
         key={i}

@@ -34,7 +34,14 @@ export const Packs = () => {
     const minCardsCount = useSelector((state: AppStoreType) => state.packs.minCardsCount)
     const maxCardsCount = useSelector((state: AppStoreType) => state.packs.maxCardsCount)
 
+
+    console.log('component Packs',cardPacks)
+
    useEffect(() => {
+       if(userId === ''){
+           dispatch(setUserIdAC(''))
+           dispatch(getPacksTC())
+       }
         dispatch(getPacksTC())
     },  [dispatch, minCardsCount, maxCardsCount])
 
@@ -72,9 +79,10 @@ export const Packs = () => {
     }
     //
 
-    useEffect(() => {
-        showAllPacks()
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(setUserIdAC(''))
+    //     dispatch(getPacksTC())
+    // }, [])
 
     const mappedPacks = cardPacks && cardPacks.map((p, i) => <Pack
         key={i}
@@ -88,6 +96,7 @@ export const Packs = () => {
     }
 
     return (
+
         <div>
             <div className={st.titleParent}>
                 <h1>Packs</h1>
