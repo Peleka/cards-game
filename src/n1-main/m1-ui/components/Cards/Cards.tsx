@@ -17,6 +17,7 @@ export const Cards = () => {
     const cards = useSelector((state: AppStoreType) => state.cards.cards)
     const {packID} = useParams<{ packID: string }>()
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
+    // const totalCards = useSelector((state: AppStoreType) => state.cards.cardsTotalCount)
 
 
     const delCard = useCallback((id: string, packId: string) => {
@@ -34,6 +35,16 @@ export const Cards = () => {
     useEffect(() => {
         dispatch(getCardsTC(packID))
     }, [dispatch, packID])
+
+    //pagination
+    // let pages = []
+    // let pagesCount = Math.ceil(totalCards / pageCardsSize)
+    // for (let i = 1; i <= pagesCount; i++) pages.push(i)
+    // const onPageChangedHandler = (p: number) => {
+    //     dispatch(setCardsCurrentPageAC(p))
+    //     dispatch(getCardsTC(packID))
+    // }
+    //
 
     const mappedCards = cards && cards.map((c, i) => <Card
         key={i}

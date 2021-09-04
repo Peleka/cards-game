@@ -5,9 +5,9 @@ import {AppThunkType} from "./store";
 const initialState = {
     cards: [] as Array<CardDataType> | null,
     packUserId: '',
-    // page: 1,
-    // pageCount: 10,
-    // cardsTotalCount: 0,
+    page: 1,
+    pageCount: 10,
+    cardsTotalCount: 0,
     minGrade: 0,
     maxGrade: 6,
 }
@@ -16,18 +16,21 @@ type InitialStateType = typeof initialState
 
 export const cardsReducer = (state: InitialStateType = initialState, action: CardsActionsType): InitialStateType => {
     switch (action.type) {
-        case 'CARDS/SET-CARDS':
+        case "CARDS/SET-CARDS":
             return {...state, cards: action.cards}
+        case "SET_CARDS_TOTAL_COUNT":
+            return {...state, pageCount: action.count}
+        case "SET_CURRENT_PAGE":
+            return {...state, page: action.page}
         default:
             return state
     }
 }
 
 //action creators
-export const setCardsAC = (cards: CardDataType[]) => ({
-    type: 'CARDS/SET-CARDS',
-    cards
-} as const)
+export const setCardsAC = (cards: CardDataType[]) => ({type: 'CARDS/SET-CARDS', cards} as const)
+export const setCardsTotalCountAC = (count: number) => ({type: 'SET_CARDS_TOTAL_COUNT', count} as const)
+export const setCardsCurrentPageAC = (page: number) => ({type: 'SET_CURRENT_PAGE', page} as const)
 
 
 //thunk
@@ -35,6 +38,7 @@ export const getCardsTC = (cardsPack_id: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     cardsAPI.getCards(cardsPack_id)
         .then(res => {
+            dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
             dispatch(setCardsAC(res.data.cards))
             dispatch(setAppStatusAC('succeeded'))
         })
@@ -88,8 +92,10 @@ export const updateCardTC = (packId: string, updateCardData: updateCardDataType)
 }
 
 //types
-export type CardsActionsType = ReturnType<typeof setCardsAC> |
-    ReturnType<typeof setAppStatusAC>
+export type CardsActionsType = ReturnType<typeof setCardsAC>
+    | ReturnType<typeof setAppStatusAC>
+    | ReturnType<typeof setCardsTotalCountAC>
+    | ReturnType<typeof setCardsCurrentPageAC>
 
 // export type GetCardsRequestDataType = {
 //     cardAnswer?: string

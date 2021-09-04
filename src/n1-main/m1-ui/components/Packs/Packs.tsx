@@ -24,7 +24,9 @@ import {ModalForPacks} from "../Modal/ModalPacks/ModalForPacks";
 export const Packs = () => {
 
 
+
   const dispatch = useDispatch()
+
 
   const cardPacks = useSelector((state: AppStoreType) => state.packs.cardPacks)
   const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
@@ -34,6 +36,7 @@ export const Packs = () => {
   const userId = useSelector((state: AppStoreType) => state.auth.userData._id)
   const minCardsCount = useSelector((state: AppStoreType) => state.packs.minCardsCount)
   const maxCardsCount = useSelector((state: AppStoreType) => state.packs.maxCardsCount)
+
 
   // Модалка на добавление колоды
   const [addPackModal, setAddPackModal] = useState<boolean>(false);
@@ -47,6 +50,13 @@ export const Packs = () => {
   const addPack = (newPackName: string) => {
     dispatch(addPackTC({name: newPackName}))
   }
+
+    // console.log('component Packs', cardPacks)
+
+    useEffect(() => {
+        dispatch(getPacksTC())
+    }, [dispatch, minCardsCount, maxCardsCount])
+
 
 
   useEffect(() => {
@@ -85,11 +95,6 @@ export const Packs = () => {
         dispatch(setCurrentPageAC(p))
         dispatch(getPacksTC())
     }
-    //
-
-    useEffect(() => {
-        showAllPacks()
-    }, [dispatch])
 
     const mappedPacks = cardPacks && cardPacks.map((p, i) => <Pack
         key={i}
