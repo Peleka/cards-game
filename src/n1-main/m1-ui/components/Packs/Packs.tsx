@@ -1,16 +1,16 @@
-import React, {ChangeEvent, useCallback, useEffect} from "react"
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux";
 import {Pagination} from '@material-ui/lab';
 import {
-    addPackTC,
-    delPackTC,
-    getPacksTC,
-    setCurrentPageAC,
-    setMaxCardsCountAC,
-    setMinCardsCountAC,
-    setUserIdAC,
-    UpdatePacksRequestDataType,
-    updatePackTC
+  addPackTC,
+  delPackTC,
+  getPacksTC,
+  setCurrentPageAC,
+  setMaxCardsCountAC,
+  setMinCardsCountAC,
+  setUserIdAC,
+  UpdatePacksRequestDataType,
+  updatePackTC
 } from "../../../m2-bll/packs-reducer";
 import {Pack} from "./Pack/Pack";
 import {AppStoreType} from "../../../m2-bll/store";
@@ -19,28 +19,44 @@ import st from './Packs.module.css'
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {Login} from "../Login/Login";
 import SuperDoubleRange from "../../superComponents/c8-SuperDoubleRange/SuperDoubleRange";
+import {ModalForPacks} from "../Modal/ModalPacks/ModalForPacks";
 
 export const Packs = () => {
 
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-    const cardPacks = useSelector((state: AppStoreType) => state.packs.cardPacks)
-    const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
-    const totalPacks = useSelector((state: AppStoreType) => state.packs.totalPacksCount)
-    const pageSize = useSelector((state: AppStoreType) => state.packs.pageSize)
-    const currentPage = useSelector((state: AppStoreType) => state.packs.currentPage)
-    const userId = useSelector((state: AppStoreType) => state.auth.userData._id)
-    const minCardsCount = useSelector((state: AppStoreType) => state.packs.minCardsCount)
-    const maxCardsCount = useSelector((state: AppStoreType) => state.packs.maxCardsCount)
+  const cardPacks = useSelector((state: AppStoreType) => state.packs.cardPacks)
+  const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
+  const totalPacks = useSelector((state: AppStoreType) => state.packs.totalPacksCount)
+  const pageSize = useSelector((state: AppStoreType) => state.packs.pageSize)
+  const currentPage = useSelector((state: AppStoreType) => state.packs.currentPage)
+  const userId = useSelector((state: AppStoreType) => state.auth.userData._id)
+  const minCardsCount = useSelector((state: AppStoreType) => state.packs.minCardsCount)
+  const maxCardsCount = useSelector((state: AppStoreType) => state.packs.maxCardsCount)
 
-   useEffect(() => {
-        dispatch(getPacksTC())
-    },  [dispatch, minCardsCount, maxCardsCount])
+  // Модалка на добавление колоды
+  const [addPackModal, setAddPackModal] = useState<boolean>(false);
+  const openAddPackModal = () => {
+    setAddPackModal(true)
+    // dispatch(addPackTC({name: 'Aleks/Dima/Elena pack'}))
+  }
+  const closeAddPackModal = () => {
+    setAddPackModal(false)
+  }
 
-    const delPack = useCallback(function (id: string) {
-        dispatch(delPackTC(id))
-    }, [dispatch])
+  const addPack = (newPackName: string) => {
+    dispatch(addPackTC({name: newPackName}))
+  }
+
+
+  useEffect(() => {
+    dispatch(getPacksTC())
+  }, [dispatch, minCardsCount, maxCardsCount])
+
+  const delPack = useCallback(function (id: string) {
+    dispatch(delPackTC(id))
+  }, [dispatch])
 
     const updatePack = useCallback(function (data: UpdatePacksRequestDataType) {
         dispatch(updatePackTC(data))
@@ -118,12 +134,18 @@ export const Packs = () => {
                 </div>
             </div>
 
+          {addPackModal && <ModalForPacks
+            closeAddPackModal={closeAddPackModal}
+            addNewPack={addPack}
+          />}
+
             <div className={`${s.packItem} ${st.packContents}`}>
                 <div>username</div>
                 <div>name</div>
                 <div>cards count</div>
                 <div>last update</div>
-                <div><SuperButton onClick={() => dispatch(addPackTC({name: 'Aleks/Dima/Elena pack'}))}>add</SuperButton>
+                {/*<div><SuperButton onClick={() => dispatch(addPackTC({name: 'Aleks/Dima/Elena pack'}))}>add</SuperButton>*/}
+                  <div><SuperButton onClick={openAddPackModal}>add</SuperButton>
                 </div>
                 <div></div>
                 <div></div>
