@@ -5,7 +5,7 @@ import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {Card} from "./Card/Card";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../m2-bll/store";
-import {addCardTC, delCardTC, getCardsTC, setCardsCurrentPageAC, updateCardTC} from "../../../m2-bll/cards-reducer";
+import {addCardTC, delCardTC, getCardsTC, updateCardTC} from "../../../m2-bll/cards-reducer";
 import {useParams} from "react-router-dom";
 import {Login} from "../Login/Login";
 import {updateCardDataType} from "../../../m3-dal/api";

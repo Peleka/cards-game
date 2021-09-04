@@ -22,7 +22,6 @@ import SuperDoubleRange from "../../superComponents/c8-SuperDoubleRange/SuperDou
 
 export const Packs = () => {
 
-
     const dispatch = useDispatch()
 
     const cardPacks = useSelector((state: AppStoreType) => state.packs.cardPacks)
@@ -34,16 +33,11 @@ export const Packs = () => {
     const minCardsCount = useSelector((state: AppStoreType) => state.packs.minCardsCount)
     const maxCardsCount = useSelector((state: AppStoreType) => state.packs.maxCardsCount)
 
+    // console.log('component Packs', cardPacks)
 
-    console.log('component Packs',cardPacks)
-
-   useEffect(() => {
-       if(userId === ''){
-           dispatch(setUserIdAC(''))
-           dispatch(getPacksTC())
-       }
+    useEffect(() => {
         dispatch(getPacksTC())
-    },  [dispatch, minCardsCount, maxCardsCount])
+    }, [dispatch, minCardsCount, maxCardsCount])
 
     const delPack = useCallback(function (id: string) {
         dispatch(delPackTC(id))
@@ -77,12 +71,6 @@ export const Packs = () => {
         dispatch(setCurrentPageAC(p))
         dispatch(getPacksTC())
     }
-    //
-
-    // useEffect(() => {
-    //     dispatch(setUserIdAC(''))
-    //     dispatch(getPacksTC())
-    // }, [])
 
     const mappedPacks = cardPacks && cardPacks.map((p, i) => <Pack
         key={i}
@@ -96,7 +84,6 @@ export const Packs = () => {
     }
 
     return (
-
         <div>
             <div className={st.titleParent}>
                 <h1>Packs</h1>
