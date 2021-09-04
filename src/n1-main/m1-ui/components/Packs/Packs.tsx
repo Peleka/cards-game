@@ -5,7 +5,10 @@ import {
     addPackTC,
     delPackTC,
     getPacksTC,
-    setCurrentPageAC, setUserIdAC,
+    setCurrentPageAC,
+    setMaxCardsCountAC,
+    setMinCardsCountAC,
+    setUserIdAC,
     UpdatePacksRequestDataType,
     updatePackTC
 } from "../../../m2-bll/packs-reducer";
@@ -19,19 +22,30 @@ import SuperDoubleRange from "../../superComponents/c8-SuperDoubleRange/SuperDou
 
 export const Packs = () => {
 
+
     const dispatch = useDispatch()
+
     const cardPacks = useSelector((state: AppStoreType) => state.packs.cardPacks)
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
     const totalPacks = useSelector((state: AppStoreType) => state.packs.totalPacksCount)
     const pageSize = useSelector((state: AppStoreType) => state.packs.pageSize)
     const currentPage = useSelector((state: AppStoreType) => state.packs.currentPage)
     const userId = useSelector((state: AppStoreType) => state.auth.userData._id)
+    const minCardsCount = useSelector((state: AppStoreType) => state.packs.minCardsCount)
+    const maxCardsCount = useSelector((state: AppStoreType) => state.packs.maxCardsCount)
+
+   useEffect(() => {
+        dispatch(getPacksTC())
+    },  [dispatch, minCardsCount, maxCardsCount])
+
     const delPack = useCallback(function (id: string) {
         dispatch(delPackTC(id))
     }, [dispatch])
+
     const updatePack = useCallback(function (data: UpdatePacksRequestDataType) {
         dispatch(updatePackTC(data))
     }, [dispatch])
+
     const showMyPacks = () => {
         dispatch(setUserIdAC(userId))
         dispatch(getPacksTC())
@@ -39,6 +53,13 @@ export const Packs = () => {
     const showAllPacks = () => {
         dispatch(setUserIdAC(''))
         dispatch(getPacksTC())
+    }
+
+    const handleChange = (event: ChangeEvent<{}>, newValue: number | number[]) => {
+        if (newValue instanceof Array) {
+            dispatch(setMinCardsCountAC(newValue[0]))
+            dispatch(setMaxCardsCountAC(newValue[1]))
+        }
     }
 
     //pagination
@@ -69,10 +90,7 @@ export const Packs = () => {
     return (
         <div>
             <div className={st.titleParent}>
-
                 <h1>Packs</h1>
-
-
                 {/*показывает окошко с выбором кол-ва отображаемых колод
 
                 <div className={st.pageCount}>
@@ -80,11 +98,11 @@ export const Packs = () => {
                         options={['10', '5', '20', '50', '100']}
                         onChangeOption={(option: string) => dispatch(getPacksTC({pageCount: option}))}/> pages displayed
                 </div>*/}
-
                 <div className={st.filter}>
                     <SuperDoubleRange
-                        value={[0, 20]}
-                        />
+                        value={[minCardsCount, maxCardsCount]}
+                        onChangeRange={handleChange}
+                    />
                 </div>
 
                 <div className={st.paginator}>

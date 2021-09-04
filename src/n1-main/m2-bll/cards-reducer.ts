@@ -3,7 +3,13 @@ import {cardsAPI, CreateCardRequestDataType, updateCardDataType} from "../m3-dal
 import {AppThunkType} from "./store";
 
 const initialState = {
-    cards: null as Array<CardDataType> | null
+    cards: [] as Array<CardDataType> | null,
+    packUserId: '',
+    // page: 1,
+    // pageCount: 10,
+    // cardsTotalCount: 0,
+    minGrade: 0,
+    maxGrade: 6,
 }
 
 type InitialStateType = typeof initialState
