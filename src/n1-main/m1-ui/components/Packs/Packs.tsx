@@ -39,7 +39,6 @@ export const Packs = () => {
   const [addPackModal, setAddPackModal] = useState<boolean>(false);
   const openAddPackModal = () => {
     setAddPackModal(true)
-    // dispatch(addPackTC({name: 'Aleks/Dima/Elena pack'}))
   }
   const closeAddPackModal = () => {
     setAddPackModal(false)
