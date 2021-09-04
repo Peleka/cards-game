@@ -35,7 +35,7 @@ export const recoverPasswordAPI = {
 }
 
 export const packsAPI = {
-    getPacks(pageCount: number,currentPage: number,packName: string = '',minCardsCount: number,maxCardsCount: number,userId: string) {
+    getPacks(pageCount: number, currentPage: number, packName: string = '', minCardsCount: number, maxCardsCount: number, userId: string) {
         return instance
             .get(`/cards/pack?pageCount=${pageCount}&page=${currentPage}&min=${minCardsCount}&max=${maxCardsCount}&user_id=${userId}`)
     },
@@ -52,7 +52,12 @@ export const packsAPI = {
 
 export const cardsAPI = {
     getCards(cardsPack_id: string) {
-        return instance.get(`/cards/card?cardsPack_id=${cardsPack_id}`)
+        return instance
+            .get(`/cards/card`, {
+                params: {
+                    cardsPack_id: cardsPack_id
+                }
+            })
     },
     addCard(data: CreateCardRequestDataType) {
         return instance.post('/cards/card', {card: {cardsPack_id: data.cardsPack_id}})

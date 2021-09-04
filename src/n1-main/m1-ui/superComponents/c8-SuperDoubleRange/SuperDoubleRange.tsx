@@ -1,9 +1,9 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import {Slider} from "@material-ui/core";
 
 
 type SuperDoubleRangePropsType = {
-    onChangeRange?:  (event: any, value: number | number[]) => void
+    onChangeRange?:  (event: ChangeEvent<{}>, value: number | number[]) => void
     value?: [number, number]
     // min, max, step, disable, ...
 }
@@ -14,8 +14,6 @@ const SuperDoubleRange: React.FC<SuperDoubleRangePropsType> = (
         // min, max, step, disable, ...
     }
 ) => {
-    // сделать самому, можно подключать библиотеки
-
     return (
         <>
             <Slider

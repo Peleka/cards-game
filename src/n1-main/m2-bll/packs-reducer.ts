@@ -31,12 +31,25 @@ export const packsReducer = (state = initialState, action: PacksActionsType): In
             return state
         case 'PACKS/SET-USER-ID':
             return {...state, userId: action.userId}
+        case 'PACKS/SET-MIN-CARDS_COUNT':
+            return {...state, minCardsCount: action.minCardsCount}
+        case "PACKS/SET-MAX-CARDS_COUNT":
+            return {...state, maxCardsCount: action.maxCardsCount}
         default:
             return state
     }
 }
 
 //action creators
+export const setMinCardsCountAC = (minCardsCount: number) => ({
+    type: 'PACKS/SET-MIN-CARDS_COUNT',
+    minCardsCount,
+} as const)
+export const setMaxCardsCountAC = (maxCardsCount: number) => ({
+    type: 'PACKS/SET-MAX-CARDS_COUNT',
+    maxCardsCount,
+} as const)
+
 export const setPacksAC = (data: PackResponseType[]) => ({
     type: 'PACKS/SET-PACKS',
     data,
@@ -64,7 +77,7 @@ export const setUserIdAC = (userId: string) => ({
 
 //thunk
 export const getPacksTC = (): AppThunkType => (dispatch, getState) => {
-  // debugger
+    // debugger
     dispatch(setAppStatusAC('loading'))
     const state = getState()
     const currentPage = state.packs.currentPage
@@ -74,7 +87,7 @@ export const getPacksTC = (): AppThunkType => (dispatch, getState) => {
     const userId = state.packs.userId
     const pageCount = state.packs.pageCount
 
-    packsAPI.getPacks(pageCount,currentPage,packName,minCardsCount,maxCardsCount,userId)
+    packsAPI.getPacks(pageCount, currentPage, packName, minCardsCount, maxCardsCount, userId)
         .then(res => {
             dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
             dispatch(setPacksAC(res.data.cardPacks))
@@ -136,6 +149,8 @@ export type PacksActionsType = ReturnType<typeof setPacksAC>
     | ReturnType<typeof delPackAC>
     | ReturnType<typeof updatePackAC>
     | ReturnType<typeof setUserIdAC>
+    | ReturnType<typeof setMinCardsCountAC>
+    | ReturnType<typeof setMaxCardsCountAC>
 
 export type GetPacksRequestDataType = {
     packName?: string
