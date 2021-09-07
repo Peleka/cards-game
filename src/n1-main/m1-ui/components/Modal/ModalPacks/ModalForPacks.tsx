@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import SuperInputText from '../../../superComponents/c1-SuperInputText/SuperInputText';
 import SuperButton from '../../../superComponents/c2-SuperButton/SuperButton';
-import s from './ModalForPacks.module.css';
+import s from '../Modal.module.css';
 
 type ModalForPacksType = {
   closeAddPackModal: () => void

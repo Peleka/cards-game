@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import s from "./Card/Card.module.css";
 import st from "./Cards.module.css"
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
@@ -9,6 +9,7 @@ import {addCardTC, delCardTC, getCardsTC, updateCardTC} from "../../../m2-bll/ca
 import {useParams} from "react-router-dom";
 import {Login} from "../Login/Login";
 import {updateCardDataType} from "../../../m3-dal/api";
+import {ModalForCards} from "../Modal/ModalCards/ModalForCards";
 
 export const Cards = () => {
 
@@ -19,6 +20,19 @@ export const Cards = () => {
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
     // const totalCards = useSelector((state: AppStoreType) => state.cards.cardsTotalCount)
 
+    // Модалка на добавление карточки
+    const [addCardModal, setAddCardsModal] = useState<boolean>(false);
+    const openAddCardModal = () => {
+        setAddCardsModal(true)
+    }
+
+    const closeAddCardModal = () => {
+        setAddCardsModal(false)
+    }
+
+    const addCardHandler = (question: string, answer: string) => {
+        dispatch(addCardTC({cardsPack_id: packID, question: question, answer: answer}))
+    }
 
     const delCard = useCallback((id: string, packId: string) => {
         dispatch(delCardTC(id, packId))
@@ -54,10 +68,6 @@ export const Cards = () => {
         updateCard={updateCard}
     />)
 
-    const addCardHandler = () => {
-        dispatch(addCardTC({cardsPack_id: packID}))
-    }
-
     if (!isLoggedIn) {
         return <Login/>
     }
@@ -68,12 +78,19 @@ export const Cards = () => {
                 <h1>Cards</h1>
             </div>
 
+            {addCardModal && <ModalForCards
+                addNewCard={addCardHandler}
+                closeAddCardModal={closeAddCardModal}
+            />}
+
             <div className={`${s.cardItem} ${st.cardContents}`}>
                 <div>question</div>
                 <div>answer</div>
                 <div>grade</div>
                 <div>last update</div>
-                <div><SuperButton type={"submit"} onClick={addCardHandler}>add</SuperButton></div>
+                {/*<div><SuperButton type={"submit"} onClick={addCardHandler}>add</SuperButton></div>*/}
+                <div><SuperButton onClick={openAddCardModal}>add</SuperButton></div>
+                <div></div>
                 <div></div>
             </div>
 
