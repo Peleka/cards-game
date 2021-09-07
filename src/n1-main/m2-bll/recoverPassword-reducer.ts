@@ -12,7 +12,8 @@ export const recoverPasswordReducer = (state: InitialStateType = initialState, a
     switch (action.type) {
         case 'recoverPassword/CHANGE-PASSWORD':
             return {...state, recoveredPassword: true}
-        default: return state
+        default:
+            return state
     }
 }
 
@@ -22,8 +23,8 @@ export const recoverPasswordAC = () => ({
 } as const)
 
 //thunks
-export const recoverPasswordTC = ( email: string, message: string) => {
-    return (dispatch: Dispatch<ActionsType>) =>  {
+export const recoverPasswordTC = (email: string, message: string) => {
+    return (dispatch: Dispatch<ActionsType>) => {
         dispatch(setAppStatusAC('loading'))
         recoverPasswordAPI.recoverPassword(email, message)
             .then(() => {

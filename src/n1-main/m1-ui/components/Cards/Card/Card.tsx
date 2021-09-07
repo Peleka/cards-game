@@ -12,8 +12,11 @@ type CardPropsType = CardDataType & {
 
 export const Card = (props: CardPropsType) => {
 
+
     const deleteCardHandler = () => props._id && props.delCard(props._id, props.packId)
     const updateCardHandler = () => props._id && props.updateCard({_id: props._id})
+
+    // const update = new Date(props.updated).toLocaleDateString(['ban', 'id']);
     // const updateCardHandler = () => {
     //     props._id && props.updateCard({_id: props._id, packId: props.packId})
     // }
