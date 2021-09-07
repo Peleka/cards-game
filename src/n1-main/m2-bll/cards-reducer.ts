@@ -34,6 +34,7 @@ export const setCardsCurrentPageAC = (page: number) => ({type: 'SET_CURRENT_PAGE
 
 
 //thunk
+//а где ты в санку передаёшь новые названия? в
 export const getCardsTC = (cardsPack_id: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     cardsAPI.getCards(cardsPack_id)
@@ -49,6 +50,7 @@ export const getCardsTC = (cardsPack_id: string): AppThunkType => dispatch => {
 }
 
 export const addCardTC = (data: CreateCardRequestDataType): AppThunkType => dispatch => {
+    debugger
     dispatch(setAppStatusAC('loading'))
     cardsAPI.addCard(data)
         .then(() => {
