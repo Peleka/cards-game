@@ -4,7 +4,7 @@ import s from './Pack.module.css'
 import {PackResponseType, UpdatePacksRequestDataType} from "../../../../m2-bll/packs-reducer";
 import {NavLink} from "react-router-dom";
 
-export const Pack = (props: PackPropsType) => {
+export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
 
     const updateTime = new Date(props.updated).toLocaleDateString(['ban', 'id'])
 
@@ -30,10 +30,9 @@ export const Pack = (props: PackPropsType) => {
             <div className={s.packSpecification}><NavLink to={`/cards/${props._id}`}>cards</NavLink></div>
         </div>
     )
-}
+})
 
 //types
-
 type PackPropsType = PackResponseType &
     {
         updatePack: (data: UpdatePacksRequestDataType) => void
