@@ -7,7 +7,7 @@ import {
     getPacksTC,
     setCurrentPageAC,
     setMaxCardsCountAC,
-    setMinCardsCountAC,
+    setMinCardsCountAC, setNameAC,
     setUserIdAC,
     UpdatePacksRequestDataType,
     updatePackTC
@@ -20,7 +20,7 @@ import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {Login} from "../Login/Login";
 import {ModalForPacks} from "../Modal/ModalPacks/ModalForPacks";
 import {Slider} from "@material-ui/core";
-
+import SuperInputText from "../../superComponents/c1-SuperInputText/SuperInputText";
 
 export const Packs: React.FC = React.memo(() => {
 
@@ -30,8 +30,10 @@ export const Packs: React.FC = React.memo(() => {
         = useSelector((state: AppStoreType) => state.packs)
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
     const _id = useSelector((state: AppStoreType) => state.auth.userData._id)
+    const status = useSelector((state: AppStoreType) => state.app.status)
 
     const [myPacks, setMyPacks] = useState(false)
+    const [searchText, setSearchText] = useState('')
 
     const activeMyPacksButton = myPacks ? `${st.activeButton}` : ''
     const activeAllPacksButton = !myPacks ? `${st.activeButton}` : ''
@@ -49,10 +51,10 @@ export const Packs: React.FC = React.memo(() => {
         setAddPackModal(false)
     }
 
+    //add/del/update packs
     const addPack = (newPackName: string) => {
         dispatch(addPackTC({name: newPackName}))
     }
-
     const delPack = useCallback(function (id: string) {
         dispatch(delPackTC(id))
     }, [dispatch])
@@ -60,6 +62,7 @@ export const Packs: React.FC = React.memo(() => {
         dispatch(updatePackTC(data))
     }, [dispatch])
 
+    //my/all packs
     const showMyPacks = () => {
         dispatch(setUserIdAC(_id))
         dispatch(getPacksTC())
@@ -79,6 +82,14 @@ export const Packs: React.FC = React.memo(() => {
         }
     }
 
+    //search
+    const onSearchChangeHandler = (value: string) => setSearchText(value)
+    const search = () => {
+        dispatch(setNameAC(searchText))
+        dispatch(getPacksTC())
+        setSearchText('')
+    }
+
     //pagination
     let pages = []
     let pagesCount = Math.ceil(totalPacksCount / pageSize)
@@ -88,6 +99,7 @@ export const Packs: React.FC = React.memo(() => {
         dispatch(getPacksTC())
     }
 
+    //list of packs
     const mappedPacks = cardPacks && cardPacks.map((p, i) => <Pack
         key={i}
         {...p}
@@ -95,6 +107,7 @@ export const Packs: React.FC = React.memo(() => {
         updatePack={updatePack}
         currentUserId={_id}
     />)
+
 
     if (!isLoggedIn) {
         return <Login/>
@@ -121,6 +134,18 @@ export const Packs: React.FC = React.memo(() => {
                         min={0}
                         max={20}
                     />
+
+                    <span className={st.search}>
+                        <SuperInputText
+                            onChangeText={onSearchChangeHandler}
+                            onEnter={search}
+                            placeholder='search packs'
+                            value={searchText}/>
+                        <SuperButton
+                            onClick={search}
+                            disabled={status === 'loading'}>search
+                        </SuperButton>
+                    </span>
                 </div>
 
                 <div className={st.paginator}>
@@ -150,7 +175,6 @@ export const Packs: React.FC = React.memo(() => {
                 <div>name</div>
                 <div>cards count</div>
                 <div>last update</div>
-                {/*<div><SuperButton onClick={() => dispatch(addPackTC({name: 'Aleks/Dima/Elena pack'}))}>add</SuperButton>*/}
                 <div><SuperButton onClick={openAddPackModal}>add</SuperButton>
                 </div>
                 <div></div>

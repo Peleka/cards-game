@@ -4,7 +4,7 @@ import {AppThunkType} from "./store";
 
 const initialState = {
     cardPacks: null as null | PackResponseType[],
-    maxCardsCount: 4,
+    maxCardsCount: 6,
     minCardsCount: 0,
     pageCount: 10,
     packId: '',
@@ -35,6 +35,8 @@ export const packsReducer = (state = initialState, action: PacksActionsType): In
             return {...state, minCardsCount: action.minCardsCount}
         case "PACKS/SET-MAX-CARDS_COUNT":
             return {...state, maxCardsCount: action.maxCardsCount}
+        case "PACKS/SET-NAME":
+            return {...state, name: action.name}
         default:
             return state
     }
@@ -74,6 +76,11 @@ export const setUserIdAC = (userId: string) => ({
     type: 'PACKS/SET-USER-ID',
     userId
 } as const)
+export const setNameAC = (name: string) => ({
+    type: 'PACKS/SET-NAME',
+    name
+} as const)
+
 
 //thunk
 export const getPacksTC = (): AppThunkType => (dispatch, getState) => {
@@ -151,6 +158,7 @@ export type PacksActionsType = ReturnType<typeof setPacksAC>
     | ReturnType<typeof setUserIdAC>
     | ReturnType<typeof setMinCardsCountAC>
     | ReturnType<typeof setMaxCardsCountAC>
+    | ReturnType<typeof setNameAC>
 
 export type GetPacksRequestDataType = {
     packName?: string
