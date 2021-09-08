@@ -1,3 +1,4 @@
+
 import React, {ChangeEvent, useCallback, useEffect} from "react"
 import s from "./Card/Card.module.css";
 import st from "./Cards.module.css"
@@ -9,7 +10,11 @@ import {addCardTC, delCardTC, getCardsTC, setCardsCurrentPageAC, updateCardTC} f
 import {useParams} from "react-router-dom";
 import {Login} from "../Login/Login";
 import {updateCardDataType} from "../../../m3-dal/api";
+
 import {Pagination} from "@material-ui/lab";
+
+import {ModalForCards} from "../Modal/ModalCards/ModalForCards";
+
 
 export const Cards = () => {
 
@@ -18,9 +23,26 @@ export const Cards = () => {
     const cards = useSelector((state: AppStoreType) => state.cards.cards)
     const {packID} = useParams<{ packID: string }>()
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
+
     const totalCards = useSelector((state: AppStoreType) => state.cards.cardsTotalCount)
     const pageCardsSize = useSelector((state: AppStoreType) => state.cards.pageCount)
     const currentPage = useSelector((state: AppStoreType) => state.cards.page)
+
+    // const totalCards = useSelector((state: AppStoreType) => state.cards.cardsTotalCount)
+
+    // Модалка на добавление карточки
+    const [addCardModal, setAddCardsModal] = useState<boolean>(false);
+    const openAddCardModal = () => {
+        setAddCardsModal(true)
+    }
+
+    const closeAddCardModal = () => {
+        setAddCardsModal(false)
+    }
+
+    const addCardHandler = (question: string, answer: string) => {
+        dispatch(addCardTC({cardsPack_id: packID, question: question, answer: answer}))
+    }
 
     const delCard = useCallback((id: string, packId: string) => {
         dispatch(delCardTC(id, packId))
@@ -52,10 +74,6 @@ export const Cards = () => {
         updateCard={updateCard}
     />)
 
-    const addCardHandler = () => {
-        dispatch(addCardTC({cardsPack_id: packID}))
-    }
-
     if (!isLoggedIn) {
         return <Login/>
     }
@@ -75,15 +93,21 @@ export const Cards = () => {
                         onChange={(e: ChangeEvent<any>, p: number) => onPageChangedHandler(p)}
                     />
                 </div>
+     
+            {addCardModal && <ModalForCards
+                addNewCard={addCardHandler}
+                closeAddCardModal={closeAddCardModal}
+            />}
 
-                <div className={`${s.cardItem} ${st.cardContents}`}>
-                    <div>question</div>
-                    <div>answer</div>
-                    <div>grade</div>
-                    <div>last update</div>
-                    <div><SuperButton type={"submit"} onClick={addCardHandler}>add</SuperButton></div>
-                    <div></div>
-                </div>
+            <div className={`${s.cardItem} ${st.cardContents}`}>
+                <div>question</div>
+                <div>answer</div>
+                <div>grade</div>
+                <div>last update</div>
+                {/*<div><SuperButton type={"submit"} onClick={addCardHandler}>add</SuperButton></div>*/}
+                <div><SuperButton onClick={openAddCardModal}>add</SuperButton></div>
+                <div></div>
+                <div></div>
             </div>
             {mappedCards}
         </div>
