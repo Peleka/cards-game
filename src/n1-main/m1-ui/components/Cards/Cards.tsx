@@ -9,8 +9,11 @@ import {addCardTC, delCardTC, getCardsTC, setCardsCurrentPageAC, updateCardTC} f
 import {useParams} from "react-router-dom";
 import {Login} from "../Login/Login";
 import {updateCardDataType} from "../../../m3-dal/api";
-import {ModalForCards} from "../Modal/ModalCards/ModalForCards";
+
 import {Pagination} from "@material-ui/lab";
+
+import {ModalForCards} from "../Modal/ModalCards/ModalForCards";
+
 
 export const Cards = () => {
 
@@ -19,9 +22,11 @@ export const Cards = () => {
     const cards = useSelector((state: AppStoreType) => state.cards.cards)
     const {packID} = useParams<{ packID: string }>()
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
+
     const totalCards = useSelector((state: AppStoreType) => state.cards.cardsTotalCount)
     const pageCardsSize = useSelector((state: AppStoreType) => state.cards.pageCount)
     const currentPage = useSelector((state: AppStoreType) => state.cards.page)
+
     // const totalCards = useSelector((state: AppStoreType) => state.cards.cardsTotalCount)
 
     // Модалка на добавление карточки
