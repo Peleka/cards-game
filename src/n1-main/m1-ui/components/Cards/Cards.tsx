@@ -1,14 +1,22 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react"
-import s from "./Card/Card.module.css";
 import st from "./Cards.module.css"
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {Card} from "./Card/Card";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../m2-bll/store";
-import {addCardTC, delCardTC, getCardsTC, setCardsCurrentPageAC, updateCardTC} from "../../../m2-bll/cards-reducer";
+import {
+    addCardTC,
+    delCardTC,
+    getCardsTC,
+    setCardsCurrentPageAC,
+    setSortCardsAC,
+    updateCardTC
+} from "../../../m2-bll/cards-reducer";
 import {useParams} from "react-router-dom";
 import {Login} from "../Login/Login";
 import {updateCardDataType} from "../../../m3-dal/api";
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 import {Pagination} from "@material-ui/lab";
 
@@ -19,7 +27,7 @@ export const Cards = () => {
 
     const dispatch = useDispatch()
 
-    const {cards, cardsTotalCount, pageCount, page} = useSelector((state: AppStoreType) => state.cards)
+    const {cards, cardsTotalCount, pageCount, page, sortCards} = useSelector((state: AppStoreType) => state.cards)
     const {packID} = useParams<{ packID: string }>()
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
     const _id = useSelector((state: AppStoreType) => state.auth.userData._id)
@@ -60,6 +68,19 @@ export const Cards = () => {
         dispatch(getCardsTC(packID))
     }
 
+    //sort
+    const sortByGradeUp = () => {
+        dispatch(setSortCardsAC('0grade'))
+        dispatch(getCardsTC(packID))
+    }
+    const sortByGradeDown = () => {
+        dispatch(setSortCardsAC('1grade'))
+        dispatch(getCardsTC(packID))
+    }
+    const sortCardsByGrade = sortCards === '0grade'
+        ? <ArrowDownwardIcon onClick={sortByGradeDown} color='primary'/>
+        : <ArrowUpwardIcon onClick={sortByGradeUp} color='primary'/>
+
     //cards list
     const mappedCards = cards && cards.map((c, i) => <Card
         key={i}
@@ -76,37 +97,34 @@ export const Cards = () => {
 
     return (
         <div>
-            <div className={st.titleParent}>
-                <div>
-                    <h1>Cards</h1>
-                </div>
-                <div className={st.paginator}>
-                    <Pagination
-                        count={pagesCount}
-                        boundaryCount={1}
-                        defaultPage={1}
-                        page={page}
-                        onChange={(e: ChangeEvent<any>, p: number) => onPageChangedHandler(p)}
-                    />
-                </div>
+            <div>
+                <h1>Cards</h1>
+            </div>
 
-                {addCardModal && <ModalForCards
-                    addNewCard={addCardHandler}
-                    closeAddCardModal={closeAddCardModal}
-                />}
+            {addCardModal && <ModalForCards
+                addNewCard={addCardHandler}
+                closeAddCardModal={closeAddCardModal}
+            />}
 
-                <div className={`${s.cardItem} ${st.cardContents}`}>
-                    <div>question</div>
-                    <div>answer</div>
-                    <div>grade</div>
-                    <div>last update</div>
-                    {/*<div><SuperButton type={"submit"} onClick={addCardHandler}>add</SuperButton></div>*/}
-                    <div><SuperButton onClick={openAddCardModal}>add</SuperButton></div>
-                    <div></div>
-                    <div></div>
-                </div>
+            <div className={st.cardContents}>
+                <div>question</div>
+                <div>answer</div>
+                <div>{sortCardsByGrade}</div>
+                <div>grade</div>
+                <div>last update</div>
+                <div><SuperButton onClick={openAddCardModal}>add</SuperButton></div>
+                <div></div>
             </div>
             {mappedCards}
+            <div className={st.paginator}>
+                <Pagination
+                    count={pagesCount}
+                    boundaryCount={1}
+                    defaultPage={1}
+                    page={page}
+                    onChange={(e: ChangeEvent<any>, p: number) => onPageChangedHandler(p)}
+                />
+            </div>
         </div>
     )
 }

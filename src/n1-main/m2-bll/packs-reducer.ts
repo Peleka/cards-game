@@ -6,7 +6,7 @@ const initialState = {
     cardPacks: null as null | PackResponseType[],
     maxCardsCount: 6,
     minCardsCount: 0,
-    pageCount: 10,
+    pageCount: 8,
     packId: '',
     name: '',
     totalPacksCount: 0,
@@ -47,47 +47,19 @@ export const packsReducer = (state = initialState, action: PacksActionsType): In
 }
 
 //action creators
-export const setMinCardsCountAC = (minCardsCount: number) => ({
-    type: 'PACKS/SET-MIN-CARDS_COUNT',
-    minCardsCount,
+export const setMinCardsCountAC = (minCardsCount: number) => ({type: 'PACKS/SET-MIN-CARDS_COUNT', minCardsCount,
 } as const)
-export const setMaxCardsCountAC = (maxCardsCount: number) => ({
-    type: 'PACKS/SET-MAX-CARDS_COUNT',
-    maxCardsCount,
+export const setMaxCardsCountAC = (maxCardsCount: number) => ({type: 'PACKS/SET-MAX-CARDS_COUNT', maxCardsCount,
 } as const)
 
-export const setPacksAC = (data: PackResponseType[]) => ({
-    type: 'PACKS/SET-PACKS',
-    data,
-} as const)
-const setTotalPacksCountAC = (totalPacks: number) => ({
-    type: 'SET-TOTAL-PACKS-COUNT',
-    totalPacks,
-} as const)
-export const setCurrentPageAC = (pageNumber: number) => ({
-    type: 'SET-CURRENT-PAGE',
-    pageNumber,
-} as const)
-export const delPackAC = (id: string) => ({
-    type: 'PACKS/DEL-PACK',
-    id
-} as const)
-export const updatePackAC = (data: UpdatePacksRequestDataType) => ({
-    type: 'PACKS/UPDATE-PACK',
-    data
-} as const)
-export const setUserIdAC = (userId: string) => ({
-    type: 'PACKS/SET-USER-ID',
-    userId
-} as const)
-export const setNameAC = (name: string) => ({
-    type: 'PACKS/SET-NAME',
-    name
-} as const)
-export const setSortPacksAC = (sortValue: SortPacksOptions) => ({
-    type: 'PACKS/SET-SORT',
-    sortValue
-} as const)
+export const setPacksAC = (data: PackResponseType[]) => ({type: 'PACKS/SET-PACKS', data,} as const)
+const setTotalPacksCountAC = (totalPacks: number) => ({type: 'SET-TOTAL-PACKS-COUNT', totalPacks,} as const)
+export const setCurrentPageAC = (pageNumber: number) => ({type: 'SET-CURRENT-PAGE', pageNumber,} as const)
+export const delPackAC = (id: string) => ({type: 'PACKS/DEL-PACK', id} as const)
+export const updatePackAC = (data: UpdatePacksRequestDataType) => ({type: 'PACKS/UPDATE-PACK', data} as const)
+export const setUserIdAC = (userId: string) => ({type: 'PACKS/SET-USER-ID', userId} as const)
+export const setNameAC = (name: string) => ({type: 'PACKS/SET-NAME', name} as const)
+export const setSortPacksAC = (sortValue: SortPacksOptions) => ({type: 'PACKS/SET-SORT', sortValue} as const)
 
 
 //thunk

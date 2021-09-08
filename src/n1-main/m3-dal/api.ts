@@ -52,12 +52,13 @@ export const packsAPI = {
 }
 
 export const cardsAPI = {
-    getCards(cardsPack_id: string, page: number, pageCount: number,) {
+    getCards(cardsPack_id: string, page: number, pageCount: number, sortCards: string) {
         return instance.get(`/cards/card`, {
             params: {
                 cardsPack_id: cardsPack_id,
                 pageCount: pageCount,
                 page: page,
+                sortCards: sortCards,
             }
         })
     },
