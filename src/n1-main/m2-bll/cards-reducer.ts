@@ -6,7 +6,7 @@ const initialState = {
     cards: [] as Array<CardDataType> | null,
     packUserId: '',
     page: 1,
-    pageCount: 10,
+    pageCount: 4,
     cardsTotalCount: 0,
     minGrade: 0,
     maxGrade: 6,
@@ -19,7 +19,7 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Car
         case "CARDS/SET-CARDS":
             return {...state, cards: action.cards}
         case "SET_CARDS_TOTAL_COUNT":
-            return {...state, pageCount: action.count}
+            return {...state, cardsTotalCount: action.totalCards}
         case "SET_CURRENT_PAGE":
             return {...state, page: action.page}
         default:
@@ -29,7 +29,7 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Car
 
 //action creators
 export const setCardsAC = (cards: CardDataType[]) => ({type: 'CARDS/SET-CARDS', cards} as const)
-export const setCardsTotalCountAC = (count: number) => ({type: 'SET_CARDS_TOTAL_COUNT', count} as const)
+export const setCardsTotalCountAC = (totalCards: number) => ({type: 'SET_CARDS_TOTAL_COUNT', totalCards} as const)
 export const setCardsCurrentPageAC = (page: number) => ({type: 'SET_CURRENT_PAGE', page} as const)
 
 
