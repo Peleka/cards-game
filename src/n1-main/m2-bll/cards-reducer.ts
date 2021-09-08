@@ -35,9 +35,12 @@ export const setCardsCurrentPageAC = (page: number) => ({type: 'SET_CURRENT_PAGE
 
 //thunk
 //а где ты в санку передаёшь новые названия? в
-export const getCardsTC = (cardsPack_id: string): AppThunkType => dispatch => {
+export const getCardsTC = (cardsPack_id: string): AppThunkType => (dispatch, getState) => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getCards(cardsPack_id)
+    const state = getState()
+    const page = state.cards.page
+    const pageCount = state.cards.pageCount
+    cardsAPI.getCards(cardsPack_id, page, pageCount)
         .then(res => {
             dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
             dispatch(setCardsAC(res.data.cards))
