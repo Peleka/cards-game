@@ -1,5 +1,4 @@
-
-import React, {ChangeEvent, useCallback, useEffect} from "react"
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react"
 import s from "./Card/Card.module.css";
 import st from "./Cards.module.css"
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
@@ -93,22 +92,23 @@ export const Cards = () => {
                         onChange={(e: ChangeEvent<any>, p: number) => onPageChangedHandler(p)}
                     />
                 </div>
-     
-            {addCardModal && <ModalForCards
-                addNewCard={addCardHandler}
-                closeAddCardModal={closeAddCardModal}
-            />}
 
-            <div className={`${s.cardItem} ${st.cardContents}`}>
-                <div>question</div>
-                <div>answer</div>
-                <div>grade</div>
-                <div>last update</div>
-                {/*<div><SuperButton type={"submit"} onClick={addCardHandler}>add</SuperButton></div>*/}
-                <div><SuperButton onClick={openAddCardModal}>add</SuperButton></div>
-                <div></div>
-                <div></div>
-            </div>
+                {addCardModal && <ModalForCards
+                    addNewCard={addCardHandler}
+                    closeAddCardModal={closeAddCardModal}
+                />}
+
+                <div className={`${s.cardItem} ${st.cardContents}`}>
+                    <div>question</div>
+                    <div>answer</div>
+                    <div>grade</div>
+                    <div>last update</div>
+                    {/*<div><SuperButton type={"submit"} onClick={addCardHandler}>add</SuperButton></div>*/}
+                    <div><SuperButton onClick={openAddCardModal}>add</SuperButton></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div> // вот эта див
             {mappedCards}
         </div>
     )
