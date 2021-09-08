@@ -108,7 +108,7 @@ export const Cards = () => {
                     <div></div>
                     <div></div>
                 </div>
-            </div>
+            </div> // вот эта див
             {mappedCards}
         </div>
     )
