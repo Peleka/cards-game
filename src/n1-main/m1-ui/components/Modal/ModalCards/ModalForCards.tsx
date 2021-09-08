@@ -26,7 +26,7 @@ export const ModalForCards = (props: ModalForCardsType) => {
   }
 
   // ХЗ куда повесить, чтобы закрывалось пр нажатии в любое место...
-  const onBackgroundClick = () => {
+  const onClosedClick = () => {
     props.closeAddCardModal()
   }
 
@@ -46,7 +46,10 @@ export const ModalForCards = (props: ModalForCardsType) => {
               placeholder='answer'
               onChange={inputChangeHandlerAnswer}
             />
-            <SuperButton type='submit' onClick={onClickHandler}>Add new card</SuperButton>
+            <div className={s.buttonBlock}>
+              <SuperButton type='submit' onClick={onClickHandler}>Add new card</SuperButton>
+              <SuperButton onClick={onClosedClick}>Cancel</SuperButton>
+            </div>
           </form>
         </div>
       </div>

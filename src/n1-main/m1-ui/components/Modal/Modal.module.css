@@ -13,7 +13,7 @@
     left: calc(50vw - 200px);
     top: calc(50vh - 161px);
     width: 400px;
-    height: 280px;
+    height: 230px;
     border: 1px solid white;
     border-radius: 6px 6px 6px 6px;
     background-color: white;
@@ -22,4 +22,8 @@
     align-items: center;
     margin: 20px 0;
     z-index: 11
+}
+
+.buttonBlock {
+    margin-top: 20px;
 }

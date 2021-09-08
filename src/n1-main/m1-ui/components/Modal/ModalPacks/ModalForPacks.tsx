@@ -21,14 +21,13 @@ export const ModalForPacks = (props: ModalForPacksType) => {
   }
 
   // ХЗ куда повесить, чтобы закрывалось пр нажатии в любое место...
-  // const onBackgroundClick = () => {
-  //   // debugger
-  //   props.closeAddPackModal()
-  // }
+  const onClosedClick = () => {
+    props.closeAddPackModal()
+  }
 
   return (
     <>
-      {/*<div className={s.wrapperModal} onClick={onBackgroundClick}>*/}
+      {/*<div className={s.wrapperModal} onClick={onClosedClick}>*/}
       <div className={s.wrapperModal}>
         <div className={s.modal}>
           <h3>Enter new pack name</h3>
@@ -38,7 +37,10 @@ export const ModalForPacks = (props: ModalForPacksType) => {
               placeholder='name'
               onChange={inputChangeHandler}
             />
-            <SuperButton type='submit' onClick={onClickHandler}>Add</SuperButton>
+            <div className={s.buttonBlock}>
+              <SuperButton type='submit' onClick={onClickHandler}>Add new pack</SuperButton>
+              <SuperButton onClick={onClosedClick}>Cancel</SuperButton>
+            </div>
           </form>
         </div>
       </div>
