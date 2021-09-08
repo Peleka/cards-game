@@ -8,6 +8,7 @@ type CardPropsType = CardDataType & {
     delCard: (id: string, packId: string) => void
     updateCard: (updateCard: updateCardDataType) => void
     packId: string
+    currentUserId: string
 }
 
 export const Card = (props: CardPropsType) => {
@@ -27,8 +28,12 @@ export const Card = (props: CardPropsType) => {
             <div className={s.cardSpecification}>{props.answer}</div>
             <div className={s.cardSpecification}>{props.grade}</div>
             <div className={s.cardSpecification}>{props.updated}</div>
-            <div className={s.cardSpecification}><SuperButton onClick={deleteCardHandler}>delete</SuperButton></div>
-            <div className={s.cardSpecification}><SuperButton onClick={updateCardHandler}>edit</SuperButton></div>
+            <div className={s.cardSpecification}>
+                { props.user_id === props.currentUserId ? <SuperButton onClick={deleteCardHandler}>delete</SuperButton> : ''}
+            </div>
+            <div className={s.cardSpecification}>
+                {props.user_id === props.currentUserId ? <SuperButton onClick={updateCardHandler}>edit</SuperButton> : ''}
+            </div>
         </div>
     )
 

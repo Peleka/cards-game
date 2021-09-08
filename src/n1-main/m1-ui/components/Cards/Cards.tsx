@@ -19,58 +19,55 @@ export const Cards = () => {
 
     const dispatch = useDispatch()
 
-    const cards = useSelector((state: AppStoreType) => state.cards.cards)
+    const {cards, cardsTotalCount, pageCount, page} = useSelector((state: AppStoreType) => state.cards)
     const {packID} = useParams<{ packID: string }>()
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
+    const _id = useSelector((state: AppStoreType) => state.auth.userData._id)
 
-    const totalCards = useSelector((state: AppStoreType) => state.cards.cardsTotalCount)
-    const pageCardsSize = useSelector((state: AppStoreType) => state.cards.pageCount)
-    const currentPage = useSelector((state: AppStoreType) => state.cards.page)
 
-    // const totalCards = useSelector((state: AppStoreType) => state.cards.cardsTotalCount)
+    useEffect(() => {
+        dispatch(getCardsTC(packID))
+    }, [dispatch, packID])
+
 
     // Модалка на добавление карточки
     const [addCardModal, setAddCardsModal] = useState<boolean>(false);
     const openAddCardModal = () => {
         setAddCardsModal(true)
     }
-
     const closeAddCardModal = () => {
         setAddCardsModal(false)
     }
 
+    //add/del/update card
     const addCardHandler = (question: string, answer: string) => {
         dispatch(addCardTC({cardsPack_id: packID, question: question, answer: answer}))
     }
-
     const delCard = useCallback((id: string, packId: string) => {
         dispatch(delCardTC(id, packId))
     }, [dispatch])
-
     const updateCard = useCallback((updateCardData: updateCardDataType) => {
         dispatch(updateCardTC(packID, updateCardData))
     }, [dispatch])
 
-    useEffect(() => {
-        dispatch(getCardsTC(packID))
-    }, [dispatch, packID])
 
     //pagination
     let pages = []
-    let pagesCount = Math.ceil(totalCards / pageCardsSize)
+    let pagesCount = Math.ceil(cardsTotalCount / pageCount)
     for (let i = 1; i <= pagesCount; i++) pages.push(i)
-
     const onPageChangedHandler = (p: number) => {
         dispatch(setCardsCurrentPageAC(p))
         dispatch(getCardsTC(packID))
     }
 
+    //cards list
     const mappedCards = cards && cards.map((c, i) => <Card
         key={i}
         {...c}
         packId={packID}
         delCard={delCard}
         updateCard={updateCard}
+        currentUserId={_id}
     />)
 
     if (!isLoggedIn) {
@@ -88,7 +85,7 @@ export const Cards = () => {
                         count={pagesCount}
                         boundaryCount={1}
                         defaultPage={1}
-                        page={currentPage}
+                        page={page}
                         onChange={(e: ChangeEvent<any>, p: number) => onPageChangedHandler(p)}
                     />
                 </div>
