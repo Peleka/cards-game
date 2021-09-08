@@ -21,9 +21,14 @@
     left: 10%;
     width: 150px;
 }
+.activeButton button {
+    border-color: lightgrey;
+    color: lightgrey;
+}
 /*
 .pageCount {
     position: absolute;
     top: 10px;
     left: 10%;
 }*/
+
