@@ -10,7 +10,10 @@ const initialState = {
     cardsTotalCount: 0,
     minGrade: 0,
     maxGrade: 6,
+    sortCards: '0grade' as SortCardsOptions,
 }
+
+type SortCardsOptions = '0grade' | '1grade'
 
 type InitialStateType = typeof initialState
 
@@ -18,10 +21,12 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Car
     switch (action.type) {
         case "CARDS/SET-CARDS":
             return {...state, cards: action.cards}
-        case "SET_CARDS_TOTAL_COUNT":
+        case "CARDS/SET_CARDS_TOTAL_COUNT":
             return {...state, cardsTotalCount: action.totalCards}
-        case "SET_CURRENT_PAGE":
+        case "CARDS/SET_CURRENT_PAGE":
             return {...state, page: action.page}
+        case "CARDS/SET-SORT":
+            return {...state, sortCards: action.sortValue}
         default:
             return state
     }
@@ -29,18 +34,19 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Car
 
 //action creators
 export const setCardsAC = (cards: CardDataType[]) => ({type: 'CARDS/SET-CARDS', cards} as const)
-export const setCardsTotalCountAC = (totalCards: number) => ({type: 'SET_CARDS_TOTAL_COUNT', totalCards} as const)
-export const setCardsCurrentPageAC = (page: number) => ({type: 'SET_CURRENT_PAGE', page} as const)
+export const setCardsTotalCountAC = (totalCards: number) => ({type: 'CARDS/SET_CARDS_TOTAL_COUNT', totalCards} as const)
+export const setCardsCurrentPageAC = (page: number) => ({type: 'CARDS/SET_CURRENT_PAGE', page} as const)
+export const setSortCardsAC = (sortValue: SortCardsOptions) => ({type: 'CARDS/SET-SORT', sortValue} as const)
 
 
 //thunk
-//а где ты в санку передаёшь новые названия? в
 export const getCardsTC = (cardsPack_id: string): AppThunkType => (dispatch, getState) => {
     dispatch(setAppStatusAC('loading'))
     const state = getState()
     const page = state.cards.page
     const pageCount = state.cards.pageCount
-    cardsAPI.getCards(cardsPack_id, page, pageCount)
+    const sortCards = state.cards.sortCards
+    cardsAPI.getCards(cardsPack_id, page, pageCount, sortCards)
         .then(res => {
             dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
             dispatch(setCardsAC(res.data.cards))
@@ -101,6 +107,7 @@ export type CardsActionsType = ReturnType<typeof setCardsAC>
     | ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setCardsTotalCountAC>
     | ReturnType<typeof setCardsCurrentPageAC>
+    | ReturnType<typeof setSortCardsAC>
 
 // export type GetCardsRequestDataType = {
 //     cardAnswer?: string
@@ -125,7 +132,7 @@ export type CardDataType = {
     rating?: number
     shots?: number
     type?: string
-    updated?: string
+    updated: string
     user_id?: string
     __v?: number
     _id?: string

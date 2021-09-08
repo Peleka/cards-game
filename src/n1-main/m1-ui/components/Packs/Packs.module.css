@@ -5,21 +5,47 @@
     padding-top: 15px;
     border-bottom: 2px solid darkviolet;
     background-color: mediumpurple;
+    display: grid;
+    grid-template-columns: 1fr 1fr 60px 15px 75px 60px 30px 30px;
+    margin: auto;
 }
-.titleParent {
-    position: relative;
-    padding-bottom: 30px;
+.packsContainer {
+    width: 70%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 20%;
+    grid-gap: 10px;
+}
+.packsField {
+
+}
+.sidebar {
+    background-color: mediumpurple;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.title {
+
+}
+.showMyAllPacks {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: auto;
+
+}
+.filterByCardsCount {
+    width: 150px;
+    margin: auto;
 }
 .paginator {
-    position: absolute;
-    top: 10px;
-    right: 10%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    width: 350px;
+    margin: 0 auto;
+    text-align: center;
 }
 .filter {
-    position: absolute;
-    top: 10px;
-    left: 10%;
-    width: 150px;
+    width: 100px;
 }
 .activeButton button {
     border-color: lightgrey;
@@ -28,20 +54,14 @@
 .search {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    padding-bottom: 25px;
+    width: 150px;
+    margin: auto;
 }
 .search input {
     margin: 0 0 0 0;
-    min-width: 150px;
-}
-.arrowDown {
-    border: 10px solid transparent; /* Прозрачные границы */
-    border-top: 10px solid darkblue; /* Добавляем треугольник */
-    border-bottom: 10px solid darkgrey;
-}
-.arrowUp {
-    border: 10px solid transparent; /* Прозрачные границы */
-    border-bottom: 10px solid darkblue; /* Добавляем треугольник */
-    border-top: 10px solid darkgrey;
+    min-width: 120px;
+    height: 20px;
 }
 /*
 .pageCount {

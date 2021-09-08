@@ -1,9 +1,10 @@
 .cardItem {
-    width: 80%;
+    width: 70%;
     margin: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 40px 1.4fr 70px 70px;
+    grid-template-columns: 1fr 1fr 70px 150px 30px 30px;
     border-bottom: 2px solid mediumpurple;
+    min-height: 30px;
 }
 
 .cardSpecification {

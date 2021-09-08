@@ -1,8 +1,10 @@
 import React from "react";
-import SuperButton from "../../../superComponents/c2-SuperButton/SuperButton";
 import s from './Pack.module.css'
 import {PackResponseType, UpdatePacksRequestDataType} from "../../../../m2-bll/packs-reducer";
 import {NavLink} from "react-router-dom";
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import {green} from "@material-ui/core/colors";
 
 export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
 
@@ -27,10 +29,10 @@ export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
             <div className={s.packSpecification}>{updateTime}</div>
             <div className={s.packSpecification}><NavLink to={`/cards/${props._id}`}>cards</NavLink></div>
             <div className={s.packSpecification}>
-                { props.user_id === props.currentUserId ? <SuperButton onClick={delPack}>Delete</SuperButton> : ''}
+                { props.user_id === props.currentUserId ? <DeleteIcon onClick={delPack} color='secondary'/> : ''}
             </div>
             <div className={s.packSpecification}>
-                { props.user_id === props.currentUserId ? <SuperButton onClick={updatePack}>Edit</SuperButton> : ''}
+                { props.user_id === props.currentUserId ? <EditIcon onClick={updatePack} style={{ color: green[500] }}/> : ''}
             </div>
 
         </div>
