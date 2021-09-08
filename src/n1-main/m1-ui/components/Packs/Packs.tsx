@@ -26,14 +26,15 @@ export const Packs: React.FC = React.memo(() => {
 
     const dispatch = useDispatch()
 
-    const cardPacks = useSelector((state: AppStoreType) => state.packs.cardPacks)
+    const {cardPacks, totalPacksCount, pageSize, currentPage, minCardsCount, maxCardsCount}
+        = useSelector((state: AppStoreType) => state.packs)
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
-    const totalPacks = useSelector((state: AppStoreType) => state.packs.totalPacksCount)
-    const pageSize = useSelector((state: AppStoreType) => state.packs.pageSize)
-    const currentPage = useSelector((state: AppStoreType) => state.packs.currentPage)
-    const userId = useSelector((state: AppStoreType) => state.auth.userData._id)
-    const minCardsCount = useSelector((state: AppStoreType) => state.packs.minCardsCount)
-    const maxCardsCount = useSelector((state: AppStoreType) => state.packs.maxCardsCount)
+    const _id = useSelector((state: AppStoreType) => state.auth.userData._id)
+
+    const [myPacks, setMyPacks] = useState(false)
+
+    const activeMyPacksButton = myPacks ? `${st.activeButton}` : ''
+    const activeAllPacksButton = !myPacks ? `${st.activeButton}` : ''
 
     useEffect(() => {
         dispatch(getPacksTC())
@@ -60,12 +61,14 @@ export const Packs: React.FC = React.memo(() => {
     }, [dispatch])
 
     const showMyPacks = () => {
-        dispatch(setUserIdAC(userId))
+        dispatch(setUserIdAC(_id))
         dispatch(getPacksTC())
+        setMyPacks(true)
     }
     const showAllPacks = () => {
         dispatch(setUserIdAC(''))
         dispatch(getPacksTC())
+        setMyPacks(false)
     }
 
     //onChangeSlider
@@ -78,7 +81,7 @@ export const Packs: React.FC = React.memo(() => {
 
     //pagination
     let pages = []
-    let pagesCount = Math.ceil(totalPacks / pageSize)
+    let pagesCount = Math.ceil(totalPacksCount / pageSize)
     for (let i = 1; i <= pagesCount; i++) pages.push(i)
     const onPageChangedHandler = (p: number) => {
         dispatch(setCurrentPageAC(p))
@@ -90,6 +93,7 @@ export const Packs: React.FC = React.memo(() => {
         {...p}
         delPack={delPack}
         updatePack={updatePack}
+        currentUserId={_id}
     />)
 
     if (!isLoggedIn) {
@@ -128,8 +132,12 @@ export const Packs: React.FC = React.memo(() => {
                                 page={currentPage}
                                 onChange={(e: ChangeEvent<any>, p: number) => onPageChangedHandler(p)}/>
 
-                    <SuperButton onClick={showMyPacks}> my packs </SuperButton>
-                    <SuperButton onClick={showAllPacks}> all packs </SuperButton>
+                    <span className={activeMyPacksButton}>
+                        <SuperButton onClick={showMyPacks}> my packs </SuperButton>
+                    </span>
+                    <span className={activeAllPacksButton}>
+                        <SuperButton onClick={showAllPacks}> all packs </SuperButton>
+                    </span>
                 </div>
             </div>
 

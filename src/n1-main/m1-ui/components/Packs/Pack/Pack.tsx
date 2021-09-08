@@ -25,9 +25,14 @@ export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
             <div className={s.packSpecification}>{props.name}</div>
             <div className={s.packSpecification}>{props.cardsCount}</div>
             <div className={s.packSpecification}>{updateTime}</div>
-            <div className={s.packSpecification}><SuperButton onClick={delPack}>Delete</SuperButton></div>
-            <div className={s.packSpecification}><SuperButton onClick={updatePack}>Edit</SuperButton></div>
             <div className={s.packSpecification}><NavLink to={`/cards/${props._id}`}>cards</NavLink></div>
+            <div className={s.packSpecification}>
+                { props.user_id === props.currentUserId ? <SuperButton onClick={delPack}>Delete</SuperButton> : ''}
+            </div>
+            <div className={s.packSpecification}>
+                { props.user_id === props.currentUserId ? <SuperButton onClick={updatePack}>Edit</SuperButton> : ''}
+            </div>
+
         </div>
     )
 })
@@ -37,4 +42,5 @@ type PackPropsType = PackResponseType &
     {
         updatePack: (data: UpdatePacksRequestDataType) => void
         delPack: (id: string) => void
+        currentUserId: string
     }
