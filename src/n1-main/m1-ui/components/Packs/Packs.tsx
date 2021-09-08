@@ -95,10 +95,9 @@ export const Packs: React.FC = React.memo(() => {
     if (!isLoggedIn) {
         return <Login/>
     }
-
+    console.log('Packs render')
     return (
         <div>
-            {/*{console.log('Packs render')}*/}
             <div className={st.titleParent}>
                 <h1>Packs</h1>
                 {/*показывает окошко с выбором кол-ва отображаемых колод
