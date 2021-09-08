@@ -13,7 +13,9 @@ const initialState = {
     pageSize: 10,
     currentPage: 1,
     userId: '',
+    sortPacks: '0updated' as SortPacksOptions,
 }
+type SortPacksOptions = '0updated' | '1updated'
 
 type InitialStateType = typeof initialState
 
@@ -37,6 +39,8 @@ export const packsReducer = (state = initialState, action: PacksActionsType): In
             return {...state, maxCardsCount: action.maxCardsCount}
         case "PACKS/SET-NAME":
             return {...state, name: action.name}
+        case "PACKS/SET-SORT":
+            return {...state, sortPacks: action.sortValue}
         default:
             return state
     }
@@ -80,6 +84,10 @@ export const setNameAC = (name: string) => ({
     type: 'PACKS/SET-NAME',
     name
 } as const)
+export const setSortPacksAC = (sortValue: SortPacksOptions) => ({
+    type: 'PACKS/SET-SORT',
+    sortValue
+} as const)
 
 
 //thunk
@@ -93,8 +101,9 @@ export const getPacksTC = (): AppThunkType => (dispatch, getState) => {
     const maxCardsCount = state.packs.maxCardsCount
     const userId = state.packs.userId
     const pageCount = state.packs.pageCount
+    const sortPacks = state.packs.sortPacks
 
-    packsAPI.getPacks(pageCount, currentPage, packName, minCardsCount, maxCardsCount, userId)
+    packsAPI.getPacks(pageCount, currentPage, packName, minCardsCount, maxCardsCount, userId, sortPacks)
         .then(res => {
             dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
             dispatch(setPacksAC(res.data.cardPacks))
@@ -159,6 +168,7 @@ export type PacksActionsType = ReturnType<typeof setPacksAC>
     | ReturnType<typeof setMinCardsCountAC>
     | ReturnType<typeof setMaxCardsCountAC>
     | ReturnType<typeof setNameAC>
+    | ReturnType<typeof setSortPacksAC>
 
 export type GetPacksRequestDataType = {
     packName?: string

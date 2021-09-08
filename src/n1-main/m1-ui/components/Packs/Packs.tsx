@@ -7,7 +7,7 @@ import {
     getPacksTC,
     setCurrentPageAC,
     setMaxCardsCountAC,
-    setMinCardsCountAC, setNameAC,
+    setMinCardsCountAC, setNameAC, setSortPacksAC,
     setUserIdAC,
     UpdatePacksRequestDataType,
     updatePackTC
@@ -26,7 +26,7 @@ export const Packs: React.FC = React.memo(() => {
 
     const dispatch = useDispatch()
 
-    const {cardPacks, totalPacksCount, pageSize, currentPage, minCardsCount, maxCardsCount}
+    const {cardPacks, totalPacksCount, pageSize, currentPage, minCardsCount, maxCardsCount, sortPacks}
         = useSelector((state: AppStoreType) => state.packs)
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
     const _id = useSelector((state: AppStoreType) => state.auth.userData._id)
@@ -61,6 +61,22 @@ export const Packs: React.FC = React.memo(() => {
     const updatePack = useCallback(function (data: UpdatePacksRequestDataType) {
         dispatch(updatePackTC(data))
     }, [dispatch])
+
+
+    //sort
+    const sortByLastUpdate = () => {
+        dispatch(setSortPacksAC('0updated'))
+        dispatch(getPacksTC())
+    }
+    const sortByFirstUpdate = () => {
+        dispatch(setSortPacksAC('1updated'))
+        dispatch(getPacksTC())
+    }
+    const sortPacksByUpdate = sortPacks === '1updated'
+        ? <span className={st.arrowDown} onClick={sortByLastUpdate}></span>
+        : <span className={st.arrowUp} onClick={sortByFirstUpdate}></span>
+
+
 
     //my/all packs
     const showMyPacks = () => {
@@ -174,7 +190,12 @@ export const Packs: React.FC = React.memo(() => {
                 <div>username</div>
                 <div>name</div>
                 <div>cards count</div>
-                <div>last update</div>
+                <div>
+
+                    {sortPacksByUpdate}
+
+                    last update
+                </div>
                 <div><SuperButton onClick={openAddPackModal}>add</SuperButton>
                 </div>
                 <div></div>
