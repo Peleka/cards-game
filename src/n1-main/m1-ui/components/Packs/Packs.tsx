@@ -147,8 +147,6 @@ export const Packs: React.FC = React.memo(() => {
 
                         <div><SuperButton onClick={openAddEditPackModal}>add</SuperButton>
                         </div>
-                        <div></div>
-                        <div></div>
                     </div>
 
                     <div>

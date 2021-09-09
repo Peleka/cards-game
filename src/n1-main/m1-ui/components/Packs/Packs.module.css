@@ -6,7 +6,7 @@
     border-bottom: 2px solid darkviolet;
     background-color: mediumpurple;
     display: grid;
-    grid-template-columns: 1fr 1fr 60px 15px 75px 60px 30px 30px;
+    grid-template-columns: 1fr 1fr 60px 15px 75px 120px;
     margin: auto;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;

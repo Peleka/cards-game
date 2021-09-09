@@ -115,7 +115,6 @@ export const Cards = () => {
                 <div>grade</div>
                 <div>last update</div>
                 <div><SuperButton onClick={openAddEditCardModal}>add</SuperButton></div>
-                <div></div>
             </div>
             {mappedCards}
             <div className={st.paginator}>
