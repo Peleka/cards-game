@@ -19,9 +19,7 @@
     grid-gap: 10px;
 }
 
-.packsField {
-
-}
+.packsField {}
 
 .sidebar {
     background-color: mediumpurple;
@@ -30,9 +28,7 @@
     border-radius: 15px;
 }
 
-.title {
-
-}
+.title {}
 
 .showMyAllPacks {
     padding-top: 20px;
