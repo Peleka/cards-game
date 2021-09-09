@@ -49,6 +49,7 @@ export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
             {editPackModal && <ModalForPacks
                 closeAddEditPackModal={closeAddEditPackModal}
                 addNewPack={updatePack}
+                titlePack={props.name}
             />}
 
         </div>
