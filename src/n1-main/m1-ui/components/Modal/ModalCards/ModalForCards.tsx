@@ -40,12 +40,12 @@ export const ModalForCards = (props: ModalForCardsType) => {
           <form>
             <SuperInputText
               type='text'
-              placeholder={props.questionPlaceholder}
+              value={question}
               onChange={inputChangeHandlerQuestion}
             />
             <SuperInputText
               type='text'
-              placeholder={props.answerPlaceholder}
+              value={answer}
               onChange={inputChangeHandlerAnswer}
             />
             <div className={s.buttonBlock}>

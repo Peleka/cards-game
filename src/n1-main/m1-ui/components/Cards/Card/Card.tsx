@@ -22,9 +22,6 @@ export const Card = (props: CardPropsType) => {
         props.updateCard({_id: props._id, question, answer})
 
     const update = new Date(props.updated).toLocaleDateString(['ban', 'id']);
-    // const updateCardHandler = () => {
-    //     props._id && props.updateCard({_id: props._id, packId: props.packId})
-    // }
 
     // Update card modal
     const [editCardModal, setEditCardsModal] = useState<boolean>(false);
