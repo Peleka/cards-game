@@ -6,6 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import {green} from "@material-ui/core/colors";
 import {ModalForPacks} from "../../Modal/ModalPacks/ModalForPacks";
+import {ModalDeleteItem} from "../../Modal/ModalDelete/ModalDeleteItem";
 
 export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
 
@@ -28,6 +29,15 @@ export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
         setEditPackModal(false)
     }
 
+    // Delete pack modal
+    const [deletePackModal, setDeletePackModal] = useState<boolean>(false);
+    const openDeletePackModal = () => {
+        setDeletePackModal(true)
+    }
+    const closeDeletePackModal = () => {
+        setDeletePackModal(false)
+    }
+
     // ОнКлик на кнопку Edit
     // const updatePack = () => {
     //   props.updatePacks(props.updatePacks.cardsPack)
@@ -43,13 +53,19 @@ export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
                 { props.user_id === props.currentUserId ? <span style={{cursor: 'pointer'}}><EditIcon onClick={openAddEditPackModal} style={{ color: green[500] }}/></span> : ''}
             </div>
             <div className={s.packSpecification}>
-                { props.user_id === props.currentUserId ? <span style={{cursor: 'pointer'}}><DeleteIcon onClick={delPack} color='secondary'/></span> : ''}
+                { props.user_id === props.currentUserId ? <span style={{cursor: 'pointer'}}><DeleteIcon onClick={openDeletePackModal} color='secondary'/></span> : ''}
             </div>
 
             {editPackModal && <ModalForPacks
                 closeAddEditPackModal={closeAddEditPackModal}
                 addNewPack={updatePack}
                 titlePack={props.name}
+            />}
+
+            {deletePackModal && <ModalDeleteItem
+                closeDeleteModal={closeDeletePackModal}
+                deleteItem={delPack}
+                title={`Are you sure you want to delete pack '${props.name}'?`}
             />}
 
         </div>

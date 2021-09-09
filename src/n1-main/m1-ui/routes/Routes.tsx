@@ -2,7 +2,7 @@ import React from "react";
 import {Redirect, Route, Switch } from "react-router-dom";
 import {Error404} from "../components/Error404";
 import {Login} from "../components/Login/Login";
-import {Profile} from "../components/Profile";
+import {Profile} from "../components/Profile/Profile";
 import {Register} from "../components/Registration/Register";
 import {NewPassword} from "../components/NewPassword";
 import {ForgotPassword} from "../components/ForgotPassword";

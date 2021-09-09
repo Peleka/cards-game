@@ -6,6 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import {green} from "@material-ui/core/colors";
 import {Delete} from '@material-ui/icons';
 import {ModalForCards} from "../../Modal/ModalCards/ModalForCards";
+import {ModalDeleteItem} from "../../Modal/ModalDelete/ModalDeleteItem";
 
 type CardPropsType = CardDataType & {
     delCard: (id: string, packId: string) => void
@@ -32,6 +33,15 @@ export const Card = (props: CardPropsType) => {
         setEditCardsModal(false)
     }
 
+    // Delete pack modal
+    const [deleteCardModal, setDeleteCardModal] = useState<boolean>(false);
+    const openDeleteCardModal = () => {
+        setDeleteCardModal(true)
+    }
+    const closeDeleteCardModal = () => {
+        setDeleteCardModal(false)
+    }
+
     return (
         <div className={s.cardItem}>
             <div className={s.cardSpecification}>{props.question}</div>
@@ -42,7 +52,7 @@ export const Card = (props: CardPropsType) => {
                 {props.user_id === props.currentUserId ? <span style={{cursor: 'pointer'}}><EditIcon onClick={openAddEditCardModal} style={{ color: green[500] }}/></span> : ''}
             </div>
             <div className={s.cardSpecification}>
-                { props.user_id === props.currentUserId ? <span style={{cursor: 'pointer'}}><Delete onClick={deleteCardHandler} color='secondary'/></span> : ''}
+                { props.user_id === props.currentUserId ? <span style={{cursor: 'pointer'}}><Delete onClick={openDeleteCardModal} color='secondary'/></span> : ''}
             </div>
 
             {editCardModal && <ModalForCards
@@ -51,6 +61,12 @@ export const Card = (props: CardPropsType) => {
                 title='Edit your card'
                 questionPlaceholder={props.question}
                 answerPlaceholder={props.answer}
+            />}
+
+            {deleteCardModal && <ModalDeleteItem
+                closeDeleteModal={closeDeleteCardModal}
+                deleteItem={deleteCardHandler}
+                title={`Are you sure you want to delete card '${props.question}'?`}
             />}
 
         </div>

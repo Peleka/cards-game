@@ -3,7 +3,7 @@ import SuperInputText from '../../../superComponents/c1-SuperInputText/SuperInpu
 import s from '../Modal.module.css';
 import SuperButton from "../../../superComponents/c2-SuperButton/SuperButton";
 
-type ModalForCardsType = {
+type ModalForCardsPropsType = {
   closeAddEditCardModal: () => void
   addNewCard: (question: string, answer: string) => void
   title: string
@@ -11,7 +11,7 @@ type ModalForCardsType = {
   answerPlaceholder: string
 }
 
-export const ModalForCards = (props: ModalForCardsType) => {
+export const ModalForCards = (props: ModalForCardsPropsType) => {
   const [question, setQuestion] = useState(props.questionPlaceholder)
   const [answer, addQuestion] = useState(props.answerPlaceholder)
 

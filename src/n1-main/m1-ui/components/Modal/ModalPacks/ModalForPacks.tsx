@@ -3,13 +3,13 @@ import SuperInputText from '../../../superComponents/c1-SuperInputText/SuperInpu
 import SuperButton from '../../../superComponents/c2-SuperButton/SuperButton';
 import s from '../Modal.module.css';
 
-type ModalForPacksType = {
+type ModalForPacksPropsType = {
   closeAddEditPackModal: () => void
   addNewPack: (name: string) => void
   titlePack?: string
 }
 
-export const ModalForPacks = (props: ModalForPacksType) => {
+export const ModalForPacks = (props: ModalForPacksPropsType) => {
   const [newText, setNewText] = useState(props.titlePack ? props.titlePack: '')
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
