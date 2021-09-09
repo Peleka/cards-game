@@ -59,7 +59,6 @@ export const getCardsTC = (cardsPack_id: string): AppThunkType => (dispatch, get
 }
 
 export const addCardTC = (data: CreateCardRequestDataType): AppThunkType => dispatch => {
-    debugger
     dispatch(setAppStatusAC('loading'))
     cardsAPI.addCard(data)
         .then(() => {
