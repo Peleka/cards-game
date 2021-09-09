@@ -172,7 +172,7 @@ export const Packs: React.FC = React.memo(() => {
 
                     <div className={st.filterByCardsCount}>
                         <Slider
-                            style={{margin: '0', height: '20px'}}
+                            style={{margin: '0', padding: '0'}}
                             value={[minCardsCount, maxCardsCount]}
                             onChangeCommitted={onChangeSlider}
                             valueLabelDisplay="auto"
