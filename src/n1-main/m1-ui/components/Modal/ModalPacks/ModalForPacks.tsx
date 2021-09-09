@@ -4,7 +4,7 @@ import SuperButton from '../../../superComponents/c2-SuperButton/SuperButton';
 import s from '../Modal.module.css';
 
 type ModalForPacksType = {
-  closeAddPackModal: () => void
+  closeAddEditPackModal: () => void
   addNewPack: (name: string) => void
 }
 
@@ -17,12 +17,12 @@ export const ModalForPacks = (props: ModalForPacksType) => {
 
   const onClickHandler = () => {
     props.addNewPack(newText)
-    props.closeAddPackModal()
+    props.closeAddEditPackModal()
   }
 
   // ХЗ куда повесить, чтобы закрывалось пр нажатии в любое место...
   const onClosedClick = () => {
-    props.closeAddPackModal()
+    props.closeAddEditPackModal()
   }
 
   return (
@@ -38,7 +38,7 @@ export const ModalForPacks = (props: ModalForPacksType) => {
               onChange={inputChangeHandler}
             />
             <div className={s.buttonBlock}>
-              <SuperButton type='submit' onClick={onClickHandler}>Add new pack</SuperButton>
+              <SuperButton type='submit' onClick={onClickHandler}>Ok</SuperButton>
               <SuperButton onClick={onClosedClick}>Cancel</SuperButton>
             </div>
           </form>

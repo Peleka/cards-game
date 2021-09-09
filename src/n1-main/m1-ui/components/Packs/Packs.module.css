@@ -8,7 +8,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr 60px 15px 75px 60px 30px 30px;
     margin: auto;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
+
 .packsContainer {
     width: 70%;
     margin: auto;
@@ -16,27 +19,34 @@
     grid-template-columns: 1fr 20%;
     grid-gap: 10px;
 }
+
 .packsField {
 
 }
+
 .sidebar {
     background-color: mediumpurple;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
+    border-radius: 15px;
 }
+
 .title {
 
 }
+
 .showMyAllPacks {
     padding-top: 20px;
     padding-bottom: 20px;
     margin: auto;
 
 }
+
 .filterByCardsCount {
     width: 150px;
     margin: auto;
 }
+
 .paginator {
     padding-top: 30px;
     padding-bottom: 30px;
@@ -44,13 +54,16 @@
     margin: 0 auto;
     text-align: center;
 }
+
 .filter {
     width: 100px;
 }
+
 .activeButton button {
     border-color: lightgrey;
     color: lightgrey;
 }
+
 .search {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -58,11 +71,13 @@
     width: 150px;
     margin: auto;
 }
+
 .search input {
     margin: 0 0 0 0;
     min-width: 120px;
     height: 20px;
 }
+
 /*
 .pageCount {
     position: absolute;

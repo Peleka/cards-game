@@ -17,10 +17,9 @@ import {Login} from "../Login/Login";
 import {updateCardDataType} from "../../../m3-dal/api";
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-
 import {Pagination} from "@material-ui/lab";
-
 import {ModalForCards} from "../Modal/ModalCards/ModalForCards";
+
 
 
 export const Cards = () => {
@@ -78,8 +77,8 @@ export const Cards = () => {
         dispatch(getCardsTC(packID))
     }
     const sortCardsByGrade = sortCards === '0grade'
-        ? <ArrowDownwardIcon onClick={sortByGradeDown} color='primary'/>
-        : <ArrowUpwardIcon onClick={sortByGradeUp} color='primary'/>
+        ? <span style={{cursor: 'pointer'}}><ArrowDownwardIcon onClick={sortByGradeDown} color='primary' /></span>
+        : <span style={{cursor: 'pointer'}}><ArrowUpwardIcon onClick={sortByGradeUp} color='primary' /></span>
 
     //cards list
     const mappedCards = cards && cards.map((c, i) => <Card

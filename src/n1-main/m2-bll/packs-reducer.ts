@@ -115,9 +115,9 @@ export const delPackTC = (id: string): AppThunkType => dispatch => {
         })
 }
 
-export const updatePackTC = (data: UpdatePacksRequestDataType): AppThunkType => (dispatch) => {
+export const updatePackTC = (packId: string, newPackName: string): AppThunkType => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    packsAPI.updatePack(data)
+    packsAPI.updatePack(packId, newPackName)
         .then(() => {
             dispatch(getPacksTC())
             console.log('pack updated successfully')

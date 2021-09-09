@@ -47,7 +47,7 @@ export const ModalForCards = (props: ModalForCardsType) => {
               onChange={inputChangeHandlerAnswer}
             />
             <div className={s.buttonBlock}>
-              <SuperButton type='submit' onClick={onClickHandler}>Add new card</SuperButton>
+              <SuperButton type='submit' onClick={onClickHandler}>Ok</SuperButton>
               <SuperButton onClick={onClosedClick}>Cancel</SuperButton>
             </div>
           </form>
