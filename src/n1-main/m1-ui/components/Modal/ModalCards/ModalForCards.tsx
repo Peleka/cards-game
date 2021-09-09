@@ -4,13 +4,16 @@ import s from '../Modal.module.css';
 import SuperButton from "../../../superComponents/c2-SuperButton/SuperButton";
 
 type ModalForCardsType = {
-  closeAddCardModal: () => void
+  closeAddEditCardModal: () => void
   addNewCard: (question: string, answer: string) => void
+  title: string
+  questionPlaceholder: string
+  answerPlaceholder: string
 }
 
 export const ModalForCards = (props: ModalForCardsType) => {
-  const [question, setQuestion] = useState('')
-  const [answer, addQuestion] = useState('')
+  const [question, setQuestion] = useState(props.questionPlaceholder)
+  const [answer, addQuestion] = useState(props.answerPlaceholder)
 
   const inputChangeHandlerQuestion = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.currentTarget.value)
@@ -22,28 +25,27 @@ export const ModalForCards = (props: ModalForCardsType) => {
 
   const onClickHandler = () => {
     props.addNewCard(question, answer)
-    props.closeAddCardModal()
+    props.closeAddEditCardModal()
   }
 
-  // ХЗ куда повесить, чтобы закрывалось пр нажатии в любое место...
   const onClosedClick = () => {
-    props.closeAddCardModal()
+    props.closeAddEditCardModal()
   }
 
   return (
     <>
       <div className={s.wrapperModal}>
         <div className={s.modal}>
-          <h3>Add new card</h3>
+          <h3>{props.title}</h3>
           <form>
             <SuperInputText
               type='text'
-              placeholder='question'
+              placeholder={props.questionPlaceholder}
               onChange={inputChangeHandlerQuestion}
             />
             <SuperInputText
               type='text'
-              placeholder='answer'
+              placeholder={props.answerPlaceholder}
               onChange={inputChangeHandlerAnswer}
             />
             <div className={s.buttonBlock}>

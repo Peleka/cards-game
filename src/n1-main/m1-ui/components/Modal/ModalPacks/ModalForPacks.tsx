@@ -20,14 +20,12 @@ export const ModalForPacks = (props: ModalForPacksType) => {
     props.closeAddEditPackModal()
   }
 
-  // ХЗ куда повесить, чтобы закрывалось пр нажатии в любое место...
   const onClosedClick = () => {
     props.closeAddEditPackModal()
   }
 
   return (
     <>
-      {/*<div className={s.wrapperModal} onClick={onClosedClick}>*/}
       <div className={s.wrapperModal}>
         <div className={s.modal}>
           <h3>Enter new pack name</h3>

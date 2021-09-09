@@ -37,12 +37,12 @@ export const Cards = () => {
     }, [dispatch, packID])
 
 
-    // Модалка на добавление карточки
+    // Add card modal
     const [addCardModal, setAddCardsModal] = useState<boolean>(false);
-    const openAddCardModal = () => {
+    const openAddEditCardModal = () => {
         setAddCardsModal(true)
     }
-    const closeAddCardModal = () => {
+    const closeAddEditCardModal = () => {
         setAddCardsModal(false)
     }
 
@@ -102,7 +102,10 @@ export const Cards = () => {
 
             {addCardModal && <ModalForCards
                 addNewCard={addCardHandler}
-                closeAddCardModal={closeAddCardModal}
+                closeAddEditCardModal={closeAddEditCardModal}
+                title='Add new card'
+                questionPlaceholder='question'
+                answerPlaceholder='answer'
             />}
 
             <div className={st.cardContents}>
@@ -111,7 +114,7 @@ export const Cards = () => {
                 <div>{sortCardsByGrade}</div>
                 <div>grade</div>
                 <div>last update</div>
-                <div><SuperButton onClick={openAddCardModal}>add</SuperButton></div>
+                <div><SuperButton onClick={openAddEditCardModal}>add</SuperButton></div>
                 <div></div>
             </div>
             {mappedCards}
