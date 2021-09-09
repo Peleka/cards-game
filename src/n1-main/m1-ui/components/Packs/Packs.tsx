@@ -42,7 +42,7 @@ export const Packs: React.FC = React.memo(() => {
         dispatch(getPacksTC())
     }, [dispatch, minCardsCount, maxCardsCount])
 
-    // Add pack modal
+    // add pack modal
     const [addPackModal, setAddPackModal] = useState<boolean>(false);
     const openAddEditPackModal = () => {
         setAddPackModal(true)

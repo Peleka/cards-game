@@ -8,8 +8,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 60px 15px 75px 120px;
     margin: auto;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-radius: 15px 15px 0 0;
 }
 
 .packsContainer {
@@ -20,31 +19,18 @@
     grid-gap: 10px;
 }
 
-.packsField {
-
-}
+.packsField {}
 
 .sidebar {
-    /*position: relative;*/
     background-color: mediumpurple;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     border-radius: 15px;
 }
 
-/*@media screen  and (max-width: 860px){*/
-/*    .sidebar {*/
-/*        width: 60px;*/
-/*    }*/
-/*}*/
-
-.title {
-
-}
+.title {}
 
 .showMyAllPacks {
-    /*position: absolute;*/
-    /*top: 0;*/
     padding-top: 20px;
     margin: 0 auto;
 }
@@ -85,15 +71,10 @@
     height: 20px;
 }
 
-/*
-.pageCount {
-    position: absolute;
-    top: 10px;
-    left: 10%;
-}*/
 @media screen  and (max-width: 1100px) {
     .packsContainer {
         grid-template-columns: none;
+        grid-gap: 0;
     }
 
     .sidebar {
@@ -101,6 +82,7 @@
         grid-template-columns: repeat(3, 1fr);
         align-items: center;
         padding: 10px;
+        border-radius: 0 0 15px 15px;
     }
 
     .showMyAllPacks {
