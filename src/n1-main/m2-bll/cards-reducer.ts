@@ -122,12 +122,12 @@ export type CardsActionsType = ReturnType<typeof setCardsAC>
 
 export type CardDataType = {
     cardsPack_id: string
-    answer?: string
+    answer: string
     comments?: string
     created?: string
     grade?: number
     more_id?: string
-    question?: string
+    question: string
     questionImg?: string
     rating?: number
     shots?: number
@@ -135,5 +135,5 @@ export type CardDataType = {
     updated: string
     user_id?: string
     __v?: number
-    _id?: string
+    _id: string
 }

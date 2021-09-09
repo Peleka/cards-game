@@ -17,10 +17,9 @@ import {Login} from "../Login/Login";
 import {updateCardDataType} from "../../../m3-dal/api";
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-
 import {Pagination} from "@material-ui/lab";
-
 import {ModalForCards} from "../Modal/ModalCards/ModalForCards";
+
 
 
 export const Cards = () => {
@@ -38,12 +37,12 @@ export const Cards = () => {
     }, [dispatch, packID])
 
 
-    // Модалка на добавление карточки
+    // Add card modal
     const [addCardModal, setAddCardsModal] = useState<boolean>(false);
-    const openAddCardModal = () => {
+    const openAddEditCardModal = () => {
         setAddCardsModal(true)
     }
-    const closeAddCardModal = () => {
+    const closeAddEditCardModal = () => {
         setAddCardsModal(false)
     }
 
@@ -78,8 +77,8 @@ export const Cards = () => {
         dispatch(getCardsTC(packID))
     }
     const sortCardsByGrade = sortCards === '0grade'
-        ? <ArrowDownwardIcon onClick={sortByGradeDown} color='primary'/>
-        : <ArrowUpwardIcon onClick={sortByGradeUp} color='primary'/>
+        ? <span style={{cursor: 'pointer'}}><ArrowDownwardIcon onClick={sortByGradeDown} color='primary' /></span>
+        : <span style={{cursor: 'pointer'}}><ArrowUpwardIcon onClick={sortByGradeUp} color='primary' /></span>
 
     //cards list
     const mappedCards = cards && cards.map((c, i) => <Card
@@ -103,7 +102,10 @@ export const Cards = () => {
 
             {addCardModal && <ModalForCards
                 addNewCard={addCardHandler}
-                closeAddCardModal={closeAddCardModal}
+                closeAddEditCardModal={closeAddEditCardModal}
+                title='Add new card'
+                questionPlaceholder='question'
+                answerPlaceholder='answer'
             />}
 
             <div className={st.cardContents}>
@@ -112,7 +114,7 @@ export const Cards = () => {
                 <div>{sortCardsByGrade}</div>
                 <div>grade</div>
                 <div>last update</div>
-                <div><SuperButton onClick={openAddCardModal}>add</SuperButton></div>
+                <div><SuperButton onClick={openAddEditCardModal}>add</SuperButton></div>
                 <div></div>
             </div>
             {mappedCards}

@@ -1,5 +1,4 @@
 import axios from "axios";
-import {UpdatePacksRequestDataType} from "../m2-bll/packs-reducer";
 
 export const instance = axios.create(
     {
@@ -46,8 +45,10 @@ export const packsAPI = {
     deletePack(id: string) {
         return instance.delete(`/cards/pack?id=${id}`)
     },
-    updatePack(data: UpdatePacksRequestDataType) {
-        return instance.put('/cards/pack', {cardsPack: data})
+    updatePack(packId: string, newPackName: string) {
+        return instance.put('/cards/pack', {
+            cardsPack: {_id: packId, name: newPackName}
+        })
     },
 }
 
@@ -69,15 +70,21 @@ export const cardsAPI = {
         return instance.delete(`/cards/card?id=${cardsPack_id}`)
     },
     updateCard(updateCardData: updateCardDataType) {
-        return instance.put('cards/card', {card: {_id: updateCardData._id}})
+        return instance.put('cards/card', {
+            card: {
+                _id: updateCardData._id,
+                question: updateCardData.question,
+                answer: updateCardData.answer,
+            }
+        })
     }
 }
 
 //types
 export type updateCardDataType = {
     _id: string,
-    question?: string,
-    answer?: string
+    question: string,
+    answer: string
 }
 
 export type CreateCardRequestDataType = {

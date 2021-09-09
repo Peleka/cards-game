@@ -9,7 +9,6 @@ import {
     setMaxCardsCountAC,
     setMinCardsCountAC, setNameAC, setSortPacksAC,
     setUserIdAC,
-    UpdatePacksRequestDataType,
     updatePackTC
 } from "../../../m2-bll/packs-reducer";
 import {Pack} from "./Pack/Pack";
@@ -43,12 +42,12 @@ export const Packs: React.FC = React.memo(() => {
         dispatch(getPacksTC())
     }, [dispatch, minCardsCount, maxCardsCount])
 
-    // Модалка на добавление колоды
+    // Add pack modal
     const [addPackModal, setAddPackModal] = useState<boolean>(false);
-    const openAddPackModal = () => {
+    const openAddEditPackModal = () => {
         setAddPackModal(true)
     }
-    const closeAddPackModal = () => {
+    const closeAddEditPackModal = () => {
         setAddPackModal(false)
     }
 
@@ -59,8 +58,8 @@ export const Packs: React.FC = React.memo(() => {
     const delPack = useCallback(function (id: string) {
         dispatch(delPackTC(id))
     }, [dispatch])
-    const updatePack = useCallback(function (data: UpdatePacksRequestDataType) {
-        dispatch(updatePackTC(data))
+    const updatePack = useCallback(function (packId: string, newPackName: string) {
+        dispatch(updatePackTC(packId, newPackName))
     }, [dispatch])
 
 
@@ -74,8 +73,8 @@ export const Packs: React.FC = React.memo(() => {
         dispatch(getPacksTC())
     }
     const sortPacksByUpdate = sortPacks === '1updated'
-        ? <ArrowDownwardIcon onClick={sortByLastUpdate} color='primary'/>
-        : <ArrowUpwardIcon onClick={sortByFirstUpdate} color='primary'/>
+        ? <span style={{cursor: 'pointer'}}><ArrowDownwardIcon onClick={sortByLastUpdate} color='primary' /></span>
+        : <span style={{cursor: 'pointer'}}><ArrowUpwardIcon onClick={sortByFirstUpdate} color='primary'/></span>
 
 
     //my/all packs
@@ -146,7 +145,7 @@ export const Packs: React.FC = React.memo(() => {
                         <div>{sortPacksByUpdate}</div>
                         <div>update</div>
 
-                        <div><SuperButton onClick={openAddPackModal}>add</SuperButton>
+                        <div><SuperButton onClick={openAddEditPackModal}>add</SuperButton>
                         </div>
                         <div></div>
                         <div></div>
@@ -158,7 +157,7 @@ export const Packs: React.FC = React.memo(() => {
                 </div>
 
                 {addPackModal && <ModalForPacks
-                    closeAddPackModal={closeAddPackModal}
+                    closeAddEditPackModal={closeAddEditPackModal}
                     addNewPack={addPack}
                 />}
 
