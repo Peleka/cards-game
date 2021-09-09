@@ -25,21 +25,28 @@
 }
 
 .sidebar {
+    /*position: relative;*/
     background-color: mediumpurple;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     border-radius: 15px;
 }
 
+/*@media screen  and (max-width: 860px){*/
+/*    .sidebar {*/
+/*        width: 60px;*/
+/*    }*/
+/*}*/
+
 .title {
 
 }
 
 .showMyAllPacks {
+    /*position: absolute;*/
+    /*top: 0;*/
     padding-top: 20px;
-    padding-bottom: 20px;
-    margin: auto;
-
+    margin: 0 auto;
 }
 
 .filterByCardsCount {
