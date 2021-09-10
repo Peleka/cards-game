@@ -77,8 +77,15 @@ export const cardsAPI = {
                 answer: updateCardData.answer,
             }
         })
+    },
+    sendGrade(card_id: string, grade: number) {
+        return instance.put('/cards/grade', {
+            grade: grade,
+            card_id: card_id
+        })
     }
 }
+
 
 //types
 export type updateCardDataType = {
