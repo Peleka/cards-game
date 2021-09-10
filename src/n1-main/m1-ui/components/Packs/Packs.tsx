@@ -23,6 +23,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import SearchIcon from '@material-ui/icons/Search';
 
+
 export const Packs: React.FC = React.memo(() => {
 
     const dispatch = useDispatch()
@@ -144,11 +145,11 @@ export const Packs: React.FC = React.memo(() => {
 
                         <div>{sortPacksByUpdate}</div>
                         <div>update</div>
-
                         <div><SuperButton onClick={openAddEditPackModal}>add</SuperButton>
-                        </div>
-                    </div>
 
+
+                    </div>
+                    </div>
                     <div>
                         {mappedPacks}
                     </div>

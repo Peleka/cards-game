@@ -7,6 +7,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import {green} from "@material-ui/core/colors";
 import {ModalForPacks} from "../../Modal/ModalPacks/ModalForPacks";
 import {ModalDeleteItem} from "../../Modal/ModalDelete/ModalDeleteItem";
+import SchoolIcon from '@material-ui/icons/School';
 
 export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
 
@@ -49,6 +50,11 @@ export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
             <div className={s.packSpecification}>{props.cardsCount}</div>
             <div className={s.packSpecification}>{updateTime}</div>
             <div className={s.packSpecification}><NavLink to={`/cards/${props._id}`}>cards</NavLink></div>
+            <div className={s.packSpecification}><NavLink to='/profile'>
+                <span style={{cursor: 'pointer'}}><SchoolIcon /></span>
+            </NavLink>
+            </div>
+
             <div className={s.packSpecification}>
                 { props.user_id === props.currentUserId ? <span style={{cursor: 'pointer'}}><EditIcon onClick={openAddEditPackModal} style={{ color: green[500] }}/></span> : ''}
             </div>
