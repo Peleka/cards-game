@@ -1,5 +1,5 @@
 import React from "react";
-import {Redirect, Route, Switch } from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import {Error404} from "../components/Error404";
 import {Login} from "../components/Login/Login";
 import {Profile} from "../components/Profile/Profile";
@@ -9,6 +9,7 @@ import {ForgotPassword} from "../components/ForgotPassword";
 
 import {Packs} from "../components/Packs/Packs";
 import {Cards} from "../components/Cards/Cards";
+import {Learn} from "../components/Learn/Learn";
 
 
 export const PATH = {
@@ -19,6 +20,7 @@ export const PATH = {
     NEW_PASSWORD: '/new-password',
     PACKS: '/packs',
     CARDS: '/cards/:packID',
+    LEARN: '/learn/:packID',
 }
 
 export const Routes = () => {
@@ -35,6 +37,7 @@ export const Routes = () => {
                 <Route path={PATH.PROFILE} render={() => <Profile/>}/>
                 <Route path={PATH.PACKS} render={() => <Packs/>}/>
                 <Route path={PATH.CARDS} render={() => <Cards/>}/>
+                <Route path={PATH.LEARN} render={() => <Learn/>}/>
 
                 <Route render={() => <Error404/>}/>
             </Switch>

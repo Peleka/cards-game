@@ -3,7 +3,7 @@ import {cardsAPI, CreateCardRequestDataType, updateCardDataType} from "../m3-dal
 import {AppThunkType} from "./store";
 
 const initialState = {
-    cards: [] as Array<CardDataType> | null,
+    cards: [] as Array<CardDataType>,
     packUserId: '',
     page: 1,
     pageCount: 4,
@@ -91,6 +91,21 @@ export const updateCardTC = (packId: string, updateCardData: updateCardDataType)
     cardsAPI.updateCard(updateCardData)
         .then(() => {
             dispatch(getCardsTC(packId))
+        })
+        .catch(err => {
+            const error = err.response
+                ? err.response.data.error
+                : (err.message + ' , error')
+            dispatch(setAppStatusAC('failed'))
+            alert(error)
+        })
+}
+
+export const sendGradeTC = (cardId: string, grade: number): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.sendGrade(cardId, grade)
+        .then(() => {
+            dispatch(setAppStatusAC('succeeded'))
         })
         .catch(err => {
             const error = err.response
