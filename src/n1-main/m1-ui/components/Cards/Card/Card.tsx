@@ -7,6 +7,7 @@ import {green} from "@material-ui/core/colors";
 import {Delete} from '@material-ui/icons';
 import {ModalForCards} from "../../Modal/ModalCards/ModalForCards";
 import {ModalDeleteItem} from "../../Modal/ModalDelete/ModalDeleteItem";
+import {LightTooltip} from "../../../common/LightToolTip";
 
 type CardPropsType = CardDataType & {
     delCard: (id: string, packId: string) => void
@@ -49,18 +50,25 @@ export const Card = (props: CardPropsType) => {
             <div className={s.cardSpecification}>{props.grade}</div>
             <div className={s.cardSpecification}>{update}</div>
             <div className={s.cardSpecification}>
-                {props.user_id === props.currentUserId ? <span style={{cursor: 'pointer'}}><EditIcon onClick={openAddEditCardModal} style={{ color: green[500] }}/></span> : ''}
+                {props.user_id === props.currentUserId
+                    ? <LightTooltip title='Edit card'><span style={{cursor: 'pointer'}}>
+                        <EditIcon onClick={openAddEditCardModal} style={{color: green[500]}}/></span>
+                    </LightTooltip> : ''}
             </div>
             <div className={s.cardSpecification}>
-                { props.user_id === props.currentUserId ? <span style={{cursor: 'pointer'}}><Delete onClick={openDeleteCardModal} color='secondary'/></span> : ''}
+                {props.user_id === props.currentUserId
+                    ? <LightTooltip title='Delete card'><span style={{cursor: 'pointer'}}>
+                        <Delete onClick={openDeleteCardModal} color='secondary'/></span>
+                    </LightTooltip> : ''}
             </div>
 
             {editCardModal && <ModalForCards
                 addNewCard={updateCardHandler}
                 closeAddEditCardModal={closeAddEditCardModal}
                 title='Edit your card'
-                questionPlaceholder={props.question}
-                answerPlaceholder={props.answer}
+                questionValue={props.question}
+                answerValue={props.answer}
+
             />}
 
             {deleteCardModal && <ModalDeleteItem

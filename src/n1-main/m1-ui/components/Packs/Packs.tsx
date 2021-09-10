@@ -28,16 +28,12 @@ export const Packs: React.FC = React.memo(() => {
 
     const dispatch = useDispatch()
 
-    const {cardPacks, totalPacksCount, pageSize, currentPage, minCardsCount, maxCardsCount, sortPacks}
+    const {cardPacks, totalPacksCount, pageSize, currentPage, minCardsCount, maxCardsCount, sortPacks, userId}
         = useSelector((state: AppStoreType) => state.packs)
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
     const _id = useSelector((state: AppStoreType) => state.auth.userData._id)
 
-    const [myPacks, setMyPacks] = useState(false)
     const [searchText, setSearchText] = useState('')
-
-    const activeMyPacksButton = myPacks ? `${st.activeButton}` : ''
-    const activeAllPacksButton = !myPacks ? `${st.activeButton}` : ''
 
     useEffect(() => {
         dispatch(getPacksTC())
@@ -79,6 +75,9 @@ export const Packs: React.FC = React.memo(() => {
 
 
     //my/all packs
+    const [myPacks, setMyPacks] = useState(userId === _id)
+    const activeMyPacksButton = myPacks ? `${st.activeButton}` : ''
+    const activeAllPacksButton = !myPacks ? `${st.activeButton}` : ''
     const showMyPacks = () => {
         dispatch(setUserIdAC(_id))
         dispatch(getPacksTC())
@@ -158,7 +157,7 @@ export const Packs: React.FC = React.memo(() => {
                 {addPackModal && <ModalForPacks
                     closeAddEditPackModal={closeAddEditPackModal}
                     addNewPack={addPack}
-                    titlePack='new pack name'
+                    placeholder='new pack name'
                 />}
 
                 <div className={st.sidebar}>

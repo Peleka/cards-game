@@ -8,8 +8,9 @@ import {green} from "@material-ui/core/colors";
 import {ModalForPacks} from "../../Modal/ModalPacks/ModalForPacks";
 import {ModalDeleteItem} from "../../Modal/ModalDelete/ModalDeleteItem";
 import SchoolIcon from '@material-ui/icons/School';
+import {LightTooltip} from "../../../common/LightToolTip";
 
-export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
+export const Pack: React.FC<PackPropsType> = React.memo((props) => {
 
     const updateTime = new Date(props.updated).toLocaleDateString(['ban', 'id'])
 
@@ -53,15 +54,23 @@ export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
                 <NavLink to={`/cards/${props._id}`} className={s.cardsLink}>cards</NavLink></div>
             <div className={s.packSpecification}>
                 <NavLink to={`/learn/${props._id}`}>
-                <span style={{cursor: 'pointer'}}><SchoolIcon /></span>
-            </NavLink>
+                    <LightTooltip title='Learn'>
+                        <span  style={{cursor: 'pointer'}}><SchoolIcon/></span>
+                    </LightTooltip>
+                </NavLink>
             </div>
 
             <div className={s.packSpecification}>
-                { props.user_id === props.currentUserId ? <span style={{cursor: 'pointer'}}><EditIcon onClick={openAddEditPackModal} style={{ color: green[500] }}/></span> : ''}
+                {props.user_id === props.currentUserId
+                    ? <LightTooltip title='Edit pack'><span style={{cursor: 'pointer'}}>
+                        <EditIcon onClick={openAddEditPackModal} style={{color: green[500]}}/></span>
+                    </LightTooltip> : ''}
             </div>
             <div className={s.packSpecification}>
-                { props.user_id === props.currentUserId ? <span style={{cursor: 'pointer'}}><DeleteIcon onClick={openDeletePackModal} color='secondary'/></span> : ''}
+                {props.user_id === props.currentUserId
+                    ? <LightTooltip title='Delete pack'><span style={{cursor: 'pointer'}}>
+                        <DeleteIcon onClick={openDeletePackModal} color='secondary'/></span>
+                    </LightTooltip> : ''}
             </div>
 
             {editPackModal && <ModalForPacks

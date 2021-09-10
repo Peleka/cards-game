@@ -6,14 +6,16 @@ import SuperButton from "../../../superComponents/c2-SuperButton/SuperButton";
 type ModalForCardsPropsType = {
   closeAddEditCardModal: () => void
   addNewCard: (question: string, answer: string) => void
-  title: string
-  questionPlaceholder: string
-  answerPlaceholder: string
+  title?: string
+  questionPlaceholder?: string
+  answerPlaceholder?: string
+  questionValue?: string
+  answerValue?: string
 }
 
 export const ModalForCards = (props: ModalForCardsPropsType) => {
-  const [question, setQuestion] = useState(props.questionPlaceholder)
-  const [answer, addQuestion] = useState(props.answerPlaceholder)
+  const [question, setQuestion] = useState(props.questionValue ?? '')
+  const [answer, addQuestion] = useState(props.answerValue ?? '')
 
   const inputChangeHandlerQuestion = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.currentTarget.value)
@@ -40,11 +42,13 @@ export const ModalForCards = (props: ModalForCardsPropsType) => {
           <form>
             <SuperInputText
               type='text'
+              placeholder={props.questionPlaceholder}
               value={question}
               onChange={inputChangeHandlerQuestion}
             />
             <SuperInputText
               type='text'
+              placeholder={props.answerPlaceholder}
               value={answer}
               onChange={inputChangeHandlerAnswer}
             />
