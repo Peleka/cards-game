@@ -104,7 +104,6 @@ export const Cards = () => {
             {addCardModal && <ModalForCards
                 addNewCard={addCardHandler}
                 closeAddEditCardModal={closeAddEditCardModal}
-                title='Add new card'
                 questionPlaceholder='question'
                 answerPlaceholder='answer'
             />}

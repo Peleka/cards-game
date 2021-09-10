@@ -6,7 +6,7 @@ const initialState = {
     cards: [] as Array<CardDataType>,
     packUserId: '',
     page: 1,
-    pageCount: 4,
+    pageCount: 5,
     cardsTotalCount: 0,
     minGrade: 0,
     maxGrade: 6,
@@ -27,6 +27,8 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Car
             return {...state, page: action.page}
         case "CARDS/SET-SORT":
             return {...state, sortCards: action.sortValue}
+        case "CARDS/SET-PAGE-COUNT":
+            return {...state, pageCount: action.pageCount}
         default:
             return state
     }
@@ -37,6 +39,7 @@ export const setCardsAC = (cards: CardDataType[]) => ({type: 'CARDS/SET-CARDS', 
 export const setCardsTotalCountAC = (totalCards: number) => ({type: 'CARDS/SET_CARDS_TOTAL_COUNT', totalCards} as const)
 export const setCardsCurrentPageAC = (page: number) => ({type: 'CARDS/SET_CURRENT_PAGE', page} as const)
 export const setSortCardsAC = (sortValue: SortCardsOptions) => ({type: 'CARDS/SET-SORT', sortValue} as const)
+export const setPageCountAC = (pageCount: number) => ({type: 'CARDS/SET-PAGE-COUNT', pageCount} as const)
 
 
 //thunk
@@ -122,6 +125,7 @@ export type CardsActionsType = ReturnType<typeof setCardsAC>
     | ReturnType<typeof setCardsTotalCountAC>
     | ReturnType<typeof setCardsCurrentPageAC>
     | ReturnType<typeof setSortCardsAC>
+    | ReturnType<typeof setPageCountAC>
 
 // export type GetCardsRequestDataType = {
 //     cardAnswer?: string

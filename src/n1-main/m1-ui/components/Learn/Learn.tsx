@@ -3,7 +3,7 @@ import {NavLink, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../m2-bll/store";
 import {RequestStatusType} from "../../../m2-bll/app-reducer";
-import {CardDataType, getCardsTC, sendGradeTC} from "../../../m2-bll/cards-reducer";
+import {CardDataType, getCardsTC, sendGradeTC, setPageCountAC} from "../../../m2-bll/cards-reducer";
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {Loader} from "../../superComponents/Loader/Loader";
 import {Button, ButtonGroup} from "@material-ui/core";
@@ -24,7 +24,9 @@ export const Learn = () => {
     const [grade, setGrade] = useState(0)
 
     useEffect(() => {
+        dispatch(setPageCountAC(1000))
         dispatch(getCardsTC(packID))
+        dispatch(setPageCountAC(5))
     }, [dispatch, packID])
 
     const nextQuestion = () => {
@@ -33,7 +35,7 @@ export const Learn = () => {
         } else {
             setStop(true)
         }
-        dispatch(sendGradeTC(cards[currentQuestion]._id, grade))
+        grade > 0 && dispatch(sendGradeTC(cards[currentQuestion]._id, grade))
         setAnswer(false)
         setGrade(0)
     }

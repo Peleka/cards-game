@@ -7,10 +7,11 @@ type ModalForPacksPropsType = {
   closeAddEditPackModal: () => void
   addNewPack: (name: string) => void
   titlePack?: string
+  placeholder?: string
 }
 
 export const ModalForPacks = (props: ModalForPacksPropsType) => {
-  const [newText, setNewText] = useState(props.titlePack ? props.titlePack: '')
+  const [newText, setNewText] = useState(props.titlePack ?? '')
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewText(e.currentTarget.value)
@@ -33,6 +34,7 @@ export const ModalForPacks = (props: ModalForPacksPropsType) => {
           <form>
             <SuperInputText
               type='text'
+              placeholder={props.placeholder}
               value={newText}
               onChange={inputChangeHandler}
             />
