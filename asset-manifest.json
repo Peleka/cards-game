@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/cards-game/static/css/main.445ecfd9.chunk.css",
-    "main.js": "/cards-game/static/js/main.98598e07.chunk.js",
-    "main.js.map": "/cards-game/static/js/main.98598e07.chunk.js.map",
-    "runtime-main.js": "/cards-game/static/js/runtime-main.fcfb855f.js",
-    "runtime-main.js.map": "/cards-game/static/js/runtime-main.fcfb855f.js.map",
-    "static/js/2.eebacc44.chunk.js": "/cards-game/static/js/2.eebacc44.chunk.js",
-    "static/js/2.eebacc44.chunk.js.map": "/cards-game/static/js/2.eebacc44.chunk.js.map",
-    "static/js/3.cc47e703.chunk.js": "/cards-game/static/js/3.cc47e703.chunk.js",
-    "static/js/3.cc47e703.chunk.js.map": "/cards-game/static/js/3.cc47e703.chunk.js.map",
+    "main.js": "/cards-game/static/js/main.39c607d6.chunk.js",
+    "main.js.map": "/cards-game/static/js/main.39c607d6.chunk.js.map",
+    "runtime-main.js": "/cards-game/static/js/runtime-main.2a9424bd.js",
+    "runtime-main.js.map": "/cards-game/static/js/runtime-main.2a9424bd.js.map",
+    "static/js/2.c96ff98e.chunk.js": "/cards-game/static/js/2.c96ff98e.chunk.js",
+    "static/js/2.c96ff98e.chunk.js.map": "/cards-game/static/js/2.c96ff98e.chunk.js.map",
+    "static/js/3.87e575cd.chunk.js": "/cards-game/static/js/3.87e575cd.chunk.js",
+    "static/js/3.87e575cd.chunk.js.map": "/cards-game/static/js/3.87e575cd.chunk.js.map",
     "index.html": "/cards-game/index.html",
     "static/css/main.445ecfd9.chunk.css.map": "/cards-game/static/css/main.445ecfd9.chunk.css.map",
-    "static/js/2.eebacc44.chunk.js.LICENSE.txt": "/cards-game/static/js/2.eebacc44.chunk.js.LICENSE.txt",
+    "static/js/2.c96ff98e.chunk.js.LICENSE.txt": "/cards-game/static/js/2.c96ff98e.chunk.js.LICENSE.txt",
     "static/media/cloud.01bc04ad.png": "/cards-game/static/media/cloud.01bc04ad.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.fcfb855f.js",
-    "static/js/2.eebacc44.chunk.js",
+    "static/js/runtime-main.2a9424bd.js",
+    "static/js/2.c96ff98e.chunk.js",
     "static/css/main.445ecfd9.chunk.css",
-    "static/js/main.98598e07.chunk.js"
+    "static/js/main.39c607d6.chunk.js"
   ]
 }
