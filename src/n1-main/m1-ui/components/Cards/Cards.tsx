@@ -26,10 +26,11 @@ export const Cards = () => {
 
     const dispatch = useDispatch()
 
-    const {cards, cardsTotalCount, pageCount, page, sortCards} = useSelector((state: AppStoreType) => state.cards)
+    const {cards, cardsTotalCount, pageCount, sortCards, page} = useSelector((state: AppStoreType) => state.cards)
     const {packID} = useParams<{ packID: string }>()
     const isLoggedIn = useSelector((state: AppStoreType) => state.auth.isLoggedIn)
     const _id = useSelector((state: AppStoreType) => state.auth.userData._id)
+    const packUserId = useSelector((state: AppStoreType) => state.packs.userId)
 
 
     useEffect(() => {
@@ -114,7 +115,9 @@ export const Cards = () => {
                 <div>{sortCardsByGrade}</div>
                 <div>grade</div>
                 <div>last update</div>
-                <div><SuperButton onClick={openAddEditCardModal}>add</SuperButton></div>
+                <div>
+                    {_id === packUserId ? <SuperButton onClick={openAddEditCardModal}>add</SuperButton> : ''}
+                </div>
             </div>
             {mappedCards}
             <div className={st.paginator}>

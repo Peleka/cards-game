@@ -157,7 +157,7 @@ export const Packs: React.FC = React.memo(() => {
                 {addPackModal && <ModalForPacks
                     closeAddEditPackModal={closeAddEditPackModal}
                     addNewPack={addPack}
-                    titlePack='name new pack'
+                    titlePack='new pack name'
                 />}
 
                 <div className={st.sidebar}>
