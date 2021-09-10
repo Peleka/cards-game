@@ -49,7 +49,8 @@ export const Pack: React.FC<PackPropsType> = React.memo((props ) => {
             <div className={s.packSpecification}>{props.name}</div>
             <div className={s.packSpecification}>{props.cardsCount}</div>
             <div className={s.packSpecification}>{updateTime}</div>
-            <div className={s.packSpecification}><NavLink to={`/cards/${props._id}`}>cards</NavLink></div>
+            <div className={s.packSpecification}>
+                <NavLink to={`/cards/${props._id}`} className={s.cardsLink}>cards</NavLink></div>
             <div className={s.packSpecification}>
                 <NavLink to={`/learn/${props._id}`}>
                 <span style={{cursor: 'pointer'}}><SchoolIcon /></span>

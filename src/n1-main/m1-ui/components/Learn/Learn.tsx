@@ -6,6 +6,8 @@ import {RequestStatusType} from "../../../m2-bll/app-reducer";
 import {CardDataType, getCardsTC, sendGradeTC} from "../../../m2-bll/cards-reducer";
 import SuperButton from "../../superComponents/c2-SuperButton/SuperButton";
 import {Loader} from "../../superComponents/Loader/Loader";
+import {Button, ButtonGroup} from "@material-ui/core";
+import s from './Learn.module.css'
 
 export const Learn = () => {
     const {packID} = useParams<{ packID: string }>()
@@ -48,10 +50,10 @@ export const Learn = () => {
     return (
         <div>
             {status === 'loading' && <Loader/>}
-            <div>
+            <div className={s.goToPacks}>
                 <NavLink
                     to={'/packs'}>
-                    🔙Go to Packs
+                    🔙 back to Packs
                 </NavLink>
             </div>
             {
@@ -62,31 +64,36 @@ export const Learn = () => {
                     : <div>
                         {stop
                             ? <div>
-                                <div>The questions are over</div>
+                                <div className={s.qOver}>The questions are over</div>
                                 <SuperButton onClick={rollbackHandler}>Start over</SuperButton>
                             </div>
                             : <>
-                                <div>
-                                    {cards[currentQuestion].question}
+                                <div className={s.question}>
+                                    Question: {cards[currentQuestion].question}
                                 </div>
                                 <SuperButton onClick={setAnswerHandler} disabled={answer}>CHECK</SuperButton>
                                 {
                                     answer && (
                                         <div>
-                                            <div>{cards[currentQuestion].answer}</div>
-                                            <div>
+                                            <div className={s.answer}>Answer: {cards[currentQuestion].answer}</div>
+                                            <div className={s.options}>
                                                 {grades.map((el, i) => {
                                                     const settingGrades = () => {
                                                         setGrade(i + 1)
                                                     }
                                                     return (
-                                                        <SuperButton
+
+                                                        <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+
+
+                                                        <Button
                                                             key={i + 1}
                                                             onClick={settingGrades}
-                                                            // disabled={i + 1 ==== grade}
+                                                            disabled={i + 1 === grade}
                                                         >
                                                             {el}
-                                                        </SuperButton>
+                                                        </Button>
+                                                        </ButtonGroup>
                                                     )
                                                 })}
                                             </div>
